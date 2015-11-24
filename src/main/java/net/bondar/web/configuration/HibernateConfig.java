@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 @ComponentScan({"net.bondar.web.configuration"})
-@PropertySource(value = {"classpath: application.properties"})
+@PropertySource(value = { "classpath:application.properties" })
 public class HibernateConfig {
 
     @Autowired

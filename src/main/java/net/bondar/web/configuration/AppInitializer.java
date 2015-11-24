@@ -12,33 +12,15 @@ import javax.servlet.ServletRegistration;
 /**
  * Created by Azeral on 24.11.2015.
  */
-//public class AppInitializer implements WebApplicationInitializer{
-//
-//    public void onStartup(ServletContext servletContext) throws ServletException {
-//        AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-//        context.register(AppConfig.class);
-//        context.setServletContext(servletContext);
-//
-//        ServletRegistration.Dynamic servlet = servletContext.addServlet("dispatcher", new DispatcherServlet(context));
-//        servlet.setLoadOnStartup(1);
-//        servlet.addMapping("/");
-//    }
-//}
+public class AppInitializer implements WebApplicationInitializer{
 
-public class AppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer{
+    public void onStartup(ServletContext servletContext) throws ServletException {
+        AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
+        context.register(AppConfig.class);
+        context.setServletContext(servletContext);
 
-    @Override
-    protected Class<?>[] getRootConfigClasses() {
-        return new Class[]{AppConfig.class};
-    }
-
-    @Override
-    protected Class<?>[] getServletConfigClasses() {
-        return new Class<?>[0];
-    }
-
-    @Override
-    protected String[] getServletMappings() {
-        return new String[]{"/"};
+        ServletRegistration.Dynamic servlet = servletContext.addServlet("dispatcher", new DispatcherServlet(context));
+        servlet.setLoadOnStartup(1);
+        servlet.addMapping("/");
     }
 }
