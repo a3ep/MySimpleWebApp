@@ -22,7 +22,7 @@
     clear: both;
     display: block;
 }
-#myModal .tab-pane .row label{
+#myModal .tab-pane .row label {
     display: block;
     float: left;
     cursor: pointer;
