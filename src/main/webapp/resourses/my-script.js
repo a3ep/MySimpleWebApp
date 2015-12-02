@@ -22,10 +22,10 @@ $(document).ready(function() {
 
         $.ajax({
             type: "POST",
-            url: '/contact',
-            contextType: "application/json; charset=utf-8",
+            url: '/clientOrder',
+            contentType: "application/json; charset=utf-8",
             dataType: "json",
-            data: '{"firstName": "' + first_name + '", "lastName": "' + last_name + '", "birthDate": "' + birth_date + '"}',
+            data: '{"firstName": "' + first_name + '", "lastName": "' + last_name + '", "birthDate: "' + birth_date + '"}',
             success: function(data) {
                 if (data.status === 'OK'){
                     displaySuccess()

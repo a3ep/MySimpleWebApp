@@ -2,37 +2,41 @@ package net.bondar.web.controller;
 
 import net.bondar.web.model.Contact;
 import net.bondar.web.model.ResponseMessage;
+import net.bondar.web.model.dto.ContactDto;
 import net.bondar.web.service.AppService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Created by Azeral on 24.11.2015.
  */
 @Controller
-//@RequestMapping("/")
-public class AppController {
+public class AppController{
 
     @Autowired
     private AppService service;
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
-    public String getHome(Model model) {
-        return "home";
+    public ModelAndView doHome() {
+        return new ModelAndView("home");
     }
 
+
+    @RequestMapping(value = "/saveContact", method = RequestMethod.POST)
     @ResponseBody
-    @RequestMapping(value = "/contact", method = RequestMethod.POST)
-    public ResponseMessage saveContact(@RequestBody Contact contact){
-        return ResponseMessage.okMessage(service.saveContact(contact.getFirstName(), contact.getLastName(), contact.getBirthDate()));
+    public ResponseMessage saveContact(@RequestBody ContactDto contactDto){
+        return ResponseMessage.okMessage(service.saveContact(contactDto.getFirstName(), contactDto.getLastName(), contactDto.getBirthDate()));
     }
 
-    @ResponseBody
+
     @ExceptionHandler(Exception.class)
+    @ResponseBody
     public ResponseMessage handleException(Exception e) {
         return ResponseMessage.errorMessage(e.getMessage());
     }
 }
+
+
 
