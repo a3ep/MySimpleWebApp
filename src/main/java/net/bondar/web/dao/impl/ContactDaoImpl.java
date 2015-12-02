@@ -21,6 +21,15 @@ import java.util.stream.Collectors;
 public class ContactDaoImpl extends AbstractDaoImpl<Contact> implements ContactDao {
 
     @Override
+    public Contact findByLogin(String login, String password) throws Exception {
+        Contact result = (Contact)getSession().get(Contact.class, login);
+        if(result==null){
+            throw new Exception("Contact with this login doesn't exist!");
+        }
+        return result.getPassword().equals(password)?result:null;
+    }
+
+    @Override
     public Set<Contact> getAllContactsWithHobby(Hobby hobby) {
         Set<Contact> result = new HashSet<>();
         Criteria criteria = getSession().createCriteria(Contact.class, "contact");

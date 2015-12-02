@@ -26,6 +26,12 @@ public class Contact extends AbstractEntity{
     @NotNull
     private LocalDate birthDate;
 
+    @NotNull
+    private String login;
+
+    @NotNull
+    private String password;
+
     @ManyToMany
     private Set<Hobby> hobbies;
 
@@ -50,10 +56,12 @@ public class Contact extends AbstractEntity{
         super(id);
     }
 
-    public Contact(String firstName, String lastName, LocalDate birthDate) {
+    public Contact(String firstName, String lastName, LocalDate birthDate, String login, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
+        this.login = login;
+        this.password = password;
         this.hobbies = new HashSet<>();
         this.places = new HashSet<>();
         this.friendList = new HashSet<>();
@@ -85,6 +93,22 @@ public class Contact extends AbstractEntity{
 
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Set<Hobby> getHobbies() {

@@ -31,7 +31,7 @@ public class HibernateConfig {
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan(new String[]{"net.bondar.web.model"});
+        sessionFactory.setPackagesToScan("net.bondar.web.model");
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;
     }

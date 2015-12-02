@@ -38,12 +38,14 @@ public class AppServiceImpl implements AppService{
 
 
     @Override
-    public Contact saveContact(String firstName, String lastName, LocalDate birthDate) {
+    public Contact saveContact(String firstName, String lastName, LocalDate birthDate, String login, String password) {
         if(firstName==null)throw new IllegalArgumentException("Contact firstName is null");
         else if(lastName==null) throw new IllegalArgumentException("Contact lastName is null");
         else if(!firstName.matches("^\\D*$")) throw new IllegalArgumentException("Contact firstName contains digits");
         else if(!lastName.matches("^\\D*$")) throw new IllegalArgumentException("Contact lastName contains digits");
-        Contact result = new Contact(firstName, lastName, birthDate);
+        else if(login==null)throw new IllegalArgumentException("Contact login is null");
+        else if(password==null) throw new IllegalArgumentException("Contact password is null");
+        Contact result = new Contact(firstName, lastName, birthDate, login, password);
         return contactDao.save(result);
     }
 
@@ -62,6 +64,13 @@ public class AppServiceImpl implements AppService{
     @Override
     public Contact findContactById(long id) {
         Contact result = contactDao.findById(id);
+        if(result==null) throw new NoSuchContactException();
+        return result;
+    }
+
+    @Override
+    public Contact findContactByLogin(String login, String password) throws Exception {
+        Contact result = contactDao.findByLogin(login, password);
         if(result==null) throw new NoSuchContactException();
         return result;
     }
