@@ -19,7 +19,7 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "net.bondar.web")
-public class AppConfig extends WebMvcConfigurerAdapter{
+public class WebAppConfig extends WebMvcConfigurerAdapter{
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
