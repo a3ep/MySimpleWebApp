@@ -23,7 +23,6 @@ public class MainController {
         return "home";
     }
 
-
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public ResponseMessage handleException(Exception e) {
