@@ -1,0 +1,33 @@
+.top-buffer {
+    margin-top:20px;
+}
+
+.top-buffer-for-change-botton {
+    margin-top:30px;
+}
+
+.text-centred {
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}
+
+.form-control-padding{
+    padding: 6px 6px;
+}
+
+.btn-margin-and-height{
+    margin-bottom: 5px;
+    height: 34px;
+}
+
+.text-index{
+    text-indent: 7px;
+}
+
+.btn-margin{
+    margin-bottom: 5px;
+    height: 34px;
+}

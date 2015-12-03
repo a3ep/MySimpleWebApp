@@ -20,6 +20,7 @@ public class MainController {
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String getHome(Model model) {
+
         return "home";
     }
 

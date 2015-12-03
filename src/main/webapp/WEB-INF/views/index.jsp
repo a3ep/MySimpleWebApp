@@ -12,8 +12,8 @@
     <title>Hello!</title>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="webjars/bootstrap/3.3.6/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../resources/my-style.css">
-    <link rel="stylesheet" href="../../resources/bootstrap_2.1.1.css">
+    <link rel="stylesheet" href="../../resources/css/my-style.css">
+    <link rel="stylesheet" href="../../resources/css/bootstrap_2.1.1.css">
 </head>
 
 <body>
@@ -42,7 +42,7 @@
 
                             <form class="form-horizontal" name="register-form">
                                 <div class="form-group">
-                                    <label for="first-name" class="col-lg-2 active">Введите имя:</label>
+                                    <label for="first-name" class="col-lg-3 active">Введите имя:</label>
 
                                     <div class="col-lg-4">
                                         <input type="text" id="first-name" class="form-control" name="first-name" placeholder="Имя"
@@ -53,7 +53,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="last-name" class="col-lg-2">Введите фамилию:</label>
+                                    <label for="last-name" class="col-lg-3">Введите фамилию:</label>
 
                                     <div class="col-lg-4">
                                         <input type="text" id="last-name" class="form-control" name="last-name"
@@ -63,7 +63,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-lg-2">Введите дату рождения:</label>
+                                    <label class="col-lg-3">Введите дату рождения:</label>
 
                                     <%--<div class="col-lg-1">--%>
                                         <%--<select name="day" id="day" class="form-control form-control-padding" required>--%>
@@ -150,7 +150,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="login" class="col-lg-2">Введите логин:</label>
+                                    <label for="login" class="col-lg-3">Введите логин:</label>
 
                                     <div class="col-lg-4">
                                         <input type="text" id="login" class="form-control" name="login" placeholder="Логин"
@@ -160,7 +160,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="password" class="col-lg-2">Введите пароль:</label>
+                                    <label for="password" class="col-lg-3">Введите пароль:</label>
 
                                     <div class="col-lg-4">
                                         <input type="password" id="password" class="form-control" name="password" placeholder="Пароль"
@@ -170,8 +170,7 @@
                                 </div>
                             </form>
                             <span class="required text-danger">*</span> - поля, обязательные для заполнения.
-                            <%--<input type="submit" id="register-button" class="register_button"--%>
-                            <%--value="Зарегистрироваться"/>--%>
+
                             <p></p>
 
                             <div class="col-lg-1">
@@ -242,7 +241,7 @@
 
 <script type="text/javascript" src="webjars/jquery/2.1.4/jquery.min.js"></script>
 <script type="text/javascript" src="webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="../../resources/my-script.js"></script>
+<script type="text/javascript" src="../../resources/js/my-script.js"></script>
 </body>
 
 </html>
