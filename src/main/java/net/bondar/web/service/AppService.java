@@ -5,13 +5,14 @@ import net.bondar.web.model.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Set;
 
 /**
  * Created by Azeral on 24.11.2015.
  */
 public interface AppService {
-    Contact saveContact(String firstName, String lastName, LocalDate birthDate, String login, String password);
+    Contact saveContact(String firstName, String lastName, Date birthDate, String login, String password);
     void deleteContact(Contact contact) throws Exception;
     Contact findContactById(long id);
     Contact findContactByLogin(String login, String password) throws Exception;

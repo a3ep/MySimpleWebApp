@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -38,7 +39,7 @@ public class AppServiceImpl implements AppService{
 
 
     @Override
-    public Contact saveContact(String firstName, String lastName, LocalDate birthDate, String login, String password) {
+    public Contact saveContact(String firstName, String lastName, Date birthDate, String login, String password) {
         if(firstName==null)throw new IllegalArgumentException("Contact firstName is null");
         else if(lastName==null) throw new IllegalArgumentException("Contact lastName is null");
         else if(!firstName.matches("^\\D*$")) throw new IllegalArgumentException("Contact firstName contains digits");

@@ -16,11 +16,11 @@ $(document).ready(function() {
     }
 
     $('#register-button').click(function(){
-        var first_name = $('#first-name').text();
-        var last_name = $('#last-name').text();
-        var birth_date = $('#birth-date').text();/*($('#day').text()+"."+$('#month').text()+"."+$('#year').text());*/
-        var login = $('#login').text();
-        var password = $('#password').text();
+        var first_name = $('#first-name').val();
+        var last_name = $('#last-name').val();
+        var birth_date = $('#birth-date').val();/*($('#day').text()+"."+$('#month').text()+"."+$('#year').text());*/
+        var login = $('#login').val();
+        var password = $('#password').val();
 
         $.ajax({
             type: "POST",

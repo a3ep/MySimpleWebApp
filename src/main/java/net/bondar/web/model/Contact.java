@@ -6,6 +6,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,7 +25,7 @@ public class Contact extends AbstractEntity{
     private String lastName;
 
     @NotNull
-    private LocalDate birthDate;
+    private Date birthDate;
 
     @NotNull
     private String login;
@@ -56,7 +57,7 @@ public class Contact extends AbstractEntity{
         super(id);
     }
 
-    public Contact(String firstName, String lastName, LocalDate birthDate, String login, String password) {
+    public Contact(String firstName, String lastName, Date birthDate, String login, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
@@ -87,11 +88,11 @@ public class Contact extends AbstractEntity{
         this.lastName = lastName;
     }
 
-    public LocalDate getBirthDate() {
+    public Date getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(LocalDate birthDate) {
+    public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
 
