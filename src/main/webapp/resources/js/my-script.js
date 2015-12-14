@@ -18,7 +18,7 @@ $(document).ready(function() {
     $('#register-button').click(function(){
         var first_name = $('#first-name').val();
         var last_name = $('#last-name').val();
-        var birth_date = /*$('#birth-date').val();*/($('#year').val()+"-"+$('#month').val()+"-"+$('#day').val());
+        var birth_date = ($('#year').val()+"-"+$('#month').val()+"-"+$('#day').val());
         var login = $('#login').val();
         var password = $('#password').val();
 

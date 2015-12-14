@@ -6,6 +6,7 @@ import net.bondar.web.model.Contact;
 import net.bondar.web.model.Hobby;
 import net.bondar.web.model.Place;
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -21,12 +22,11 @@ import java.util.stream.Collectors;
 public class ContactDaoImpl extends AbstractDaoImpl<Contact> implements ContactDao {
 
     @Override
-    public Contact findByLogin(String login, String password) throws Exception {
-        Contact result = (Contact)getSession().get(Contact.class, login);
-        if(result==null){
-            throw new Exception("Contact with this login doesn't exist!");
-        }
-        return result.getPassword().equals(password)?result:null;
+    public Long findByLogin(String login) {
+        Criteria criteria = getSession().createCriteria(Contact.class);
+        criteria.add(Restrictions.eq("login", login));
+        criteria.setProjection(Projections.rowCount());
+        return (Long)criteria.uniqueResult();
     }
 
     @Override

@@ -35,6 +35,13 @@ public class WebAppConfig extends WebMvcConfigurerAdapter{
         resolver.setViewClass(JstlView.class);
         return resolver;
     }
+
+    @Bean
+    public MessageSource messageSource() {
+        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+        messageSource.setBasename("message");
+        return messageSource;
+    }
 //    public ViewResolver viewResolver(){
 //        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
 //        viewResolver.setViewClass(JstlView.class);

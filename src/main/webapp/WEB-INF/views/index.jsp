@@ -1,3 +1,5 @@
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.HashMap" %>
 <%--
   Created by IntelliJ IDEA.
   User: Azeral
@@ -13,6 +15,9 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="webjars/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../resources/css/my-style.css">
+
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 </head>
 
 <body>
@@ -39,142 +44,180 @@
 
                             <h3>Зарегистрируйтесь, пожалуйста.</h3><br/>
 
-                            <form class="form-horizontal" name="register-form">
+                            <%--<form action="/form" modelAttribute="contact">--%>
+                                <%--<div class="form-group">--%>
+                                <%--<label for="first-name" class="col-lg-3 active">Введите имя:</label>--%>
+
+                                <%--<div class="col-lg-4">--%>
+                                <%--<input type="text" id="first-name" class="form-control" name="first-name" placeholder="Имя"--%>
+                                <%--value="" autofocus required/>--%>
+                                <%--</div>--%>
+                                <%--<span class="required text-danger">*</span>--%>
+                                <%--</div>--%>
+
+                                <%--<div class="form-group">--%>
+                                <%--<label for="last-name" class="col-lg-3">Введите фамилию:</label>--%>
+
+                                <%--<div class="col-lg-4">--%>
+                                <%--<input type="text" id="last-name" class="form-control" name="last-name"--%>
+                                <%--placeholder="Фамилия" value="" required/>--%>
+                                <%--</div>--%>
+                                <%--<span class="required text-danger">*</span>--%>
+                                <%--</div>--%>
+
+                                <%--<div class="form-group">--%>
+                                <%--<label class="col-lg-3">Введите дату рождения:</label>--%>
+
+                                <%--<div class="col-lg-1">--%>
+                                <%--<select name="day" id="day" class="form-control form-control-padding" style="text-align: center" required>--%>
+                                <%--<option selected >-</option>--%>
+                                <%--<c:forEach var="day" begin="1" end="31">--%>
+                                    <%--<option>${day}</option>--%>
+                                <%--</c:forEach>--%>
+                                <%--</select>--%>
+                                <%--</div>--%>
+                                <%--<div class="col-lg-2">--%>
+                                <%--<select name="month" id="month" class="form-control" style="text-align: center" required>--%>
+                                <%--<option selected>-</option>--%>
+                                <%--<%--%>
+                                    <%--String[] months_name = new String[]{"Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"};--%>
+                                    <%--int[] month_value = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};--%>
+                                    <%--Map<String, Integer> months = new HashMap<>();--%>
+                                    <%--for(int i=0; i<month_value.length; i++){--%>
+                                        <%--months.put(months_name[i], month_value[i]);--%>
+                                    <%--}--%>
+                                    <%--pageContext.setAttribute("months", months);--%>
+                                <%--%>--%>
+                                <%--<c:forEach items="${months}" var="month">--%>
+                                    <%--<option value="${month.value}">${month.key}</option>--%>
+                                <%--</c:forEach>--%>
+                                <%--</select>--%>
+                                <%--</div>--%>
+                                <%--<div class="col-lg-1">--%>
+                                <%--<input id="year" class="form-control form-control-padding" name="year"--%>
+                                <%--placeholder="Год" value="" required/>--%>
+                                <%--</div>--%>
+                                <%--<span class="required text-danger">*</span>--%>
+                                <%--</div>--%>
+
+                                <%--<div class="form-group">--%>
+                                <%--<label for="login" class="col-lg-3">Введите логин:</label>--%>
+
+                                <%--<div class="col-lg-4">--%>
+                                <%--<input type="text" id="login" class="form-control" name="login" placeholder="Логин"--%>
+                                <%--value="" required/>--%>
+                                <%--</div>--%>
+                                <%--<span class="required text-danger">*</span>--%>
+                                <%--</div>--%>
+
+                                <%--<div class="form-group">--%>
+                                <%--<label for="password" class="col-lg-3">Введите пароль:</label>--%>
+
+                                <%--<div class="col-lg-4">--%>
+                                <%--<input type="password" id="password" class="form-control" name="password" placeholder="Пароль"--%>
+                                <%--value="" required/>--%>
+                                <%--</div>--%>
+                                <%--<span class="required text-danger">*</span>--%>
+                                <%--</div>--%>
+                                <%--<span class="required text-danger">*</span> - поля, обязательные для заполнения.--%>
+
+                                <%--<p></p>--%>
+
+                                <%--<div class="col-lg-1">--%>
+                                <%--&lt;%&ndash;<button class="btn btn-default" id="register-button">Зарегистрироваться</button>&ndash;%&gt;--%>
+                                <%--<input type="submit" class="btn btn-default" id="register-button" value="Зарегистрироваться">--%>
+                                <%--</div>--%>
+                            <%--</form>--%>
+
+                            <form:form action="/saveContact">
                                 <div class="form-group">
                                     <label for="first-name" class="col-lg-3 active">Введите имя:</label>
 
                                     <div class="col-lg-4">
-                                        <input type="text" id="first-name" class="form-control" name="first-name" placeholder="Имя"
-                                               value="" autofocus required/>
+                                    <input type="text" id="first-name" class="form-control" name="first-name" placeholder="Имя"
+                                    value="" autofocus required/>
                                     </div>
                                     <span class="required text-danger">*</span>
-                                    <%--<span class="label label-important">Важно</span>--%>
-                                </div>
+                                    <form:errors path="firstName" cssclass="error"></form:errors>
+                                    </div>
 
                                 <div class="form-group">
                                     <label for="last-name" class="col-lg-3">Введите фамилию:</label>
 
                                     <div class="col-lg-4">
-                                        <input type="text" id="last-name" class="form-control" name="last-name"
-                                               placeholder="Фамилия" value="" required/>
+                                    <input type="text" id="last-name" class="form-control" name="last-name"
+                                    placeholder="Фамилия" value="" required/>
                                     </div>
                                     <span class="required text-danger">*</span>
-                                </div>
+                                    <form:errors path="lastName" cssclass="error"></form:errors>
+                                    </div>
 
                                 <div class="form-group">
                                     <label class="col-lg-3">Введите дату рождения:</label>
 
                                     <div class="col-lg-1">
-                                        <select name="day" id="day" class="form-control form-control-padding" required>
-                                            <option selected></option>
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
-                                            <option>6</option>
-                                            <option>7</option>
-                                            <option>8</option>
-                                            <option>9</option>
-                                            <option>10</option>
-                                            <option>11</option>
-                                            <option>12</option>
-                                            <option>13</option>
-                                            <option>14</option>
-                                            <option>15</option>
-                                            <option>16</option>
-                                            <option>17</option>
-                                            <option>18</option>
-                                            <option>19</option>
-                                            <option>20</option>
-                                            <option>21</option>
-                                            <option>22</option>
-                                            <option>23</option>
-                                            <option>24</option>
-                                            <option>25</option>
-                                            <option>26</option>
-                                            <option>27</option>
-                                            <option>28</option>
-                                            <option>29</option>
-                                            <option>30</option>
-                                            <option>31</option>
-                                            <script type="text/javascript">
-                                                function writeDayOptions(){
-                                                    document.write("<option selected></option>");
-                                                    for (var dayCounter = 1; dayCounter<32; dayCounter++){
-                                                        document.write("<option >" + dayCounter +" </option>");
-                                                    }
-                                                }
-                                            </script>
-                                        </select>
+                                    <select name="day" id="day" class="form-control form-control-padding" style="text-align: center" required>
+                                    <option selected >-</option>
+                                    <c:forEach var="day" begin="1" end="31">
+                                        <option>${day}</option>
+                                    </c:forEach>
+                                    </select>
                                     </div>
                                     <div class="col-lg-2">
-                                        <select name="month" id="month" class="form-control" required>
-                                            <option selected></option>
-                                            <option value=1>Январь</option>
-                                            <option value=2>Февраль</option>
-                                            <option value=3>Март</option>
-                                            <option value=4>Апрель</option>
-                                            <option value=5>Май</option>
-                                            <option value=6>Июнь</option>
-                                            <option value=7>Июль</option>
-                                            <option value=8>Август</option>
-                                            <option value=9>Сентябрь</option>
-                                            <option value=10>Октябрь</option>
-                                            <option value=11>Ноябрь</option>
-                                            <option value=12>Декабрь</option>
-                                            <script type="text/javascript">
-                                                function writeMonthOptions(){
-                                                    var Months = ["","Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"];
-
-                                                    document.write("<option value=" + monthCounter + " selected>" + Months[monthCounter] + "</option>");
-
-                                                    for (var monthCounter = 1; monthCounter < Months.length; monthCounter++){
-                                                        document.write("<option value="+(monthCounter+1)+">" + Months[monthCounter]+" </option>");
-                                                    }
-                                                }
-                                            </script>
-                                        </select>
+                                    <select name="month" id="month" class="form-control" style="text-align: center" required>
+                                    <option selected>-</option>
+                                    <%
+                                        String[] months_name = new String[]{"Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"};
+                                        int[] month_value = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+                                        Map<String, Integer> months = new HashMap<>();
+                                        for(int i=0; i<month_value.length; i++){
+                                            months.put(months_name[i], month_value[i]);
+                                        }
+                                        pageContext.setAttribute("months", months);
+                                    %>
+                                    <c:forEach items="${months}" var="month">
+                                        <option value="${month.value}">${month.key}</option>
+                                    </c:forEach>
+                                    </select>
                                     </div>
                                     <div class="col-lg-1">
-                                        <input id="year" class="form-control form-control-padding" name="year"
-                                               placeholder="Год" value="" required/>
+                                    <input id="year" class="form-control form-control-padding" name="year"
+                                    placeholder="Год" value="" required/>
                                     </div>
-                                    <%--<div class="col-lg-4">--%>
-
-                                        <%--<input id="birth-date" class="form-control" name="birth-date"--%>
-                                        <%--placeholder="Дата рождения" value=""/>--%>
-                                    <%--</div>--%>
                                     <span class="required text-danger">*</span>
-                                </div>
+                                    <form:errors path="birthDate" cssclass="error"></form:errors>
+                                    </div>
 
                                 <div class="form-group">
                                     <label for="login" class="col-lg-3">Введите логин:</label>
 
                                     <div class="col-lg-4">
-                                        <input type="text" id="login" class="form-control" name="login" placeholder="Логин"
-                                               value="" required/>
+                                    <input type="text" id="login" class="form-control" name="login" placeholder="Логин"
+                                    value="" required/>
                                     </div>
                                     <span class="required text-danger">*</span>
-                                </div>
+                                    <form:errors path="login" cssclass="error"></form:errors>
+                                    </div>
 
                                 <div class="form-group">
                                     <label for="password" class="col-lg-3">Введите пароль:</label>
 
                                     <div class="col-lg-4">
-                                        <input type="password" id="password" class="form-control" name="password" placeholder="Пароль"
-                                               value="" required/>
+                                    <input type="password" id="password" class="form-control" name="password" placeholder="Пароль"
+                                    value="" required/>
                                     </div>
                                     <span class="required text-danger">*</span>
+                                    <form:errors path="password" cssclass="error"></form:errors>
+                                    </div>
+                                <span class="required text-danger">*</span> - поля, обязательные для заполнения.
+
+                                <p></p>
+
+                                <div class="col-lg-1">
+                                <%--<button class="btn btn-default" id="register-button">Зарегистрироваться</button>--%>
+                                <input type="submit" class="btn btn-default" id="register-button" value="Зарегистрироваться">
                                 </div>
-                            </form>
-                            <span class="required text-danger">*</span> - поля, обязательные для заполнения.
-
-                            <p></p>
-
-                            <div class="col-lg-1">
-                                <button class="btn btn-default" id="register-button">Зарегистрироваться</button>
-                            </div>
+                            </form:form>
                         </div>
                     </div>
                     <div class="row top-buffer">

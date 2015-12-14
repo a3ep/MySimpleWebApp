@@ -1,11 +1,15 @@
 package net.bondar.web.model;
 
+import org.hibernate.validator.constraints.NotBlank;
+import org.joda.time.DateTime;
+import org.joda.time.Period;
+
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,19 +22,19 @@ import java.util.Set;
 @Table(name = "CONTACT")
 public class Contact extends AbstractEntity{
 
-    @NotNull
+    @NotNull @NotBlank @Size(min = 2, max = 20)
     private String firstName;
 
-    @NotNull
+    @NotNull @NotBlank @Size(min = 2, max = 20)
     private String lastName;
 
     @NotNull
     private Date birthDate;
 
-    @NotNull
+    @NotNull @NotBlank @Size(min = 2, max = 20)
     private String login;
 
-    @NotNull
+    @NotNull @NotBlank @Size(min = 8, max = 16)
     private String password;
 
     @ManyToMany
@@ -70,7 +74,13 @@ public class Contact extends AbstractEntity{
         this.posts = new HashSet<>();
     }
 
+    public int getAge() {
+        DateTime date = new DateTime();
+        DateTime birthDate = new DateTime(this.birthDate);
+        Period period = new Period(birthDate,date);
 
+        return period.getYears();
+    }
 
     public String getFirstName() {
         return firstName;

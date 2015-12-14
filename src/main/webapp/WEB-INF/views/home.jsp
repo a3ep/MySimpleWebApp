@@ -19,7 +19,7 @@
     <%--<jsp:useBean id="contact" scope="request" type="net.bondar.web.model.Contact"/>--%>
 </head>
 <body>
-<div class="container">
+<div class="container-fluid">
     <div class="page-header text-center">
         <h1>Добро пожаловать!</h1>
     </div>
@@ -42,11 +42,13 @@
                                                           data-toggle="tab">Профиль</a>
                 </li>
                 <li role=presentation><a href="#friends-panel" role="tab" data-toggle="tab">Друзья</a></li>
-                <li role=presentation><a href="#places-panel" role="tab" data-toggle="tab">Места</a></li>
                 <li role=presentation><a href="#hobbies-panel" role="tab" data-toggle="tab">Хобби</a></li>
+                <li role=presentation><a href="#places-panel" role="tab" data-toggle="tab">Места</a></li>
             </ul>
 
             <div class="tab-content col-lg-10">
+
+                <%--TAB USER-PROFILE--%>
                 <div role="tabpanel" class="tab-pane active" id="user-info-panel">
                     <%--<h3 class="text-index">Имя Фамилия</h3>--%>
                     <img src="../../resources/img/no-photo.png" alt="Фото" class="img-rounded col-lg-3" width="200"
@@ -78,6 +80,8 @@
                                 class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
                     </div>
                 </div>
+
+                <%--TAB FRIENDS--%>
                 <div role="tabpanel" class="tab-pane fade in" id="friends-panel">
                     <div class="col-lg-10">
                         <table class="table table-hover-my">
@@ -90,7 +94,9 @@
                             </thead>
                             <tbody>
                             <tr>
-                                <td id="friend-photo" style="text-align:center; vertical-align:middle"><img src="../../resources/img/no-photo.png" alt="Фото" class="img-rounded" width="30" height="30"></td>
+                                <td id="friend-photo" style="text-align:center; vertical-align:middle"><img
+                                        src="../../resources/img/no-photo.png" alt="Фото" class="img-rounded" width="30"
+                                        height="30"></td>
                                 <td id="friend-last-name" style="text-align:center; vertical-align:middle">Фамилия</td>
                                 <td id="friend-first-name" style="text-align:center; vertical-align:middle">Имя</td>
                             </tr>
@@ -99,16 +105,80 @@
                     </div>
                     <div class="col-lg-2">
                         <div class="btn-group" style="margin-top: 45px">
-                            <button class="btn btn-success" id="send-message"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></button>
-                            <button class="btn btn-info" id="send-post"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span></button>
-                            <button class="btn btn-danger" id="remove-friend"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+                            <button class="btn btn-success" id="send-message"><span class="glyphicon glyphicon-envelope"
+                                                                                    aria-hidden="true"></span></button>
+                            <button class="btn btn-info" id="send-post"><span class="glyphicon glyphicon-comment"
+                                                                              aria-hidden="true"></span></button>
+                            <button class="btn btn-danger" id="remove-friend"><span class="glyphicon glyphicon-trash"
+                                                                                    aria-hidden="true"></span></button>
                         </div>
                     </div>
                 </div>
-                <div role="tabpanel" class="tab-pane fade in" id="places-panel">
 
-                </div>
+                <%--TAB HOBBY--%>
                 <div role="tabpanel" class="tab-pane fade in" id="hobbies-panel">
+                    <div class="col-lg-10">
+                        <table class="table table-hover-my">
+                            <thead>
+                            <tr>
+                                <th style="text-align: center">Название</th>
+                                <th style="text-align: center">Описание</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td id="hobby-title" style="text-align:center; vertical-align:middle">Название</td>
+                                <td id="hobby-description" style="text-align:center; vertical-align:middle">Описание
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="btn-group" style="margin-top: 45px">
+                            <button class="btn btn-info" id="edit-hobby"><span class="glyphicon glyphicon-pencil"
+                                                                               aria-hidden="true"></span></button>
+                            <button class="btn btn-danger" id="delete-hobby"><span class="glyphicon glyphicon-trash"
+                                                                                   aria-hidden="true"></span></button>
+                        </div>
+                    </div>
+                </div>
+
+                <%--TAB PLACES--%>
+                <div role="tabpanel" class="tab-pane fade in" id="places-panel">
+                    <div class="col-lg-10">
+                        <table class="table table-hover-my">
+                            <thead>
+                            <tr>
+                                <th style="text-align: center">Фото</th>
+                                <th style="text-align: center">Название</th>
+                                <th style="text-align: center">Описание</th>
+                                <th style="text-align: center">Широта</th>
+                                <th style="text-align: center">Долгота</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td id="place-photo" style="text-align:center; vertical-align:middle"><img
+                                        src="../../resources/img/no-photo.png" alt="Фото" class="img-rounded" width="30"
+                                        height="30"></td>
+                                <td id="place-title" style="text-align:center; vertical-align:middle">Название</td>
+                                <td id="place-description" style="text-align:center; vertical-align:middle">Описание
+                                </td>
+                                <td id="place-latitude" style="text-align:center; vertical-align:middle">0.0</td>
+                                <td id="place-longitude" style="text-align:center; vertical-align:middle">0.0</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="btn-group" style="margin-top: 45px">
+                            <button class="btn btn-info" id="edit-place"><span class="glyphicon glyphicon-pencil"
+                                                                               aria-hidden="true"></span></button>
+                            <button class="btn btn-danger" id="delete-place"><span class="glyphicon glyphicon-trash"
+                                                                                   aria-hidden="true"></span></button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
