@@ -12,13 +12,20 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.IOException;
+import java.sql.SQLException;
 
 /**
  * Created by Azeral on 24.11.2015.
  */
 @Controller
-public class RegistrationController {
+public class RegistrationController extends HttpServlet {
 
     @Autowired
     private ContactService service;
@@ -57,6 +64,29 @@ public class RegistrationController {
             return ResponseMessage.errorMessage("Registration error!");
         }
     }
+    @RequestMapping(value = "/author", method = RequestMethod.GET)
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String login = request.getParameter("login").toLowerCase();
+        String password = request.getParameter("password");
+
+
+        if (login.isEmpty() || password.isEmpty()) {
+            String errorString = "You should fill in both values - login and password.";
+            request.setAttribute("Error", errorString);
+            request.getRequestDispatcher("index").forward(request, response);
+        }
+
+        try {
+            service.findContactByLogin(login);
+            HttpSession session = request.getSession(true);
+            session.setAttribute("USER", login);
+            request.getRequestDispatcher("home").forward(request, response);
+        } catch (Exception e) {
+            request.setAttribute("Error", e.getMessage());
+            request.getRequestDispatcher("index").forward(request, response);
+        }
+    }
+
 
     @ExceptionHandler(Exception.class)
     @ResponseBody

@@ -19,7 +19,7 @@
     <%--<jsp:useBean id="contact" scope="request" type="net.bondar.web.model.Contact"/>--%>
 </head>
 <body>
-<div class="container-fluid">
+<div class="container">
     <div class="page-header text-center">
         <h1>Добро пожаловать!</h1>
     </div>
