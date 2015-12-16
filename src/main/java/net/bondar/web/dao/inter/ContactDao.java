@@ -10,7 +10,8 @@ import java.util.Set;
  * Created by AzeraL on 06.10.2015.
  */
 public interface ContactDao extends AbstractDao<Contact> {
-    Long findByLogin(String login);
+    Long count(String login);
+    Contact findContactByLogin(String login);
     Set<Contact> getAllContactsWithHobby(Hobby hobby);
     Set<Contact> getAllContactsForPlace(Place place);
     Chat getConversation(Contact who, Contact with);

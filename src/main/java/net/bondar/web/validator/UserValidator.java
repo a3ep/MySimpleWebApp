@@ -29,7 +29,7 @@ public class UserValidator implements Validator{
             errors.rejectValue("birthDate", "contact.age.error.max");
         }
 
-        if (service.findContactByLogin(contact.getLogin()) >0) {
+        if (service.count(contact.getLogin()) >0) {
             errors.rejectValue("login", "contact.username.error.unique");
         }
     }

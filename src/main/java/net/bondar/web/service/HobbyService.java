@@ -28,6 +28,10 @@ public class HobbyService {
         return hobbyDao.save(hobby);
     }
 
+    public Hobby saveHobby(Hobby hobby){
+        return hobbyDao.save(hobby);
+    }
+
     public Hobby findHobbyById(long id) {
         return hobbyDao.findById(id);
     }

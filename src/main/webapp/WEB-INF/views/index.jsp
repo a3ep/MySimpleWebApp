@@ -15,12 +15,17 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="webjars/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../resources/css/my-style.css">
+    <script type="text/javascript" src="webjars/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../resources/js/my-script.js"></script>
+    <script type="text/javascript" src="webjars/jquery.lazyload/1.9.3/jquery.lazyload.js"></script>
 
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 </head>
 
 <body>
+
 <div class="container">
     <div class="page-header text-center">
         <h1>Добро пожаловать!</h1>
@@ -39,35 +44,35 @@
             <div class="tab-content col-lg-10">
 
                 <%--TAB REGISTRATION--%>
-                <div role="tabpanel" class="tab-pane active" id="register-panel">
+                <div role="tabpanel" class="tab-pane fade in active" id="register-panel" style="margin-bottom: 100px">
 
                     <div class="row top-buffer">
                         <div class="col-lg-offset-1">
 
                             <h3>Зарегистрируйтесь, пожалуйста.</h3><br/>
 
-                            <div class="form-group">
+                            <div class="form-group form-panel-marging">
                                 <label for="first-name" class="col-lg-3 active">Введите имя:</label>
 
                                 <div class="col-lg-4">
-                                    <input type="text" id="first-name" class="form-control" name="first-name"
+                                    <input type="text" id="first-name" class="form-control" name="firstName"
                                            placeholder="Имя"
                                            value="" autofocus required/>
                                 </div>
                                 <span class="required text-danger">*</span>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group form-panel-marging">
                                 <label for="last-name" class="col-lg-3">Введите фамилию:</label>
 
                                 <div class="col-lg-4">
-                                    <input type="text" id="last-name" class="form-control" name="last-name"
+                                    <input type="text" id="last-name" class="form-control" name="lastName"
                                            placeholder="Фамилия" value="" required/>
                                 </div>
                                 <span class="required text-danger">*</span>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group form-panel-marging">
                                 <label class="col-lg-3">Введите дату рождения:</label>
 
                                 <div class="col-lg-1">
@@ -104,7 +109,16 @@
                                 <span class="required text-danger">*</span>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group form-panel-marging">
+                                <label for="photo" class="col-lg-3">Выберите фото:</label>
+
+                                <div class="col-lg-4">
+                                    <input id="photo" type="file" class="btn btn-default">
+                                </div>
+                                <span class="required text-danger">*</span>
+                            </div>
+
+                            <div class="form-group form-panel-marging">
                                 <label for="login" class="col-lg-3">Введите логин:</label>
 
                                 <div class="col-lg-4">
@@ -114,7 +128,7 @@
                                 <span class="required text-danger">*</span>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group form-panel-marging">
                                 <label for="password" class="col-lg-3">Введите пароль:</label>
 
                                 <div class="col-lg-4">
@@ -129,15 +143,14 @@
                             <p></p>
 
                             <div class="col-lg-1">
-                                <%--<button class="btn btn-default" id="register-button">Зарегистрироваться</button>--%>
                                 <input type="submit" class="btn btn-default" id="register-button"
                                        value="Зарегистрироваться">
                             </div>
                         </div>
                     </div>
                     <div class="row top-buffer">
-                        <div class="col-lg-10 col-lg-offset-1">
-                            <span id="register-button-response" class="text-centred"></span>
+                        <div class="col-lg-6 col-lg-offset-3">
+                            <p id="register-button-response" class="text-centred"></p>
                         </div>
                     </div>
                 </div>
@@ -152,22 +165,22 @@
                             <p>Авторизируйтесь, пожалуйста.</p>
 
                             <form method="get" action="/author" class="form-horizontal" name="author-form" >
-                                <div class="form-group">
+                                <div class="form-group form-panel-marging">
                                     <label for="user_login" class="col-lg-2">Введите логин</label>
 
                                     <div class="col-lg-3">
-                                        <input type="text" id="user_login" class="form-control" name="user_login"
+                                        <input type="text" id="user_login" class="form-control" name="login"
                                                placeholder="Логин" value="" autofocus required/>
                                     </div>
                                     <span class="required text-danger">*</span><br/>
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group form-panel-marging">
                                     <label for="user_password" class="col-lg-2">Введите пароль</label>
 
                                     <div class="col-lg-3">
                                         <input type="password" id="user_password" class="form-control"
-                                               name="user_password"
+                                               name="password"
                                                placeholder="Пароль" value="" required/>
                                     </div>
                                     <span class="required text-danger">*</span>
@@ -175,7 +188,6 @@
 
                                 <span class="required text-danger">*</span> - поля, обязательные для заполнения.
                                 <p></p>
-                                <%--<input type="submit" id="login-button" class="login_button" value="Войти"/>--%>
                                 <div class="col-lg-3">
                                     <button type="submit" class="btn btn-default" id="login-button">Войти</button>
                                 </div>
@@ -189,9 +201,7 @@
 </div>
 
 
-<script type="text/javascript" src="webjars/jquery/2.1.4/jquery.min.js"></script>
-<script type="text/javascript" src="webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="../../resources/js/my-script.js"></script>
+
 </body>
 
 </html>

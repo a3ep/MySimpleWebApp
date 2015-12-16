@@ -1,13 +1,11 @@
 package net.bondar.web.model;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
@@ -22,34 +20,36 @@ import java.util.Set;
 @Table(name = "CONTACT")
 public class Contact extends AbstractEntity{
 
-    @NotNull @NotBlank @Size(min = 2, max = 20)
+    @NotNull @NotEmpty @Size(min = 2, max = 20)
     private String firstName;
 
-    @NotNull @NotBlank @Size(min = 2, max = 20)
+    @NotNull @NotEmpty @Size(min = 2, max = 20)
     private String lastName;
 
     @NotNull
     private Date birthDate;
 
-    @NotNull @NotBlank @Size(min = 2, max = 20)
+    @NotNull @NotEmpty @Size(min = 2, max = 20)
     private String login;
 
-    @NotNull @NotBlank @Size(min = 8, max = 16)
+    @NotNull @NotBlank @Size(min = 6, max = 16)
     private String password;
 
-    @ManyToMany
+    private String photo;
+
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Hobby> hobbies;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Place> places;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Contact> friendList;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private Set<Chat> conversation;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private Set<Post> posts;
 
 
@@ -61,12 +61,13 @@ public class Contact extends AbstractEntity{
         super(id);
     }
 
-    public Contact(String firstName, String lastName, Date birthDate, String login, String password) {
+    public Contact(String firstName, String lastName, Date birthDate, String login, String password, String photo) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
         this.login = login;
         this.password = password;
+        this.photo=photo;
         this.hobbies = new HashSet<>();
         this.places = new HashSet<>();
         this.friendList = new HashSet<>();
@@ -120,6 +121,14 @@ public class Contact extends AbstractEntity{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
     public Set<Hobby> getHobbies() {

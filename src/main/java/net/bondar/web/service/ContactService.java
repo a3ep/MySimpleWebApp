@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -31,19 +29,23 @@ public class ContactService {
 
 
 
-    public Contact saveContact(String firstName, String lastName, Date birthDate, String login, String password) {
-        if(firstName==null)throw new IllegalArgumentException("Contact firstName is null");
-        else if(lastName==null) throw new IllegalArgumentException("Contact lastName is null");
-        else if(!firstName.matches("^\\D*$")) throw new IllegalArgumentException("Contact firstName contains digits");
-        else if(!lastName.matches("^\\D*$")) throw new IllegalArgumentException("Contact lastName contains digits");
-        else if(login==null)throw new IllegalArgumentException("Contact login is null");
-        else if(password==null) throw new IllegalArgumentException("Contact password is null");
-        Contact result = new Contact(firstName, lastName, birthDate, login, password);
-        return contactDao.save(result);
-    }
+//    public Contact saveContact(String firstName, String lastName, Date birthDate, String login, String password) {
+//        if(firstName==null)throw new IllegalArgumentException("Contact firstName is null");
+//        else if(lastName==null) throw new IllegalArgumentException("Contact lastName is null");
+//        else if(!firstName.matches("^\\D*$")) throw new IllegalArgumentException("Contact firstName contains digits");
+//        else if(!lastName.matches("^\\D*$")) throw new IllegalArgumentException("Contact lastName contains digits");
+//        else if(login==null)throw new IllegalArgumentException("Contact login is null");
+//        else if(password==null) throw new IllegalArgumentException("Contact password is null");
+//        Contact result = new Contact(firstName, lastName, birthDate, login, password);
+//        return contactDao.save(result);
+//    }
 
     public Contact saveContact(Contact contact) {
         return contactDao.save(contact);
+    }
+
+    public Contact updateContact(Contact contact){
+        return contactDao.update(contact);
     }
 
     public void deleteContact(Contact contact) throws Exception {
@@ -64,8 +66,12 @@ public class ContactService {
         return result;
     }
 
-    public Long findContactByLogin(String login) {
-        return contactDao.findByLogin(login);
+    public Contact findContactByLogin(String login) {
+        return contactDao.findContactByLogin(login);
+    }
+
+    public Long count(String login){
+        return contactDao.count(login);
     }
 
     public Collection<Contact> findAllContacts() {

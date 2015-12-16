@@ -42,12 +42,13 @@ public abstract class AbstractDaoImpl<T> implements AbstractDao<T> {
     }
 
     public T save(T t) {
-        getSession().save(t);
+        getSession().saveOrUpdate(t);
         return  t;
     }
 
-    public void update(T t) {
+    public T update(T t) {
         getSession().saveOrUpdate(t);
+        return t;
     }
 
     public void refresh(T t) {

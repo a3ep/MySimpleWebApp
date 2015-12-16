@@ -12,12 +12,12 @@ $(document).ready(function() {
     function displaySuccess() {
         $('#register-button-response').removeClass('bg-danger');
         $('#register-button-response').addClass('bg-success');
-        $('#register-button-response').text('Registration successful:)');
+        $('#register-button-response').text('Done:)');
     }
 
     $('#register-button').click(function(){
-        var first_name = $('#first-name').val();
-        var last_name = $('#last-name').val();
+        var first_name = $('#firstName').val();
+        var last_name = $('#lastName').val();
         var birth_date = ($('#year').val()+"-"+$('#month').val()+"-"+$('#day').val());
         var login = $('#login').val();
         var password = $('#password').val();
@@ -37,5 +37,4 @@ $(document).ready(function() {
             }
         });
     });
-
 });

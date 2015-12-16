@@ -31,6 +31,10 @@ public class PlaceService {
         return placeDao.save(place);
     }
 
+    public Place savePlace(Place place){
+        return placeDao.save(place);
+    }
+
     public Place findPlaceById(long id) {
         return placeDao.findById(id);
     }
