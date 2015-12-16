@@ -21,6 +21,7 @@
     <script type="text/javascript" src="webjars/jquery.lazyload/1.9.3/jquery.lazyload.js"></script>
 
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
     <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 </head>
 
@@ -164,7 +165,7 @@
 
                             <p>Авторизируйтесь, пожалуйста.</p>
 
-                            <form method="get" action="/author" class="form-horizontal" name="author-form" >
+                            <form method="get" action="/author" class="form-horizontal" name="author-form">
                                 <div class="form-group form-panel-marging">
                                     <label for="user_login" class="col-lg-2">Введите логин</label>
 
@@ -188,10 +189,44 @@
 
                                 <span class="required text-danger">*</span> - поля, обязательные для заполнения.
                                 <p></p>
+
                                 <div class="col-lg-3">
                                     <button type="submit" class="btn btn-default" id="login-button">Войти</button>
                                 </div>
                             </form>
+                            <%--<spring:url value="/author" var="userAuthUrl"/>--%>
+                            <%--<form:form class="form-horizontal" method="get" modelAttribute="userForm"--%>
+                            <%--action="${userAuthUrl}">--%>
+
+                            <%--<spring:bind path="login">--%>
+                            <%--<div class="form-group ${status.error ? 'has-error' : ''}">--%>
+                            <%--<label class="col-lg-2 control-label">Введите логин:</label>--%>
+
+                            <%--<div class="col-lg-6">--%>
+                            <%--<form:input path="login" type="text" class="form-control" id="login"--%>
+                            <%--placeholder="Логин"/>--%>
+                            <%--<form:errors path="login" class="control-label"/>--%>
+                            <%--</div>--%>
+                            <%--</div>--%>
+                            <%--</spring:bind>--%>
+                            <%--<spring:bind path="password">--%>
+                            <%--<div class="form-group ${status.error ? 'has-error' : ''}">--%>
+                            <%--<label class="col-lg-2 control-label">Введите пароль:</label>--%>
+
+                            <%--<div class="col-lg-6">--%>
+                            <%--<form:input path="password" class="form-control"--%>
+                            <%--id="password" placeholder="Пароль"/>--%>
+                            <%--<form:errors path="password" class="control-label"/>--%>
+                            <%--</div>--%>
+                            <%--</div>--%>
+                            <%--</spring:bind>--%>
+                            <%--<div class="form-group">--%>
+                            <%--<div class="col-sm-offset-2 col-sm-10">--%>
+                            <%--<button type="submit" class="btn-lg btn-default pull-right">Войти--%>
+                            <%--</button>--%>
+                            <%--</div>--%>
+                            <%--</div>--%>
+                            <%--</form:form>--%>
                         </div>
                     </div>
                 </div>
@@ -199,7 +234,6 @@
         </div>
     </div>
 </div>
-
 
 
 </body>

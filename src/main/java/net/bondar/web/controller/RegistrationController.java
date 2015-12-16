@@ -12,7 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -86,7 +88,7 @@ public class RegistrationController {
                     session.setAttribute("USER", service.findContactByLogin(login));
                 }else{
                     model.addAttribute("error", "Incorrect password.");
-                    return "index";
+                    return "index#author-panel";
                 }
 
             } catch (Exception e) {

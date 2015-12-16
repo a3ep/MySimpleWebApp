@@ -22,6 +22,8 @@ public class Place extends AbstractEntity{
 
     private double longitude;
 
+    private String photo;
+
 
     public Place(){
         super();
@@ -31,11 +33,12 @@ public class Place extends AbstractEntity{
         super(id);
     }
 
-    public Place(String title, String description, double latitude, double longitude) {
+    public Place(String title, String description, double latitude, double longitude, String photo) {
         this.title = title;
         this.description = description;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.photo = photo;
     }
 
     public String getTitle() {
@@ -68,6 +71,14 @@ public class Place extends AbstractEntity{
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
     @Override

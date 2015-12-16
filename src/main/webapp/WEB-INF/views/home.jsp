@@ -158,21 +158,27 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td id="hobby-title" style="text-align:center; vertical-align:middle">Название</td>
-                                <td id="hobby-description" style="text-align:center; vertical-align:middle">Описание
-                                </td>
-                                <td>
-                                    <div class="btn-group" style=>
-                                        <button class="btn btn-info" id="edit-hobby"><span
-                                                class="glyphicon glyphicon-pencil"
-                                                aria-hidden="true"></span></button>
-                                        <button class="btn btn-danger" id="delete-hobby"><span
-                                                class="glyphicon glyphicon-trash"
-                                                aria-hidden="true"></span></button>
-                                    </div>
-                                </td>
-                            </tr>
+                            <c:forEach items="${user.hobbies}" var="hobby">
+                                <tr>
+                                    <td id="hobby-title"
+                                        style="text-align:center; vertical-align:middle">${hobby.title}</td>
+                                    <td id="hobby-description"
+                                        style="text-align:center; vertical-align:middle">${hobby.description}</td>
+                                    <td>
+                                        <spring:url value="/hobies/${hobby.id}/edit" var="editUrl"/>
+                                        <spring:url value="/hobies/${hobby.id}/delete" var="deleteUrl"/>
+                                        <div class="btn-group" style=>
+                                            <button class="btn btn-info" onclick="post(${editUrl})"
+                                                    id="edit-hobby"><span class="glyphicon glyphicon-pencil"
+                                                                          aria-hidden="true"></span></button>
+                                            <button class="btn btn-danger" onclick="post(${deleteUrl})"
+                                                    id="delete-hobby"><span
+                                                    class="glyphicon glyphicon-trash"
+                                                    aria-hidden="true"></span></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </c:forEach>
                             </tbody>
                         </table>
                     </div>
@@ -193,26 +199,30 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td id="place-photo" style="text-align:center; vertical-align:middle"><img
-                                        src="../../resources/img/no-photo.png" alt="Фото" class="img-rounded" width="30"
-                                        height="30"></td>
-                                <td id="place-title" style="text-align:center; vertical-align:middle">Название</td>
-                                <td id="place-description" style="text-align:center; vertical-align:middle">Описание
-                                </td>
-                                <td id="place-latitude" style="text-align:center; vertical-align:middle">0.0</td>
-                                <td id="place-longitude" style="text-align:center; vertical-align:middle">0.0</td>
-                                <td>
-                                    <div class="btn-group">
-                                        <button class="btn btn-info" id="edit-place"><span
-                                                class="glyphicon glyphicon-pencil"
-                                                aria-hidden="true"></span></button>
-                                        <button class="btn btn-danger" id="delete-place"><span
-                                                class="glyphicon glyphicon-trash"
-                                                aria-hidden="true"></span></button>
-                                    </div>
-                                </td>
-                            </tr>
+                            <c:forEach items="${user.places}" var="place">
+                                <tr>
+                                    <td id="place-photo" style="text-align:center; vertical-align:middle"><img
+                                            src=${place.photo} alt="../../resources/img/no-photo.png" class="img-rounded"
+                                            width="30"
+                                            height="30"></td>
+                                    <td id="place-title" style="text-align:center; vertical-align:middle">${place.title}</td>
+                                    <td id="place-description" style="text-align:center; vertical-align:middle">${place.description}</td>
+                                    <td id="place-latitude" style="text-align:center; vertical-align:middle">${place.latitude}</td>
+                                    <td id="place-longitude" style="text-align:center; vertical-align:middle">${place.longitude}</td>
+                                    <td>
+                                        <spring:url value="/places/${place.id}/edit" var="editUrl"/>
+                                        <spring:url value="/places/${place.id}/delete" var="deleteUrl"/>
+                                        <div class="btn-group">
+                                            <button class="btn btn-info" onclick="post(${editUrl})" id="edit-place"><span
+                                                    class="glyphicon glyphicon-pencil"
+                                                    aria-hidden="true"></span></button>
+                                            <button class="btn btn-danger" onclick="post(${deleteUrl})" id="delete-place"><span
+                                                    class="glyphicon glyphicon-trash"
+                                                    aria-hidden="true"></span></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </c:forEach>
                             </tbody>
                         </table>
                     </div>
