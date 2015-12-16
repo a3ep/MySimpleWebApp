@@ -1,12 +1,8 @@
 package net.bondar.web.controller;
 
 import net.bondar.web.model.Contact;
-import net.bondar.web.model.Hobby;
-import net.bondar.web.model.Place;
 import net.bondar.web.model.ResponseMessage;
 import net.bondar.web.service.ContactService;
-import net.bondar.web.service.HobbyService;
-import net.bondar.web.service.PlaceService;
 import net.bondar.web.validator.UserValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,15 +14,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.Date;
 
 /**
  * Created by Azeral on 24.11.2015.

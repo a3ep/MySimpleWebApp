@@ -1,6 +1,6 @@
 package net.bondar.web.service;
 
-import net.bondar.web.dao.inter.*;
+import net.bondar.web.dao.inter.ContactDao;
 import net.bondar.web.exceptions.*;
 import net.bondar.web.model.*;
 import org.hibernate.Criteria;
@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
