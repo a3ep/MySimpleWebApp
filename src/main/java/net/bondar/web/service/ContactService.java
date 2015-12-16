@@ -28,14 +28,14 @@ public class ContactService {
 
 
 
-//    public Contact saveContact(String firstName, String lastName, Date birthDate, String login, String password) {
+//    public Contact saveContact(String firstName, String lastName, Date birthDate, String userName, String password) {
 //        if(firstName==null)throw new IllegalArgumentException("Contact firstName is null");
 //        else if(lastName==null) throw new IllegalArgumentException("Contact lastName is null");
 //        else if(!firstName.matches("^\\D*$")) throw new IllegalArgumentException("Contact firstName contains digits");
 //        else if(!lastName.matches("^\\D*$")) throw new IllegalArgumentException("Contact lastName contains digits");
-//        else if(login==null)throw new IllegalArgumentException("Contact login is null");
+//        else if(userName==null)throw new IllegalArgumentException("Contact login is null");
 //        else if(password==null) throw new IllegalArgumentException("Contact password is null");
-//        Contact result = new Contact(firstName, lastName, birthDate, login, password);
+//        Contact result = new Contact(firstName, lastName, birthDate, userName, password);
 //        return contactDao.save(result);
 //    }
 
@@ -65,12 +65,12 @@ public class ContactService {
         return result;
     }
 
-    public Contact findContactByLogin(String login) {
-        return contactDao.findContactByLogin(login);
+    public Contact findContactByUserName(String userName) {
+        return contactDao.findContactByUserName(userName);
     }
 
-    public Long count(String login){
-        return contactDao.count(login);
+    public Long count(String userName){
+        return contactDao.count(userName);
     }
 
     public Collection<Contact> findAllContacts() {

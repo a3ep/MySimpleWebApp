@@ -4,6 +4,8 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -20,20 +22,19 @@ import java.util.Set;
 @Table(name = "CONTACT")
 public class Contact extends AbstractEntity{
 
-    @NotNull @NotEmpty @Size(min = 2, max = 20)
-    private String firstName;
+   private String firstName;
 
-    @NotNull @NotEmpty @Size(min = 2, max = 20)
     private String lastName;
 
-    @NotNull
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @Temporal(TemporalType.DATE)
     private Date birthDate;
 
-    @NotNull @NotEmpty @Size(min = 2, max = 20)
-    private String login;
+    private String userName;
 
-    @NotNull @NotBlank @Size(min = 6, max = 16)
     private String password;
+
+    private String confirmPassword;
 
     private String photo;
 
@@ -61,13 +62,14 @@ public class Contact extends AbstractEntity{
         super(id);
     }
 
-    public Contact(String firstName, String lastName, Date birthDate, String login, String password, String photo) {
+    public Contact(String firstName, String lastName, Date birthDate, String userName, String password, String confirmPassword, String photo) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
-        this.login = login;
+        this.userName = userName;
         this.password = password;
-        this.photo=photo;
+        this.confirmPassword = confirmPassword;
+        this.photo="../../resources/img/no-photo.png";
         this.hobbies = new HashSet<>();
         this.places = new HashSet<>();
         this.friendList = new HashSet<>();
@@ -107,12 +109,12 @@ public class Contact extends AbstractEntity{
         this.birthDate = birthDate;
     }
 
-    public String getLogin() {
-        return login;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getPassword() {
@@ -121,6 +123,14 @@ public class Contact extends AbstractEntity{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 
     public String getPhoto() {

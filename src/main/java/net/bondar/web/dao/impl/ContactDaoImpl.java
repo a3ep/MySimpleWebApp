@@ -22,17 +22,17 @@ import java.util.stream.Collectors;
 public class ContactDaoImpl extends AbstractDaoImpl<Contact> implements ContactDao {
 
     @Override
-    public Long count(String login) {
+    public Long count(String userName) {
         Criteria criteria = getSession().createCriteria(Contact.class);
-        criteria.add(Restrictions.eq("login", login));
+        criteria.add(Restrictions.eq("userName", userName));
         criteria.setProjection(Projections.rowCount());
         return (Long)criteria.uniqueResult();
     }
 
     @Override
-    public Contact findContactByLogin(String login) {
+    public Contact findContactByUserName(String userName) {
         Criteria criteria = getSession().createCriteria(Contact.class);
-        criteria.add(Restrictions.eq("login", login));
+        criteria.add(Restrictions.eq("userName", userName));
         return (Contact) criteria.uniqueResult();
     }
 
