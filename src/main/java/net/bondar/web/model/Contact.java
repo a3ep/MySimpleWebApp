@@ -22,11 +22,11 @@ import java.util.Set;
 @Table(name = "CONTACT")
 public class Contact extends AbstractEntity{
 
-   private String firstName;
+    private String firstName;
 
     private String lastName;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "dd.MM.yyyy")
     @Temporal(TemporalType.DATE)
     private Date birthDate;
 
@@ -62,7 +62,7 @@ public class Contact extends AbstractEntity{
         super(id);
     }
 
-    public Contact(String firstName, String lastName, Date birthDate, String userName, String password, String confirmPassword, String photo) {
+    public Contact(String firstName, String lastName, Date birthDate, String userName, String password, String confirmPassword) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;

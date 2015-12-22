@@ -58,6 +58,18 @@ public class ContactService {
         contactDao.delete(contact);
     }
 
+    public void deleteContactById(long id) throws Exception {
+        Contact contact = contactDao.findById(id);
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Contact.class, "contact");
+        criteria.createAlias("contact.friendList", "friendList");
+        criteria.add(Restrictions.eq("friendList.id", contact.getId()));
+        List<Contact> contacts = criteria.list();
+        for(Contact user:contacts){
+            removeFriendship(user, contact);
+        }
+        contactDao.delete(id);
+    }
+
 
     public Contact findContactById(long id) {
         Contact result = contactDao.findById(id);
@@ -118,7 +130,7 @@ public class ContactService {
     }
 
     public void removeFriendship(Contact who, Contact with) throws Exception {
-        if(who.getFriendList().isEmpty()||!who.getFriendList().contains(with)) throw new NoSuchFriendException();
+        if(who.getFriendList().isEmpty()) throw new NoSuchFriendException();
         removeFriend(who, with);
         removeFriend(with, who);
     }

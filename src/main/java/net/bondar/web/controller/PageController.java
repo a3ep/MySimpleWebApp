@@ -4,17 +4,24 @@ import net.bondar.web.model.Contact;
 import net.bondar.web.model.ContactFieldsTransport;
 import net.bondar.web.model.ResponseMessage;
 import net.bondar.web.service.ContactService;
+import net.bondar.web.service.HobbyService;
+import net.bondar.web.service.PlaceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by AzeraL on 03.12.2015.
@@ -27,40 +34,15 @@ public class PageController {
     @Autowired
     private ContactService service;
 
-
-//    @Autowired
-//    private HobbyService hobbyService;
-//
-//    @Autowired
-//    private PlaceService placeService;
-
     @Autowired
     private MessageSource messageSource;
 
-//        НЕ РАБОТАЕТ(((Ошибки!!!
-//    @RequestMapping(value = "/test", method=RequestMethod.GET)
-//    public String test(){
-//        Contact contact1 = new Contact("Всеволод", "Бондарь", new Date(1990, 9, 18), "azeral", "258456", "../../resources/img/my.png");
-//        Contact contact2 = new Contact("Святослав", "Бондарь", new Date(1992, 7, 24), "ctumyji", "258456", "../../resources/img/no-photo.png");
-//        Contact contact3 = new Contact("Илья", "Коверя", new Date(1992, 8 , 14), "gold", "258456", "../../resources/img/no-photo.png");
-//        service.saveContact(contact1);
-//        service.saveContact(contact2);
-//        service.saveContact(contact3);
-//        service.addFriendship(contact1, contact2);
-//        service.addFriendship(contact1, contact3);
-//
-//        Hobby hobby1 = new Hobby("Games", "Play PC games");
-//        Hobby hobby2 = new Hobby("Sport", "Play football");
-//        hobbyService.saveHobby(hobby1);
-//        hobbyService.saveHobby(hobby2);
-//
-//        Place place1 = new Place("Home", "My Home", 12.0, 12.0);
-//        Place place2 = new Place("Work", "My Work", 21.0, 21.0);
-//        placeService.savePlace(place1);
-//        placeService.savePlace(place2);
-//
-//        return "redirect:/index";
-//    }
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        CustomDateEditor editor = new CustomDateEditor(new SimpleDateFormat("dd.MM.yyyy"), true);
+        binder.registerCustomEditor(Date.class, editor);
+    }
+
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String getHome(Model model, HttpSession httpSession) {
@@ -97,6 +79,28 @@ public class PageController {
             return ResponseMessage.errorMessage("Error! Profile does't change!");
         }
     }
+
+    @RequestMapping(value = "/friends/{id}/delete", method = RequestMethod.POST)
+    public String deleteUser(@PathVariable("id") long id, Model model,HttpSession session, final RedirectAttributes redirectAttributes) {
+        logger.warn("deleteUser() : {}", id);
+
+        Contact user = (Contact)session.getAttribute("USER");
+        Contact friend = service.findContactById(id);
+        System.out.println(user.getFriendList());
+        try {
+            service.removeFriendship(user,friend);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        redirectAttributes.addFlashAttribute("css", "success");
+        redirectAttributes.addFlashAttribute("msg", "Friend was removed!");
+        model.addAttribute("user", user);
+        return "redirect:/login#tab_friends-panel";
+
+    }
+
+
 
     @ExceptionHandler(Exception.class)
     @ResponseBody

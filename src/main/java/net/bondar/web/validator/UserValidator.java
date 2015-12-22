@@ -52,9 +52,9 @@ public class UserValidator implements Validator{
             errors.rejectValue("userName", "contact.username.error.unique");
         }
 
-        if(contact.getUserName().length()<2){
+        if(contact.getUserName().length()<6){
             errors.rejectValue("userName", "contact.userName.error.minLength");
-        }else if(contact.getUserName().length()>20){
+        }else if(contact.getUserName().length()>16){
             errors.rejectValue("userName", "contact.userName.error.maxLength");
         }
 

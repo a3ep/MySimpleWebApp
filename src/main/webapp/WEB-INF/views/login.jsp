@@ -1,5 +1,3 @@
-<%@ page import="java.util.HashMap" %>
-<%@ page import="java.util.Map" %>
 <%--
   Created by IntelliJ IDEA.
   User: Azeral
@@ -8,12 +6,11 @@
   To change this template use File | Settings | File Templates.
 --%>
 <!DOCTYPE html>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <html>
 <head>
     <title>Hello!</title>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-    <meta charset="utf-8">
     <link rel="stylesheet" href="webjars/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../resources/css/my-style.css">
 
@@ -21,6 +18,7 @@
     <script type="text/javascript" src="webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../resources/js/login-script.js"></script>
     <script type="text/javascript" src="webjars/jquery.lazyload/1.9.3/jquery.lazyload.js"></script>
+
 
     <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -92,7 +90,7 @@
                                     <div class="form-group form-panel-marging ${status.error ? 'has-error' : ''}">
                                         <label class="col-lg-3">Введите дату рождения:</label>
                                         <div class="col-lg-4">
-                                            <form:input path="birthDate" type="date" class="form-control " id="birthDate" placeholder="dd/MM/yyyy"/>
+                                            <form:input path="birthDate" type="date" class="form-control " id="birthDate" placeholder="dd.MM.yyyy"/>
                                             <form:errors path="birthDate" class="control-label"/>
                                         </div>
                                         <%--<div>--%>

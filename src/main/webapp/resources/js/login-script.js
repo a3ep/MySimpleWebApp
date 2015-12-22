@@ -12,31 +12,30 @@ $(document).ready(function() {
     function displaySuccess() {
         $('#register-button-response').removeClass('bg-danger');
         $('#register-button-response').addClass('bg-success');
-        $('#register-button-response').text('Done:)');
+        $('#register-button-response').text('Registration successful:)');
     }
 
-    //$('#register-button').click(function(){
-    //    var firstName = $('#firstName').val();
-    //    var lastName = $('#lastName').val();
-    //    var birthDate = ($('#year').val()+"-"+$('#month').val()+"-"+$('#day').val());
-    //    var userName = $('#userName').val();
-    //    var password = $('#password').val();
-    //    var confirmPassword = $('#confirmPassword').val();
-    //
-    //    $.ajax({
-    //        type: "POST",
-    //        url: '/saveContact',
-    //        contentType: "application/json; charset=utf-8",
-    //        dataType: "json",
-    //        data: '{"firstName": "' + firstName + '", "lastName": "' + lastName + '", "birthDate": "' + birthDate + '",' +
-    //        ' "userName": "' + userName + '", "password": "' + password + '", "confirmPassword": "' + confirmPassword + '"}',
-    //        success: function(data) {
-    //            if (data.status === 'OK'){
-    //                //displaySuccess()
-    //            }else{
-    //                //displayError(data.errorMessage);
-    //            }
-    //        }
-    //    });
-    //});
+    $('#register-button').click(function(){
+        var first_name = $('#first-name').val();
+        var last_name = $('#last-name').val();
+        var birth_date = ($('#year').val()+"-"+$('#month').val()+"-"+$('#day').val());
+        var login = $('#login').val();
+        var password = $('#password').val();
+
+        $.ajax({
+            type: "POST",
+            url: '/saveContact',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: '{"firstName": "' + first_name + '", "lastName": "' + last_name + '", "birthDate": "' + birth_date + '", "login": "' + login + '", "password": "' + password + '"}',
+            success: function(data) {
+                if (data.status === 'OK'){
+                    displaySuccess()
+                }else{
+                    displayError(data.errorMessage);
+                }
+            }
+        });
+    });
+
 });

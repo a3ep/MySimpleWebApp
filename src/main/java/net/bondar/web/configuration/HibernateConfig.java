@@ -34,8 +34,8 @@ public class HibernateConfig {
     @Autowired
     private Environment environment;
 
-    @Value("classpath:test-data.sql")
-    private Resource dataScript;
+//    @Value("classpath:test-data.sql")
+//    private Resource dataScript;
 
     @Bean
     public LocalSessionFactoryBean sessionFactory() {
@@ -54,19 +54,19 @@ public class HibernateConfig {
         return dataSource;
     }
 
-    @Bean
-    public DataSourceInitializer dataSourceInitializer(final DataSource dataSource) {
-        final DataSourceInitializer initializer = new DataSourceInitializer();
-        initializer.setDataSource(dataSource);
-        initializer.setDatabasePopulator(databasePopulator());
-        return initializer;
-    }
-
-    private DatabasePopulator databasePopulator() {
-        final ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-        populator.addScript(dataScript);
-        return populator;
-    }
+//    @Bean
+//    public DataSourceInitializer dataSourceInitializer(final DataSource dataSource) {
+//        final DataSourceInitializer initializer = new DataSourceInitializer();
+//        initializer.setDataSource(dataSource);
+//        initializer.setDatabasePopulator(databasePopulator());
+//        return initializer;
+//    }
+//
+//    private DatabasePopulator databasePopulator() {
+//        final ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+//        populator.addScript(dataScript);
+//        return populator;
+//    }
 
     private Properties hibernateProperties(){
         Properties properties = new Properties();

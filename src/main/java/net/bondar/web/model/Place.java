@@ -33,12 +33,12 @@ public class Place extends AbstractEntity{
         super(id);
     }
 
-    public Place(String title, String description, double latitude, double longitude, String photo) {
+    public Place(String title, String description, double latitude, double longitude) {
         this.title = title;
         this.description = description;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.photo = photo;
+        this.photo = "../../resources/img/no-photo.png";
     }
 
     public String getTitle() {
