@@ -7,6 +7,7 @@ import net.bondar.web.model.ResponseMessage;
 import net.bondar.web.service.ContactService;
 import net.bondar.web.service.HobbyService;
 import net.bondar.web.service.PlaceService;
+import net.bondar.web.validator.UserSingInValidator;
 import net.bondar.web.validator.UserValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,17 +49,20 @@ public class RegistrationController {
     @Autowired
     private UserValidator userValidator;
 
+    @Autowired
+    private UserSingInValidator userSingInValidator;
+
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         CustomDateEditor editor = new CustomDateEditor(new SimpleDateFormat("dd.MM.yyyy"), true);
         binder.registerCustomEditor(Date.class, editor);
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String getIndex(Model model) {
-        logger.warn("getIndex()");
+    @RequestMapping(value = "/login-registerPanel", method = RequestMethod.GET)
+    public String getLogin(Model model) {
+        logger.warn("getLogin()");
         model.addAttribute("userForm", new Contact());
-        return "login";
+        return "login-registerPanel";
     }
 
     @RequestMapping(value = "/test", method=RequestMethod.GET)
@@ -90,7 +94,49 @@ public class RegistrationController {
         return "redirect:/index";
     }
 
-//    @RequestMapping(value = "/saveContact", method = RequestMethod.POST)
+    @RequestMapping(value = "/saveContact", method = RequestMethod.POST)
+    public String saveContact(@ModelAttribute("userForm") @Validated Contact contact, BindingResult result, Model model, final RedirectAttributes redirectAttributes) {
+        logger.warn("saveContact()");
+        logger.warn(contact.getFirstName());
+        userValidator.validate(contact, result);
+        if (result.hasErrors()) {
+//            model.addAttribute("userForm", contact);
+            return "login-registerPanel";
+        } else {
+            redirectAttributes.addFlashAttribute("css", "success");
+            redirectAttributes.addFlashAttribute("msg", "Congratulations " + contact.getFirstName() + ", registration successful!:)");
+        }
+
+        service.saveContact(contact);
+
+        return "redirect:/login#tab_author-panel";
+    }
+
+    @RequestMapping(value = "/author", method = RequestMethod.GET)
+    public String signIn(@ModelAttribute("userForm") @Validated Contact contact, BindingResult result, Model model, HttpSession session) {
+        logger.warn("singIn()");
+        userSingInValidator.validate(contact, result);
+        if (result.hasErrors()) {
+            return "login-authorPanel";
+        }
+
+        try {
+            session.setAttribute("USER", service.findContactByUserName(contact.getUserName()));
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            return "redirect:/home";
+        }
+        return "redirect:/home";
+    }
+
+    @ExceptionHandler(Exception.class)
+    @ResponseBody
+    public ResponseMessage handleException(Exception e) {
+        logger.debug("handlerException()");
+        return ResponseMessage.errorMessage(e.getMessage());
+    }
+
+    //    @RequestMapping(value = "/saveContact", method = RequestMethod.POST)
 //    @ResponseBody
 //    public ResponseMessage saveContact(@RequestBody @Valid Contact contact, BindingResult bindingResult) {
 //        logger.warn("saveContact()");
@@ -114,62 +160,35 @@ public class RegistrationController {
 //        }
 //    }
 
-    @RequestMapping(value = "/author", method = RequestMethod.GET)
-    public String signIn(@RequestParam(name = "userName") String userName, @RequestParam(name = "userPassword") String password, Model model, HttpSession session) {
-        logger.warn("singIn()");
-        try {
-            if (userName.isEmpty() || password.isEmpty()) {
-                String errorString = "You should fill in both values - login and password.";
-                model.addAttribute("error", errorString);
-                return "login";
-            }
-
-            try {
-                Contact contact = service.findContactByUserName(userName);
-                if (contact.getPassword().equals(password)) {
-                    session.setAttribute("USER", service.findContactByUserName(userName));
-                } else {
-                    model.addAttribute("error", "Incorrect password.");
-                    return "redirect:/login#tab_author-panel";
-                }
-
-            } catch (Exception e) {
-                model.addAttribute("error", e.getMessage());
-                return "redirect:/home";
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return "redirect:/home";
-    }
-
-
-    @ExceptionHandler(Exception.class)
-    @ResponseBody
-    public ResponseMessage handleException(Exception e) {
-        logger.debug("handlerException()");
-        return ResponseMessage.errorMessage(e.getMessage());
-    }
-
-    @RequestMapping(value = "/saveContact", method = RequestMethod.POST)
-    public String saveContact(@ModelAttribute("userForm") /*@RequestBody*/ @Validated Contact contact, BindingResult result, Model model, final RedirectAttributes redirectAttributes) {
-        logger.warn("saveContact()");
-        logger.warn(contact.getFirstName());
-        userValidator.validate(contact, result);
-        if (result.hasErrors()) {
-//            model.addAttribute("userForm", contact);
-            return "login";
-        } else {
-            redirectAttributes.addFlashAttribute("css", "success");
-            redirectAttributes.addFlashAttribute("msg", "Congratulations " + contact.getFirstName() + ", registration successful!:)");
-        }
-
-        service.saveContact(contact);
-
-        return "redirect:/login#tab_author-panel";
-    }
-
+//    @RequestMapping(value = "/author", method = RequestMethod.GET)
+//    public String signIn(@RequestParam(name = "userName") String userName, @RequestParam(name = "userPassword") String password, Model model, HttpSession session) {
+//        logger.warn("singIn()");
+//        try {
+//            if (userName.isEmpty() || password.isEmpty()) {
+//                String errorString = "You should fill in both values - login and password.";
+//                model.addAttribute("error", errorString);
+//                return "login";
+//            }
+//
+//            try {
+//                Contact contact = service.findContactByUserName(userName);
+//                if (contact.getPassword().equals(password)) {
+//                    session.setAttribute("USER", service.findContactByUserName(userName));
+//                } else {
+//                    model.addAttribute("error", "Incorrect password.");
+//                    return "redirect:/login#tab_author-panel";
+//                }
+//
+//            } catch (Exception e) {
+//                model.addAttribute("error", e.getMessage());
+//                return "redirect:/home";
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        return "redirect:/home";
+//    }
 
 }
 

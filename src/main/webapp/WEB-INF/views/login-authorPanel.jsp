@@ -29,12 +29,12 @@
 
 <div class="container-login">
     <c:if test="${not empty msg}">
-    <div class="alert alert-${css} alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        <strong>${msg}</strong>
-    </div>
+        <div class="alert alert-${css} alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <strong>${msg}</strong>
+        </div>
     </c:if>
     <div class="header-login">
         <h1>Добро пожаловать!</h1>
@@ -44,16 +44,16 @@
 
         <div class="mainRow">
             <ul class="nav nav-tabs" id="login-or-register">
-                <li role="presentation" class="active"><a href="#register-panel" aria-controls="register" role="tab"
+                <li role="presentation"><a href="#register-panel" aria-controls="register" role="tab"
                                                           data-toggle="tab">Регистрация</a></li>
-                <li role=presentation><a href="#author-panel" aria-controls="profile" role="tab"
+                <li role="presentation" class="active"><a href="#author-panel" aria-controls="profile" role="tab"
                                          data-toggle="tab">Авторизация</a></li>
             </ul>
 
             <div id=content class="tab-content">
 
                 <%--TAB REGISTRATION--%>
-                <div role="tabpanel" class="tab-pane fade in active" id="register-panel">
+                <div role="tabpanel" class="tab-pane fade in" id="register-panel">
 
                     <div class="row tab-login">
                         <div style="width: 800px; margin: 0 auto">
@@ -213,103 +213,111 @@
                             <%----------------------------------------------------------------------------------------------                          --%>
                         </div>
                     </div>
-                </div>
-                <div class="row top-buffer">
-                    <div>
-                        <p id="register-button-response" class="text-centred"></p>
+                    <div class="row top-buffer">
+                        <div>
+                            <p id="register-button-response" class="text-centred"></p>
+                        </div>
                     </div>
                 </div>
 
                 <%--TAB AUTHORISATION--%>
-                <div role=tabpanel class="tab-pane fade in" id="author-panel">
-
-                    <div class="row top-buffer">
-                        <div class="col-lg-offset-1">
-                            <h3>Уже зарегистрировались?</h3>
-
-                            <p>Авторизируйтесь, пожалуйста.</p>
-
-                            <form method="get" action="/author" class="form-horizontal" name="author-form">
-                                <div class="form-group form-panel-marging">
-                                    <label for="userName" class="col-lg-2">Введите логин</label>
-
-                                    <div class="col-lg-3">
-                                        <input type="text" id="userName" class="form-control" name="userName"
-                                               placeholder="Логин" value="" autofocus required/>
-                                    </div>
-                                    <span class="required text-danger">*</span><br/>
-                                </div>
-
-                                <div class="form-group form-panel-marging">
-                                    <label for="userPassword" class="col-lg-2">Введите пароль</label>
-
-                                    <div class="col-lg-3">
-                                        <input type="password" id="userPassword" class="form-control"
-                                               name="userPassword"
-                                               placeholder="Пароль" value="" required/>
+                <div role=tabpanel class="tab-pane fade in active" id="author-panel">
+                    <div class="row tab-login">
+                    <div style="width: 500px; margin: 0 auto">
+                        <h3 style="text-align:center">Уже зарегистрировались?</h3>
+                        <p class="fontBold" style="text-align:center">Авторизируйтесь, пожалуйста.</p>
+                    </div>
+                    <div class="row-login" style="width: 500px">
+                        <%----------------------------------------------------------------------------------------------                          --%>
+                        <form:form class="form-horizontal" modelAttribute="userForm" method="get" action="/author">
+                            <spring:bind path="userName">
+                                <div style="width: 500px; margin: 0 auto" class="form-group ${status.error ? 'has-error' : ''}">
+                                    <label class="label-login control-label active">Введите логин</label>
+                                    <div class="input-login">
+                                        <form:input path="userName" type="text" class="form-control"
+                                                    id="userName"
+                                                    placeholder="Логин"/>
+                                        <form:errors path="userName" class="control-label"/>
                                     </div>
                                     <span class="required text-danger">*</span>
                                 </div>
+                            </spring:bind>
 
-                                <span class="required text-danger">*</span> - поля, обязательные для заполнения.
-                                <p></p>
-
-                                <div class="col-lg-3">
-                                    <button type="submit" class="btn btn-default" id="login-button">Войти</button>
+                            <spring:bind path="password">
+                                <div style="width: 500px; margin: 0 auto" class="form-group ${status.error ? 'has-error' : ''}">
+                                    <label class="label-login control-label active">Введите пароль</label>
+                                    <div class="input-login" style="margin-left:-11px">
+                                        <form:input path="password" type="text" class="form-control"
+                                                    id="password"
+                                                    placeholder="Пароль"/>
+                                        <form:errors path="password" class="control-label"/>
+                                    </div>
+                                    <span class="required text-danger">*</span>
                                 </div>
-                            </form>
-                            <%--<spring:url value="/author" var="userAuthUrl"/>--%>
-                            <%--<form:form class="form-horizontal" method="get" modelAttribute="userForm"--%>
-                            <%--action="${userAuthUrl}">--%>
+                            </spring:bind>
+                            <div style="width: 325px; margin: 0 auto">
+                                <span class="required text-danger">*</span> - поля, обязательные для заполнения.
+                            </div>
+                            <p></p>
 
-                            <%--<spring:bind path="userName">--%>
-                            <%--<div class="form-group ${status.error ? 'has-error' : ''}">--%>
-                            <%--<label class="col-lg-2 control-label">Введите логин:</label>--%>
+                            <div style="width: 190px; margin: 0 auto">
+                                <input style="width: 190px" type="submit" class="btn btn-primary" id="login-button"
+                                       value="Войти">
+                            </div>
+                        </form:form>
+                        <%--<spring:url value="/author" var="userAuthUrl"/>--%>
+                        <%--<form:form class="form-horizontal" method="get" modelAttribute="userForm"--%>
+                        <%--action="${userAuthUrl}">--%>
 
-                            <%--<div class="col-lg-6">--%>
-                            <%--<form:input path="userName" type="text" class="form-control" id="userName"--%>
-                            <%--placeholder="Логин"/>--%>
-                            <%--<form:errors path="userName" class="control-label"/>--%>
-                            <%--</div>--%>
-                            <%--</div>--%>
-                            <%--</spring:bind>--%>
-                            <%--<spring:bind path="password">--%>
-                            <%--<div class="form-group ${status.error ? 'has-error' : ''}">--%>
-                            <%--<label class="col-lg-2 control-label">Введите пароль:</label>--%>
+                        <%--<spring:bind path="userName">--%>
+                        <%--<div class="form-group ${status.error ? 'has-error' : ''}">--%>
+                        <%--<label class="col-lg-2 control-label">Введите логин:</label>--%>
 
-                            <%--<div class="col-lg-6">--%>
-                            <%--<form:input path="password" class="form-control"--%>
-                            <%--id="password" placeholder="Пароль"/>--%>
-                            <%--<form:errors path="password" class="control-label"/>--%>
-                            <%--</div>--%>
-                            <%--</div>--%>
-                            <%--</spring:bind>--%>
-                            <%--<div class="form-group">--%>
-                            <%--<div class="col-sm-offset-2 col-sm-10">--%>
-                            <%--<button type="submit" class="btn-lg btn-default pull-right">Войти--%>
-                            <%--</button>--%>
-                            <%--</div>--%>
-                            <%--</div>--%>
-                            <%--</form:form>--%>
-                        </div>
+                        <%--<div class="col-lg-6">--%>
+                        <%--<form:input path="userName" type="text" class="form-control" id="userName"--%>
+                        <%--placeholder="Логин"/>--%>
+                        <%--<form:errors path="userName" class="control-label"/>--%>
+                        <%--</div>--%>
+                        <%--</div>--%>
+                        <%--</spring:bind>--%>
+                        <%--<spring:bind path="password">--%>
+                        <%--<div class="form-group ${status.error ? 'has-error' : ''}">--%>
+                        <%--<label class="col-lg-2 control-label">Введите пароль:</label>--%>
+
+                        <%--<div class="col-lg-6">--%>
+                        <%--<form:input path="password" class="form-control"--%>
+                        <%--id="password" placeholder="Пароль"/>--%>
+                        <%--<form:errors path="password" class="control-label"/>--%>
+                        <%--</div>--%>
+                        <%--</div>--%>
+                        <%--</spring:bind>--%>
+                        <%--<div class="form-group">--%>
+                        <%--<div class="col-sm-offset-2 col-sm-10">--%>
+                        <%--<button type="submit" class="btn-lg btn-default pull-right">Войти--%>
+                        <%--</button>--%>
+                        <%--</div>--%>
+                        <%--</div>--%>
+                        <%--</form:form>--%>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+</div>
 
-    <script>
-        //код Javascript, предназначенный для того активировать вкладку по хэшу (#tab_tab1) в адресной строке
-        var hash = document.location.hash;
-        var prefix = "tab_";
-        if (hash) {
-            $('.nav-tabs a[href=' + hash.replace(prefix, "") + ']').tab('show');
-        }
-        //Изменить хэш при перезагрузки страницы
-        $('.nav-tabs a').on('shown', function (e) {
-            window.location.hash = e.target.hash.replace("#", "#" + prefix);
-        });
-    </script>
+<script>
+    //код Javascript, предназначенный для того активировать вкладку по хэшу (#tab_tab1) в адресной строке
+    var hash = document.location.hash;
+    var prefix = "tab_";
+    if (hash) {
+        $('.nav-tabs a[href=' + hash.replace(prefix, "") + ']').tab('show');
+    }
+    //Изменить хэш при перезагрузки страницы
+    $('.nav-tabs a').on('shown', function (e) {
+        window.location.hash = e.target.hash.replace("#", "#" + prefix);
+    });
+</script>
 
 </body>
 
