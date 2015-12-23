@@ -62,14 +62,14 @@ public class Contact extends AbstractEntity{
         super(id);
     }
 
-    public Contact(String firstName, String lastName, Date birthDate, String userName, String password, String confirmPassword) {
+    public Contact(String firstName, String lastName, Date birthDate, String userName, String password, String confirmPassword, String photo) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
         this.userName = userName;
         this.password = password;
         this.confirmPassword = confirmPassword;
-        this.photo="../../resources/img/my.png";
+        this.photo = photo;
         this.hobbies = new HashSet<>();
         this.places = new HashSet<>();
         this.friendList = new HashSet<>();

@@ -67,8 +67,7 @@
                     <div class="row tab-home">
                         <div class="row row-home">
                             <div id="profilePhoto">
-                                <img src="${user.photo}" alt="Фото" class="img-rounded"
-                                     height="200">
+                                <img src="${user.photo}" alt="Фото" class="img-rounded">
                             </div>
                             <div id="profileChangeBtn">
                                 <button class="btn btn-primary" id="edit-profile-btn"><span
