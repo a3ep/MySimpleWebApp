@@ -69,7 +69,7 @@ public class Contact extends AbstractEntity{
         this.userName = userName;
         this.password = password;
         this.confirmPassword = confirmPassword;
-        this.photo="../../resources/img/no-photo.png";
+        this.photo="../../resources/img/my.png";
         this.hobbies = new HashSet<>();
         this.places = new HashSet<>();
         this.friendList = new HashSet<>();

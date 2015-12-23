@@ -54,13 +54,15 @@ public class PageController {
 
     @RequestMapping(value = "/edit/profile", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseMessage editProfile(@RequestBody ContactFieldsTransport contactFieldsTransport, BindingResult bindingResult, HttpSession session){
+    public ResponseMessage editProfile(@RequestBody ContactFieldsTransport contactFieldsTransport, BindingResult bindingResult, HttpSession session, final RedirectAttributes redirectAttributes){
         logger.debug("editProfile()");
         try {
             Contact user = (Contact)session.getAttribute("USER");
             user.setFirstName(contactFieldsTransport.getFirstName());
             user.setLastName(contactFieldsTransport.getLastName());
             user.setBirthDate(contactFieldsTransport.getBirthDate());
+
+            service.updateContact(user);
 
             if (bindingResult.hasErrors()) {
                 String errors = "";
@@ -70,9 +72,13 @@ public class PageController {
                         errors += messageSource.getMessage(fieldError, null);
                     }
                 }
+                redirectAttributes.addFlashAttribute("css", "danger");
+                redirectAttributes.addFlashAttribute("msg", "Error! Profile does't change!");
                 return ResponseMessage.errorMessage(errors);
             } else {
-                return ResponseMessage.okMessage(service.updateContact(user));
+                redirectAttributes.addFlashAttribute("css", "success");
+                redirectAttributes.addFlashAttribute("msg", "Done!");
+                return ResponseMessage.okMessage(contactFieldsTransport);
             }
         } catch (Exception e) {
             e.printStackTrace();
