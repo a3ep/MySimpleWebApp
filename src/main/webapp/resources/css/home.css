@@ -90,7 +90,7 @@ body{
     background-color: #337AB7;
     color: #ffffff;
 }
-.container-home{
+.container-home {
     width: 1170px;
     padding: 0;
     margin:0 auto;
@@ -106,12 +106,12 @@ body{
     width: 1000px;
     margin: 0 auto;
 }
-.tab-home{
+.tab-home {
     width: 1000px;
     padding: 10px;
     margin: 0 auto;
 }
-.row-home{
+.row-home {
     width: 880px;
     padding: 0 10px;
     margin: 0 auto;
@@ -127,6 +127,12 @@ body{
 }
 .nav-tabs li{
     font-weight: bold;
+}
+
+.popover-home .popover{
+    position: relative;
+    display: block;
+    margin: 20px;
 }
 
 
@@ -173,6 +179,8 @@ body{
 }
 .postMessage{
     /*outline: 2px solid #FF8000;*/
+    width: 850px;
+    max-width: 850px;
     margin: 0 0 20px 0;
 }
 

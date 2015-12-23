@@ -1,0 +1,112 @@
+/*ALL*/
+
+body{
+    background-color: #C7EDFC;
+    background-image: url(../img/background_blue.gif);
+    font: 14px Verdana, sans-serif;
+}
+.header-login {
+    width: 1168px;
+    margin: 0 auto 20px auto;
+    padding: 20px;
+    background-color: #337AB7;
+    color: #ffffff;
+    text-align: center;
+}
+.container-login {
+    width: 1170px;
+    padding: 0;
+    margin:0 auto;
+    background-color: #ffffff;
+    border: 1px solid #333333;
+}
+.mainRow{
+    margin: 15px;
+    padding: 15px;
+}
+#login-or-register{
+    width: 275px;
+    margin: 0 auto;
+}
+
+#content{
+    width: 800px;
+    margin: 0 auto;
+}
+.tab-login {
+    width: 800px;
+    padding: 10px;
+    margin: 0 auto;
+}
+.row-login {
+    width: 800px;
+    padding: 0 10px;
+    margin: 0 auto;
+    /*outline: 2px solid #cccccc;*/
+}
+.row-form{
+    width: 800px;
+    padding: 0 auto;
+    margin: 0 auto;
+}
+.label-login{
+    float: left;
+    position: relative;
+    padding: 0 15px;
+}
+.input-login{
+    width: 300px;
+    float: left;
+    position: relative;
+    padding: 0 15px;
+    margin: 0 0 20px 0;
+}
+.fontBold{
+    font-weight: bold;
+}
+.nav-tabs li{
+    font-weight: bold;
+}
+
+.popover-home .popover{
+    position: relative;
+    display: block;
+    margin: 20px;
+}
+
+
+.top-buffer {
+    margin-top:20px;
+}
+.top-buffer-for-change-botton {
+    margin-top:30px;
+}
+
+.text-centred {
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}
+
+.form-control-padding{
+    padding: 6px 4px;
+}
+
+.btn-margin-and-height{
+    margin-bottom: 5px;
+    height: 34px;
+}
+
+.text-index{
+    text-indent: 7px;
+}
+
+
+                /*REGISTRATION*/
+
+#firstNameLabel{
+    width: 200px;
+    float: left;
+}

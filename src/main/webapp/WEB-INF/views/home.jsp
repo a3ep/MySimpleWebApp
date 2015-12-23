@@ -12,10 +12,10 @@
     <title>Home</title>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
     <meta charset="utf-8">
-    <link rel="stylesheet" href="webjars/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="webjars/bootstrap/3.3.6/css/bootstrap.css">
     <link rel="stylesheet" href="../../resources/css/home.css">
-    <script type="text/javascript" src="webjars/jquery/2.1.4/jquery.min.js"></script>
-    <script type="text/javascript" src="webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="webjars/jquery/2.1.4/jquery.js"></script>
+    <script type="text/javascript" src="webjars/bootstrap/3.3.6/js/bootstrap.js"></script>
     <script type="text/javascript" src="../../resources/js/home-script.js"></script>
     <script type="text/javascript" src="../../resources/js/post.js"></script>
     <script type="text/javascript" src="webjars/jquery.lazyload/1.9.3/jquery.lazyload.js"></script>
@@ -103,33 +103,72 @@
                         </div>
                         <div id="postRow" class="row">
                             <div id="postArea">
-                                <div class="panel panel-primary postMessage">
-                                    <div class="panel-heading">
-                                        <h3 class="panel-title"><span style="text-align: left;">Имя Фамилия</span> <span
-                                                style="text-align: right">00:00</span></h3>
-                                    </div>
-                                    <div class="panel-body">
-                                        Сообщение сообщение сообщение сообщение сообщение сообщение сообщение сообщение
-                                    </div>
-                                </div>
-                                <div class="panel panel-primary postMessage">
-                                    <div class="panel-heading">
-                                        <h3 class="panel-title"><span style="text-align: left;">Имя Фамилия</span> <span
-                                                style="text-align: right">00:00</span></h3>
-                                    </div>
-                                    <div class="panel-body">
-                                        Сообщение сообщение сообщение сообщение сообщение сообщение сообщение сообщение
+                                <div class="popover-home">
+                                    <div class="popover right postMessage">
+                                        <div class="arrow"></div>
+                                        <h3 style="background-color: #337AB7; color: #ffffff" class="popover-title">
+                                            <span style="text-align: left">Имя Фамилия</span> <span
+                                                style="text-align:right">00:00</span></h3>
+
+                                        <div style="background-color:#EFEFEF" class="popover-content">
+                                            Сообщение сообщение сообщение сообщение сообщение сообщение сообщение
+                                            сообщение
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="panel panel-primary postMessage">
-                                    <div class="panel-heading">
-                                        <h3 class="panel-title"><span style="text-align: left;">Имя Фамилия</span> <span
-                                                style="text-align: right">00:00</span></h3>
-                                    </div>
-                                    <div class="panel-body">
-                                        Сообщение сообщение сообщение сообщение сообщение сообщение сообщение сообщение
+                                <div class="popover-home">
+                                    <div class="popover right postMessage">
+                                        <div class="arrow"></div>
+                                        <h3 style="background-color: #337AB7; color: #ffffff" class="popover-title">
+                                            <span style="text-align: left">Имя Фамилия</span> <span
+                                                style="text-align:right">00:00</span></h3>
+
+                                        <div style="background-color:#EFEFEF" class="popover-content">
+                                            Сообщение сообщение сообщение сообщение сообщение сообщение сообщение
+                                            сообщение
+                                        </div>
                                     </div>
                                 </div>
+                                <div class="popover-home">
+                                    <div class="popover right postMessage">
+                                        <div class="arrow"></div>
+                                        <h3 style="background-color: #337AB7; color: #ffffff" class="popover-title">
+                                            <span style="text-align: left">Имя Фамилия</span> <span
+                                                style="text-align:right">00:00</span></h3>
+
+                                        <div style="background-color:#EFEFEF" class="popover-content">
+                                            Сообщение сообщение сообщение сообщение сообщение сообщение сообщение
+                                            сообщение
+                                        </div>
+                                    </div>
+                                </div>
+                                <%--<div class="panel panel-primary postMessage">--%>
+                                <%--<div class="panel-heading">--%>
+                                <%--<h3 class="panel-title"><span style="text-align: left;">Имя Фамилия</span> <span--%>
+                                <%--style="text-align: right">00:00</span></h3>--%>
+                                <%--</div>--%>
+                                <%--<div class="panel-body">--%>
+                                <%--Сообщение сообщение сообщение сообщение сообщение сообщение сообщение сообщение--%>
+                                <%--</div>--%>
+                                <%--</div>--%>
+                                <%--<div class="panel panel-primary postMessage">--%>
+                                <%--<div class="panel-heading">--%>
+                                <%--<h3 class="panel-title"><span style="text-align: left;">Имя Фамилия</span> <span--%>
+                                <%--style="text-align: right">00:00</span></h3>--%>
+                                <%--</div>--%>
+                                <%--<div class="panel-body">--%>
+                                <%--Сообщение сообщение сообщение сообщение сообщение сообщение сообщение сообщение--%>
+                                <%--</div>--%>
+                                <%--</div>--%>
+                                <%--<div class="panel panel-primary postMessage">--%>
+                                <%--<div class="panel-heading">--%>
+                                <%--<h3 class="panel-title"><span style="text-align: left;">Имя Фамилия</span> <span--%>
+                                <%--style="text-align: right">00:00</span></h3>--%>
+                                <%--</div>--%>
+                                <%--<div class="panel-body">--%>
+                                <%--Сообщение сообщение сообщение сообщение сообщение сообщение сообщение сообщение--%>
+                                <%--</div>--%>
+                                <%--</div>--%>
                             </div>
                         </div>
                     </div>
@@ -179,7 +218,8 @@
                                                     <%----------------MODAL---------------%>
                                                 <div id="modalMessage" class="modal fade in"
                                                      aria-labelledby="modalMessageLabel" role="dialog" tabindex="-1">
-                                                    <div class="modal-dialog" role="document" style="width: 700px; margin-top: 110px">
+                                                    <div class="modal-dialog" role="document"
+                                                         style="width: 700px; margin-top: 110px">
                                                         <div class="modal-content">
                                                             <div class="modal-header"
                                                                  style="background-color: #337AB7; color: #ffffff">
@@ -192,10 +232,15 @@
                                                                     сообщение</h4>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <label style="margin-bottom:5px" for="friendName">Кому</label><br>
-                                                                <input style="width:300px; margin-bottom:10px" id="friendName" type="text" name="friendName"><br>
-                                                                <label style="margin-bottom:5px" for="messageArea">Введите сообщение</label><br>
-                                                                <textarea style="width:660px" id=messageArea name="message"></textarea>
+                                                                <label class="label label-primary" style="margin-bottom:10px"
+                                                                       for="friendName">Кому</label>
+                                                                <input class="form-control" style="width:660px; margin-bottom:15px"
+                                                                       id="friendName" type="text"
+                                                                       name="friendName"><br>
+                                                                <label class="label label-primary" style="margin-bottom:10px" for="messageArea">Введите
+                                                                    сообщение</label><br>
+                                                                <textarea class="form-control" style="width:660px" id=messageArea
+                                                                          name="message"></textarea>
                                                             </div>
                                                             <div class="modal-footer" style="background-color: #337AB7">
                                                                 <button class="btn btn-success" type="button">Отправить
@@ -242,7 +287,7 @@
                                                 <spring:url value="/hobies/${hobby.id}/edit" var="editUrl"/>
                                                 <spring:url value="/hobies/${hobby.id}/delete" var="deleteUrl"/>
                                                 <div class="btn-group" style=>
-                                                    <button class="btn btn-info" onclick="post(${editUrl})"
+                                                    <button class="btn btn-primary" onclick="post(${editUrl})"
                                                             id="edit-hobby"><span class="glyphicon glyphicon-pencil"
                                                                                   aria-hidden="true"></span>
                                                     </button>
@@ -297,7 +342,7 @@
                                                 <spring:url value="/places/${place.id}/edit" var="editUrl"/>
                                                 <spring:url value="/places/${place.id}/delete" var="deleteUrl"/>
                                                 <div class="btn-group">
-                                                    <button class="btn btn-info" onclick="post(${editUrl})"
+                                                    <button class="btn btn-primary" onclick="post(${editUrl})"
                                                             id="edit-place"><span
                                                             class="glyphicon glyphicon-pencil"
                                                             aria-hidden="true"></span></button>
