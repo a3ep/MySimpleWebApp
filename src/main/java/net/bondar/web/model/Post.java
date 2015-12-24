@@ -3,6 +3,7 @@ package net.bondar.web.model;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * Created by Azeral on 28.10.2015.
@@ -15,7 +16,7 @@ public class Post extends AbstractEntity{
 
     private String content;
 
-    private LocalDateTime date;
+    private Date date;
 
 
     public Post(){
@@ -26,7 +27,7 @@ public class Post extends AbstractEntity{
         super(id);
     }
 
-    public Post(Contact contactFrom, String content, LocalDateTime date) {
+    public Post(Contact contactFrom, String content, Date date) {
         this.contactFrom = contactFrom;
         this.content = content;
         this.date = date;
@@ -50,11 +51,11 @@ public class Post extends AbstractEntity{
         this.content = content;
     }
 
-    public LocalDateTime getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

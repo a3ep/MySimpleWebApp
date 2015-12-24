@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Set;
 
 /**
@@ -23,8 +23,12 @@ public class PostService {
     @Autowired
     SessionFactory sessionFactory;
 
-    public Post savePost(Contact contactFrom, String content, LocalDateTime date) {
+    public Post savePost(Contact contactFrom, String content, Date date) {
         Post post = new Post(contactFrom, content, date);
+        return postDao.save(post);
+    }
+
+    public Post savePost(Post post){
         return postDao.save(post);
     }
 

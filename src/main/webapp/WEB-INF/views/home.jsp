@@ -74,7 +74,7 @@
                                         class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
                             </div>
                             <div id="profileInfo">
-                                <table class="table table-hover">
+                                <table class="table table-hover-my">
                                     <tr>
                                         <td id="profileFirstCol" class="fontBold">Имя</td>
                                         <td id="profileLastCol">
@@ -102,72 +102,22 @@
                         </div>
                         <div id="postRow" class="row">
                             <div id="postArea">
-                                <div class="popover-home">
-                                    <div class="popover right postMessage">
-                                        <div class="arrow"></div>
-                                        <h3 style="background-color: #337AB7; color: #ffffff" class="popover-title">
-                                            <span style="text-align: left">Имя Фамилия</span> <span
-                                                style="text-align:right">00:00</span></h3>
+                                <c:forEach items="${user.posts}" var="post">
+                                    <div class="popover-home">
+                                        <div class="popover right postMessage">
+                                            <div class="arrow"></div>
+                                            <h3 style="background-color: #337AB7; color: #ffffff" class="popover-title">
+                                                <span style="text-align: left">${post.contactFrom.firstName} ${post.contactFrom.lastName}</span> <span
+                                                    style="text-align:right"><fmt:formatDate value="${post.date}"
+                                                                                             pattern="hh:mm:ss"/></span>
+                                            </h3>
 
-                                        <div style="background-color:#EFEFEF" class="popover-content">
-                                            Сообщение сообщение сообщение сообщение сообщение сообщение сообщение
-                                            сообщение
+                                            <div style="background-color:#EFEFEF" class="popover-content">
+                                                    ${post.content}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="popover-home">
-                                    <div class="popover right postMessage">
-                                        <div class="arrow"></div>
-                                        <h3 style="background-color: #337AB7; color: #ffffff" class="popover-title">
-                                            <span style="text-align: left">Имя Фамилия</span> <span
-                                                style="text-align:right">00:00</span></h3>
-
-                                        <div style="background-color:#EFEFEF" class="popover-content">
-                                            Сообщение сообщение сообщение сообщение сообщение сообщение сообщение
-                                            сообщение
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="popover-home">
-                                    <div class="popover right postMessage">
-                                        <div class="arrow"></div>
-                                        <h3 style="background-color: #337AB7; color: #ffffff" class="popover-title">
-                                            <span style="text-align: left">Имя Фамилия</span> <span
-                                                style="text-align:right">00:00</span></h3>
-
-                                        <div style="background-color:#EFEFEF" class="popover-content">
-                                            Сообщение сообщение сообщение сообщение сообщение сообщение сообщение
-                                            сообщение
-                                        </div>
-                                    </div>
-                                </div>
-                                <%--<div class="panel panel-primary postMessage">--%>
-                                <%--<div class="panel-heading">--%>
-                                <%--<h3 class="panel-title"><span style="text-align: left;">Имя Фамилия</span> <span--%>
-                                <%--style="text-align: right">00:00</span></h3>--%>
-                                <%--</div>--%>
-                                <%--<div class="panel-body">--%>
-                                <%--Сообщение сообщение сообщение сообщение сообщение сообщение сообщение сообщение--%>
-                                <%--</div>--%>
-                                <%--</div>--%>
-                                <%--<div class="panel panel-primary postMessage">--%>
-                                <%--<div class="panel-heading">--%>
-                                <%--<h3 class="panel-title"><span style="text-align: left;">Имя Фамилия</span> <span--%>
-                                <%--style="text-align: right">00:00</span></h3>--%>
-                                <%--</div>--%>
-                                <%--<div class="panel-body">--%>
-                                <%--Сообщение сообщение сообщение сообщение сообщение сообщение сообщение сообщение--%>
-                                <%--</div>--%>
-                                <%--</div>--%>
-                                <%--<div class="panel panel-primary postMessage">--%>
-                                <%--<div class="panel-heading">--%>
-                                <%--<h3 class="panel-title"><span style="text-align: left;">Имя Фамилия</span> <span--%>
-                                <%--style="text-align: right">00:00</span></h3>--%>
-                                <%--</div>--%>
-                                <%--<div class="panel-body">--%>
-                                <%--Сообщение сообщение сообщение сообщение сообщение сообщение сообщение сообщение--%>
-                                <%--</div>--%>
-                                <%--</div>--%>
+                                </c:forEach>
                             </div>
                         </div>
                     </div>
@@ -176,6 +126,7 @@
                 <%--TAB FRIENDS--%>
                 <div role="tabpanel" class="tab-pane fade in" id="friends-panel">
                     <div class="row tab-home">
+
                         <div class="row row-home">
                             <div class="table-home">
                                 <table class="table table-hover-my">
@@ -192,7 +143,7 @@
                                         <tr>
                                             <td id="friend-photo" style="text-align:center; vertical-align:middle"><img
                                                     src="${friend.photo}" alt="../img/no-photo.png" class="img-rounded"
-                                                    <%--width="30" --%>height="30"></td>
+                                                    height="30"></td>
                                             <td id="friend-last-name"
                                                 style="text-align:center; vertical-align:middle">${friend.lastName}</td>
                                             <td id="friend-first-name"
@@ -206,54 +157,137 @@
                                                             data-target="#modalMessage"><span
                                                             class="glyphicon glyphicon-envelope"
                                                             aria-hidden="true"></span></button>
-                                                    <button class="btn btn-info"
-                                                            onclick="location.href='${postUrl}'"><span
+                                                    <button id="postBtn" class="btn btn-info" data-toggle="modal"
+                                                            data-target="#modalPost"><span
                                                             class="glyphicon glyphicon-comment"
                                                             aria-hidden="true"></span></button>
                                                     <button class="btn btn-danger" onclick="post('${deleteUrl}')"><span
                                                             class="glyphicon glyphicon-trash"
                                                             aria-hidden="true"></span></button>
                                                 </div>
-                                                    <%----------------MODAL---------------%>
-                                                <div id="modalMessage" class="modal fade in"
-                                                     aria-labelledby="modalMessageLabel" role="dialog" tabindex="-1">
-                                                    <div class="modal-dialog" role="document"
-                                                         style="width: 700px; margin-top: 110px">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header"
-                                                                 style="background-color: #337AB7; color: #ffffff">
-                                                                <button class="close" aria-label="Close"
-                                                                        data-dismiss="modal" type="button">
-                                                                    <span aria-hidden="false">×</span>
-                                                                </button>
+                                            </td>
+                                        </tr>
+                                        <%----------------MODAL MESSAGE---------------%>
+                                        <div id="modalMessage" class="modal fade in"
+                                             aria-labelledby="modalMessageLabel" role="dialog" tabindex="-1">
+                                            <div class="modal-dialog" role="document"
+                                                 style="width: 700px; margin-top: 110px">
+                                                <div class="modal-content">
+                                                    <div class="modal-header"
+                                                         style="background-color: #337AB7; color: #ffffff">
+                                                        <button class="close" aria-label="Close"
+                                                                data-dismiss="modal" type="button">
+                                                            <span aria-hidden="false">×</span>
+                                                        </button>
 
-                                                                <h4 id="modalMessageLabel" class="modal-title">Отправить
-                                                                    сообщение</h4>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <label class="label label-primary" style="margin-bottom:10px"
-                                                                       for="friendName">Кому</label>
-                                                                <input class="form-control" style="width:660px; margin-bottom:15px"
-                                                                       id="friendName" type="text"
-                                                                       name="friendName"><br>
-                                                                <label class="label label-primary" style="margin-bottom:10px" for="messageArea">Введите
-                                                                    сообщение</label><br>
-                                                                <textarea class="form-control" style="width:660px" id=messageArea
-                                                                          name="message"></textarea>
-                                                            </div>
-                                                            <div class="modal-footer" style="background-color: #337AB7">
-                                                                <button class="btn btn-success" type="button">Отправить
-                                                                    сообщение
-                                                                </button>
-                                                                <button class="btn btn-danger" data-dismiss="modal"
-                                                                        type="button">Закрыть
-                                                                </button>
+                                                        <h4 id="modalMessageLabel" class="modal-title"
+                                                            style="text-align: center"><span
+                                                                class="glyphicon glyphicon-envelope" style="font-size: 30px"> Чат</span></h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <label class="label label-primary"
+                                                               style="margin-bottom:10px"
+                                                                >Кому -> <span class="glyphicon glyphicon-user"></span> ${friend.firstName} ${friend.lastName}</label>
+
+                                                        <div class="panel panel-primary">
+                                                            <div class="panel-body">
+                                                                <div class="popover-home">
+                                                                    <div class="popover right message">
+                                                                        <div class="arrow"></div>
+                                                                        <h3 style="background-color: #337AB7; color: #ffffff; text-align: right"
+                                                                            class="popover-title"><span
+                                                                                style="text-align:right">00:00</span>
+                                                                        </h3>
+
+                                                                        <div style="background-color:#EFEFEF"
+                                                                             class="popover-content">
+                                                                            Сообщение сообщение сообщение сообщение
+                                                                            сообщение сообщение сообщение
+                                                                            сообщение
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="popover-home">
+                                                                    <div class="popover left message">
+                                                                        <div class="arrow"></div>
+                                                                        <h3 style="background-color: #5CB85C; color: #ffffff; text-align: right"
+                                                                            class="popover-title">
+                                                                            <span>00:00</span></h3>
+
+                                                                        <div style="background-color:#EFEFEF"
+                                                                             class="popover-content">
+                                                                            Сообщение сообщение сообщение сообщение
+                                                                            сообщение сообщение сообщение
+                                                                            сообщение
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <div class="modal-footer" style="background-color: #337AB7">
+                                                        <div style="width: 135px">
+                                                            <label class="label label-default"
+                                                                   style="margin-bottom:10px; text-align: left"
+                                                                   for="messageArea">Введите сообщение</label><br>
+                                                        </div>
+                                                                <textarea class="form-control"
+                                                                          style="width:660px;max-width: 660px; margin-bottom: 20px"
+                                                                          id=messageArea
+                                                                          name="message"></textarea>
+                                                        <button class="btn btn-success" type="button">Отправить
+                                                        </button>
+                                                        <button class="btn btn-danger" data-dismiss="modal"
+                                                                type="button">Закрыть
+                                                        </button>
+                                                    </div>
                                                 </div>
-                                            </td>
-                                        </tr>
+                                            </div>
+                                        </div>
+                                        <%------------------------------MODAL POST--------------------------------%>
+                                        <div id="modalPost" class="modal fade in"
+                                             aria-labelledby="modalPostLabel" role="dialog" tabindex="-1">
+                                            <div class="modal-dialog" role="document"
+                                                 style="width: 700px; margin-top: 110px">
+                                                <div class="modal-content">
+                                                    <div class="modal-header"
+                                                         style="background-color: #337AB7; color: #ffffff">
+                                                        <button class="close" aria-label="Close"
+                                                                data-dismiss="modal" type="button">
+                                                            <span aria-hidden="false">×</span>
+                                                        </button>
+
+                                                        <h4 id="modalPostLabel" class="modal-title"
+                                                            style="text-align: center"><span
+                                                                class="glyphicon glyphicon-comment" style="font-size: 30px"> Стена</span></h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div style="margin-bottom: 10px">
+                                                            <label class="label label-primary">Кому -> <span class="glyphicon glyphicon-user"></span> ${friend.firstName} ${friend.lastName}
+                                                            </label>
+                                                        </div>
+
+
+                                                        <div style="width: 135px">
+                                                            <label class="label label-default"
+                                                                   style="margin-bottom:10px; text-align: left"
+                                                                   for="postTextArea">Введите сообщение</label><br>
+                                                        </div>
+                                                                <textarea class="form-control"
+                                                                          style="width:660px;max-width: 660px; margin-bottom: 20px"
+                                                                          id="postTextArea" name="post">
+                                                                </textarea>
+                                                    </div>
+                                                    <div class="modal-footer" style="background-color: #337AB7">
+                                                        <button class="btn btn-success" type="button">Отправить
+                                                        </button>
+                                                        <button class="btn btn-danger" data-dismiss="modal"
+                                                                type="button">Закрыть
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </c:forEach>
                                     </tbody>
                                 </table>
@@ -266,40 +300,106 @@
                 <div role="tabpanel" class="tab-pane fade in" id="hobbies-panel">
                     <div class="row tab-home">
                         <div class="row row-home">
-                            <div class="table-home">
-                                <table class="table table-hover-my">
-                                    <thead>
-                                    <tr>
-                                        <th id="hobbyTitleTh">Название</th>
-                                        <th id="hobbyDescriptionTh">Описание</th>
-                                        <th id="hobbyBtnTh"></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <c:forEach items="${user.hobbies}" var="hobby">
-                                        <tr>
-                                            <td id="hobby-title"
-                                                style="text-align:center; vertical-align:middle">${hobby.title}</td>
-                                            <td id="hobby-description"
-                                                style="text-align:center; vertical-align:middle">${hobby.description}</td>
-                                            <td id="hobbyCellBtn">
-                                                <spring:url value="/hobies/${hobby.id}/edit" var="editUrl"/>
-                                                <spring:url value="/hobies/${hobby.id}/delete" var="deleteUrl"/>
-                                                <div class="btn-group" style=>
-                                                    <button class="btn btn-primary" onclick="post(${editUrl})"
-                                                            id="edit-hobby"><span class="glyphicon glyphicon-pencil"
-                                                                                  aria-hidden="true"></span>
-                                                    </button>
-                                                    <button class="btn btn-danger" onclick="post(${deleteUrl})"
-                                                            id="delete-hobby"><span
-                                                            class="glyphicon glyphicon-trash"
-                                                            aria-hidden="true"></span></button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </c:forEach>
-                                    </tbody>
-                                </table>
+                            <div class="panel-group" id="hobbyCollapseGroup" role="tablist"
+                                 aria-multiselectable="true">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading" role="tab" id="hobbyHeadingOne">
+                                        <h4 class="panel-title">
+                                            <a role="button" data-toggle="collapse"
+                                               data-parent="#hobbyCollapseGroup" href="#hobbyCollapseOne"
+                                               aria-expanded="false" aria-controls="hobbyCollapseOne">
+                                                Добавить новое хобби
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="hobbyCollapseOne" class="panel-collapse collapse" role="tabpanel"
+                                         aria-labelledby="hobbyHeadingOne" aria-expanded="false" style="height: 0px">
+                                        <div class="panel-body">
+                                            <table class="table table-hover-my">
+                                                <thead>
+                                                <tr>
+                                                    <th class="hobbyTitleTh">Название</th>
+                                                    <th class="hobbyDescriptionTh">Описание</th>
+                                                    <th class="hobbyBtnTh"></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td style="text-align:center; vertical-align:middle">
+                                                        <input class="form-control" id="hobbyTitleInput"
+                                                               type="text">
+                                                    </td>
+                                                    <td style="text-align:center; vertical-align:middle">
+                                                        <input class="form-control" id="hobbyDescriptionInput"
+                                                               type="text">
+                                                    </td>
+                                                    <td>
+                                                        <button id="saveHobbyBtn" style="width: 160px"
+                                                                class="btn btn-success"><span
+                                                                class="glyphicon glyphicon-save"
+                                                                aria-hidden="true"></span>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading" role="tab" id="hobbyHeadingTwo">
+                                        <h4 class="panel-title">
+                                            <a class="" role="button" data-toggle="collapse"
+                                               data-parent="#hobbyCollapseGroup" href="#hobbyCollapseTwo"
+                                               aria-expanded="true" aria-controls="hobbyCollapseTwo">
+                                                Мои хобби
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="hobbyCollapseTwo" class="panel-collapse collapse in" role="tabpanel"
+                                         aria-labelledby="hobbyHeadingTwo" aria-expanded="true" style="">
+                                        <div class="panel-body">
+                                            <table class="table table-hover-my">
+                                                <thead>
+                                                <tr>
+                                                    <th class="hobbyTitleTh">Название</th>
+                                                    <th class="hobbyDescriptionTh">Описание</th>
+                                                    <th class="hobbyBtnTh"></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <c:forEach items="${user.hobbies}" var="hobby">
+                                                    <tr>
+                                                        <td id="hobby-title"
+                                                            style="text-align:center; vertical-align:middle">${hobby.title}</td>
+                                                        <td id="hobby-description"
+                                                            style="text-align:center; vertical-align:middle">${hobby.description}</td>
+                                                        <td class="hobbyCellBtn">
+                                                            <spring:url value="/hobies/${hobby.id}/edit"
+                                                                        var="editUrl"/>
+                                                            <spring:url value="/hobies/${hobby.id}/delete"
+                                                                        var="deleteUrl"/>
+                                                            <div class="btn-group" style=>
+                                                                <button class="btn btn-primary"
+                                                                        onclick="post(${editUrl})"
+                                                                        id="edit-hobby"><span
+                                                                        class="glyphicon glyphicon-pencil"
+                                                                        aria-hidden="true"></span>
+                                                                </button>
+                                                                <button class="btn btn-danger"
+                                                                        onclick="post(${deleteUrl})"
+                                                                        id="delete-hobby"><span
+                                                                        class="glyphicon glyphicon-trash"
+                                                                        aria-hidden="true"></span></button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </c:forEach>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -309,52 +409,130 @@
                 <div role="tabpanel" class="tab-pane fade in" id="places-panel">
                     <div class="row tab-home">
                         <div class="row row-home">
-                            <div class="table-home">
-                                <table class="table table-hover-my">
-                                    <thead>
-                                    <tr>
-                                        <th id="postPhotoTh">Фото</th>
-                                        <th id="postTitleTh">Название</th>
-                                        <th id="postDescriptionTh">Описание</th>
-                                        <th id="postLatitudeTh">Широта</th>
-                                        <th id="postLongitudeTh">Долгота</th>
-                                        <th id="postBtnTh"></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <c:forEach items="${user.places}" var="place">
-                                        <tr>
-                                            <td id="place-photo" style="text-align:center; vertical-align:middle"><img
-                                                    src=${place.photo} alt="../../resources/img/no-photo.png"
-                                                    class="img-rounded"
-                                                    width="30"
-                                                    height="30"></td>
-                                            <td id="place-title"
-                                                style="text-align:center; vertical-align:middle">${place.title}</td>
-                                            <td id="place-description"
-                                                style="text-align:center; vertical-align:middle">${place.description}</td>
-                                            <td id="place-latitude"
-                                                style="text-align:center; vertical-align:middle">${place.latitude}</td>
-                                            <td id="place-longitude"
-                                                style="text-align:center; vertical-align:middle">${place.longitude}</td>
-                                            <td id="postCellBtn">
-                                                <spring:url value="/places/${place.id}/edit" var="editUrl"/>
-                                                <spring:url value="/places/${place.id}/delete" var="deleteUrl"/>
-                                                <div class="btn-group">
-                                                    <button class="btn btn-primary" onclick="post(${editUrl})"
-                                                            id="edit-place"><span
-                                                            class="glyphicon glyphicon-pencil"
-                                                            aria-hidden="true"></span></button>
-                                                    <button class="btn btn-danger" onclick="post(${deleteUrl})"
-                                                            id="delete-place"><span
-                                                            class="glyphicon glyphicon-trash"
-                                                            aria-hidden="true"></span></button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </c:forEach>
-                                    </tbody>
-                                </table>
+                            <div class="panel-group" id="placeCollapseGroup" role="tablist"
+                                 aria-multiselectable="true">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading" role="tab" id="placeHeadingOne">
+                                        <h4 class="panel-title">
+                                            <a role="button" data-toggle="collapse"
+                                               data-parent="#placeCollapseGroup" href="#placeCollapseOne"
+                                               aria-expanded="false" aria-controls="placeCollapseOne">
+                                                Добавить новое место
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="placeCollapseOne" class="panel-collapse collapse" role="tabpanel"
+                                         aria-labelledby="placeHeadingOne" aria-expanded="false" style="height: 0px">
+                                        <div class="panel-body">
+                                            <table class="table table-hover-my">
+                                                <thead>
+                                                <tr>
+                                                    <th class="placeBtnTh">Фото</th>
+                                                    <th class="placeTitleTh">Название</th>
+                                                    <th class="placeDescriptionTh">Описание</th>
+                                                    <th class="placeLatitudeTh">Широта</th>
+                                                    <th class="placeLongitudeTh">Долгота</th>
+                                                    <th class="placePhotoTh"></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td style="text-align:center; vertical-align:middle">
+                                                        <input class="form-control" id="placePhotoInput"
+                                                               type="text">
+                                                    </td>
+                                                    <td style="text-align:center; vertical-align:middle">
+                                                        <input class="form-control" id="placeTitleInput"
+                                                               type="text">
+                                                    </td>
+                                                    <td style="text-align:center; vertical-align:middle">
+                                                        <input class="form-control" id="placeDescriptionInput"
+                                                               type="text">
+                                                    </td>
+                                                    <td style="text-align:center; vertical-align:middle">
+                                                        <input class="form-control" id="placeLatitudeInput"
+                                                               type="text">
+                                                    </td>
+                                                    <td style="text-align:center; vertical-align:middle">
+                                                        <input class="form-control" id="placeLongitudeInput"
+                                                               type="text">
+                                                    </td>
+                                                    <td class="placeCellBtn">
+                                                        <button id="savePlaceBtn" class="btn btn-success"><span
+                                                                class="glyphicon glyphicon-save"
+                                                                aria-hidden="true"></span></button>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading" role="tab" id="placeHeadingTwo">
+                                        <h4 class="panel-title">
+                                            <a class="" role="button" data-toggle="collapse"
+                                               data-parent="#placeCollapseGroup" href="#placeCollapseTwo"
+                                               aria-expanded="true" aria-controls="placeCollapseTwo">
+                                                Мои места
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="placeCollapseTwo" class="panel-collapse collapse in" role="tabpanel"
+                                         aria-labelledby="placeHeadingTwo" aria-expanded="true" style="">
+                                        <div class="panel-body">
+                                            <table class="table table-hover-my">
+                                                <thead>
+                                                <tr>
+                                                    <th class="placePhotoTh">Фото</th>
+                                                    <th class="placeTitleTh">Название</th>
+                                                    <th class="placeDescriptionTh">Описание</th>
+                                                    <th class="placeLatitudeTh">Широта</th>
+                                                    <th class="placeLongitudeTh">Долгота</th>
+                                                    <th class="placeBtnTh"></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <c:forEach items="${user.places}" var="place">
+                                                    <tr>
+                                                        <td id="place-photo"
+                                                            style="text-align:center; vertical-align:middle"><img
+                                                                src="${place.photo}"
+                                                                alt="../../resources/img/no-photo.png"
+                                                                class="img-rounded"
+                                                                height="30"></td>
+                                                        <td id="place-title"
+                                                            style="text-align:center; vertical-align:middle">${place.title}</td>
+                                                        <td id="place-description"
+                                                            style="text-align:center; vertical-align:middle">${place.description}</td>
+                                                        <td id="place-latitude"
+                                                            style="text-align:center; vertical-align:middle">${place.latitude}</td>
+                                                        <td id="place-longitude"
+                                                            style="text-align:center; vertical-align:middle">${place.longitude}</td>
+                                                        <td class="placeCellBtn">
+                                                            <spring:url value="/places/${place.id}/edit" var="editUrl"/>
+                                                            <spring:url value="/places/${place.id}/delete"
+                                                                        var="deleteUrl"/>
+                                                            <div class="btn-group">
+                                                                <button class="btn btn-primary"
+                                                                        onclick="post(${editUrl})"
+                                                                        id="edit-place"><span
+                                                                        class="glyphicon glyphicon-pencil"
+                                                                        aria-hidden="true"></span></button>
+                                                                <button class="btn btn-danger"
+                                                                        onclick="post(${deleteUrl})"
+                                                                        id="delete-place"><span
+                                                                        class="glyphicon glyphicon-trash"
+                                                                        aria-hidden="true"></span></button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </c:forEach>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

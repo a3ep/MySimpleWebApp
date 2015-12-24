@@ -1,12 +1,10 @@
 package net.bondar.web.controller;
 
-import net.bondar.web.model.Contact;
-import net.bondar.web.model.Hobby;
-import net.bondar.web.model.Place;
-import net.bondar.web.model.ResponseMessage;
+import net.bondar.web.model.*;
 import net.bondar.web.service.ContactService;
 import net.bondar.web.service.HobbyService;
 import net.bondar.web.service.PlaceService;
+import net.bondar.web.service.PostService;
 import net.bondar.web.validator.UserSingInValidator;
 import net.bondar.web.validator.UserValidator;
 import org.slf4j.Logger;
@@ -44,6 +42,9 @@ public class RegistrationController {
     private PlaceService placeService;
 
     @Autowired
+    private PostService postService;
+
+    @Autowired
     private MessageSource messageSource;
 
     @Autowired
@@ -58,11 +59,11 @@ public class RegistrationController {
         binder.registerCustomEditor(Date.class, editor);
     }
 
-    @RequestMapping(value = "/login-registerPanel", method = RequestMethod.GET)
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String getLogin(Model model) {
         logger.warn("getLogin()");
         model.addAttribute("userForm", new Contact());
-        return "login-registerPanel";
+        return "login";
     }
 
     @RequestMapping(value = "/test", method=RequestMethod.GET)
@@ -91,7 +92,12 @@ public class RegistrationController {
         service.addPlaceToContact(contact1, place1);
         service.addPlaceToContact(contact1, place2);
 
-        return "redirect:/index";
+//                     Ошибка SQL!!!!!
+//        Post post1 = new Post(contact2, "Привет!", new Date());
+//        postService.savePost(post1);
+//        service.addPostToContact(contact1, post1);
+
+        return "redirect:/1";
     }
 
     @RequestMapping(value = "/saveContact", method = RequestMethod.POST)
@@ -101,7 +107,7 @@ public class RegistrationController {
         userValidator.validate(contact, result);
         if (result.hasErrors()) {
 //            model.addAttribute("userForm", contact);
-            return "login-registerPanel";
+            return "login";
         } else {
             redirectAttributes.addFlashAttribute("css", "success");
             redirectAttributes.addFlashAttribute("msg", "Congratulations " + contact.getFirstName() + ", registration successful!:)");

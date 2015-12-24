@@ -1,20 +1,22 @@
 package net.bondar.web.model;
 
+import net.bondar.web.model.dto.ContactDto;
+
 /**
  * Created by AzeraL on 30.11.2015.
  */
 public class ResponseMessage {
     private String status;
     private Contact contact;
-    private ContactFieldsTransport cft;
+    private ContactDto contactDto;
     private String errorMessage;
 
     public static ResponseMessage okMessage(Contact contact) {
         return new ResponseMessage("OK", contact);
     }
 
-    public static ResponseMessage okMessage(ContactFieldsTransport cft){
-        return new ResponseMessage("OK", cft);
+    public static ResponseMessage okMessage(ContactDto contactDto){
+        return new ResponseMessage("OK", contactDto);
     }
 
     public static ResponseMessage errorMessage(String message) {
@@ -31,9 +33,9 @@ public class ResponseMessage {
         this.errorMessage = errorMessage;
     }
 
-    private ResponseMessage(String status, ContactFieldsTransport cft){
+    private ResponseMessage(String status, ContactDto contactDto){
         this.status = status;
-        this.cft = cft;
+        this.contactDto = contactDto;
     }
 
     public String getStatus() {
@@ -44,8 +46,8 @@ public class ResponseMessage {
         return contact;
     }
 
-    public ContactFieldsTransport getCft() {
-        return cft;
+    public ContactDto getContactDto() {
+        return contactDto;
     }
 
     public String getErrorMessage() {

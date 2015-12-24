@@ -265,39 +265,6 @@
                                            value="Войти">
                                 </div>
                             </form:form>
-                            <%--<spring:url value="/author" var="userAuthUrl"/>--%>
-                            <%--<form:form class="form-horizontal" method="get" modelAttribute="userForm"--%>
-                            <%--action="${userAuthUrl}">--%>
-
-                            <%--<spring:bind path="userName">--%>
-                            <%--<div class="form-group ${status.error ? 'has-error' : ''}">--%>
-                            <%--<label class="col-lg-2 control-label">Введите логин:</label>--%>
-
-                            <%--<div class="col-lg-6">--%>
-                            <%--<form:input path="userName" type="text" class="form-control" id="userName"--%>
-                            <%--placeholder="Логин"/>--%>
-                            <%--<form:errors path="userName" class="control-label"/>--%>
-                            <%--</div>--%>
-                            <%--</div>--%>
-                            <%--</spring:bind>--%>
-                            <%--<spring:bind path="password">--%>
-                            <%--<div class="form-group ${status.error ? 'has-error' : ''}">--%>
-                            <%--<label class="col-lg-2 control-label">Введите пароль:</label>--%>
-
-                            <%--<div class="col-lg-6">--%>
-                            <%--<form:input path="password" class="form-control"--%>
-                            <%--id="password" placeholder="Пароль"/>--%>
-                            <%--<form:errors path="password" class="control-label"/>--%>
-                            <%--</div>--%>
-                            <%--</div>--%>
-                            <%--</spring:bind>--%>
-                            <%--<div class="form-group">--%>
-                            <%--<div class="col-sm-offset-2 col-sm-10">--%>
-                            <%--<button type="submit" class="btn-lg btn-default pull-right">Войти--%>
-                            <%--</button>--%>
-                            <%--</div>--%>
-                            <%--</div>--%>
-                            <%--</form:form>--%>
                         </div>
                     </div>
                 </div>

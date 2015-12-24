@@ -25,7 +25,27 @@ $(document).ready(function() {
             data: '{"firstName": "' + firstName +'", "lastName": "' + lastName + '", "birthDate": "' + birthDate + '"}',
             success: function (result) {
                 if (result.status === 'OK'){
-                    $('h1').text("Добро пожаловать " + result.cft.firstName + "!");
+                    $('h1').text("Добро пожаловать " + result.contactDto.firstName + "!");
+                    displaySuccess()
+                }else{
+                    displayError(data.errorMessage);
+                }
+            }
+        });
+    });
+
+    $('#saveHobbyBtn').click(function(){
+        var hobbyTitle = $('#hobbyTitleInput').val();
+        var hobbyDescription = $('#hobbyDescriptionInput').val();
+
+        $.ajax({
+            type: "POST",
+            url: '/saveHobby',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: '{"title": "' + hobbyTitle +'", "description": "' + hobbyDescription + '"}',
+            success: function (result) {
+                if (result.status === 'OK'){
                     displaySuccess()
                 }else{
                     displayError(data.errorMessage);

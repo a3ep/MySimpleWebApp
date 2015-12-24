@@ -208,59 +208,70 @@ body{
 #friendCellBtn .btn-group button{
     width: 70px;
 }
+.message{
+    /*outline: 2px solid #FF8000;*/
+    width: 600px;
+    max-width: 600px;
+    margin: 0 0 20px 0;
+}
 
 
             /*HOBBY*/
 
-#hobbyTitleTh{
+.hobbyTitleTh{
     width: 200px;
     text-align: center;
 }
-#hobbyDescriptionTh{
+.hobbyDescriptionTh{
     width: 500px;
     text-align: center;
 }
-#hobbyBtnTh{
+.hobbyBtnTh{
     width: 160px;
 }
-#hobbyCellBtn .btn-group {
+.hobbyCellBtn .btn-group {
     width: 160px;
 }
 
-#hobbyCellBtn .btn-group button{
+.hobbyCellBtn .btn-group button{
     width: 80px;
 }
+.well-home{
+    padding: 0px;
+
+}
 
 
-             /*POST*/
+             /*PLACE*/
 
-#postPhotoTh{
+.placePhotoTh {
     width: 60px;
     text-align: center;
 }
-#postTitleTh{
+.placeTitleTh {
     width: 160px;
     text-align: center;
 }
-#postDescriptionTh{
+.placeDescriptionTh {
     width: 300px;
     text-align: center;
 }
-#postLatitudeTh{
+.placeLatitudeTh {
     width: 90px;
     text-align: center;
 }
-#postLongitudeTh{
+.placeLongitudeTh {
     width: 90px;
     text-align: center;
 }
-#postBtnTh{
+.placeBtnTh {
     width: 160px;
+    text-align: center;
 }
-#postCellBtn .btn-group {
+.placeCellBtn .btn-group {
     width: 160px;
 }
 
-#postCellBtn .btn-group button{
+.placeCellBtn .btn-group button{
     width: 80px;
 }
