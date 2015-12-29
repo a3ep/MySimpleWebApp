@@ -14,6 +14,7 @@ body{
 
 .table-hover-my > tbody > tr:hover {
     background-color: #D9EDF7;
+    max-width: 900px;
 }
 
 .tabbable {
@@ -269,9 +270,9 @@ body{
     text-align: center;
 }
 .placeCellBtn .btn-group {
-    width: 160px;
+    width: 100px;
 }
 
 .placeCellBtn .btn-group button{
-    width: 80px;
+    width: 50px;
 }

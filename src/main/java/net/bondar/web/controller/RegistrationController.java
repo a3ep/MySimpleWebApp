@@ -97,7 +97,7 @@ public class RegistrationController {
 //        postService.savePost(post1);
 //        service.addPostToContact(contact1, post1);
 
-        return "redirect:/1";
+        return "redirect:/login";
     }
 
     @RequestMapping(value = "/saveContact", method = RequestMethod.POST)
@@ -138,7 +138,7 @@ public class RegistrationController {
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public ResponseMessage handleException(Exception e) {
-        logger.debug("handlerException()");
+        logger.debug("handlerException()",e);
         return ResponseMessage.errorMessage(e.getMessage());
     }
 

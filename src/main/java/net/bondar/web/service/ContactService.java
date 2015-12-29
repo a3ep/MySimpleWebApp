@@ -110,11 +110,27 @@ public class ContactService {
         contactDao.flush();
     }
 
+    public void removeHobby(Contact contact, Hobby hobby){
+        if(contact.getHobbies().contains(hobby)){
+            contact.getHobbies().remove(hobby);
+            contactDao.update(contact);
+            contactDao.flush();
+        }
+    }
+
     public void addPlaceToContact(Contact contact, Place place) {
         if(contact.getPlaces().contains(place)) throw new ExistingPlaceException();
         contact.getPlaces().add(place);
         contactDao.update(contact);
         contactDao.flush();
+    }
+
+    public void removePlace(Contact contact, Place place){
+        if(contact.getPlaces().contains(place)){
+            contact.getPlaces().remove(place);
+            contactDao.update(contact);
+            contactDao.flush();
+        }
     }
 
     public void addFriendship(Contact who, Contact with) {

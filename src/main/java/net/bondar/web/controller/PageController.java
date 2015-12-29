@@ -1,12 +1,16 @@
 package net.bondar.web.controller;
 
+import com.sun.deploy.net.HttpResponse;
 import net.bondar.web.model.Contact;
 import net.bondar.web.model.Hobby;
+import net.bondar.web.model.Place;
 import net.bondar.web.model.dto.ContactDto;
 import net.bondar.web.model.ResponseMessage;
 import net.bondar.web.model.dto.HobbyDto;
+import net.bondar.web.model.dto.PlaceDto;
 import net.bondar.web.service.ContactService;
 import net.bondar.web.service.HobbyService;
+import net.bondar.web.service.PlaceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +24,9 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -37,6 +43,9 @@ public class PageController {
 
     @Autowired
     private HobbyService hobbyService;
+
+    @Autowired
+    private PlaceService placeService;
 
     @Autowired
     private MessageSource messageSource;
@@ -58,7 +67,7 @@ public class PageController {
 
     @RequestMapping(value = "/edit/profile", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseMessage editProfile(@RequestBody ContactDto contactDto, BindingResult bindingResult, HttpSession session, final RedirectAttributes redirectAttributes){
+    public ResponseMessage editProfile(@RequestBody ContactDto contactDto, HttpSession session){
         logger.debug("editProfile()");
         try {
             Contact user = (Contact)session.getAttribute("USER");
@@ -68,77 +77,121 @@ public class PageController {
 
             service.updateContact(user);
 
-            if (bindingResult.hasErrors()) {
-                String errors = "";
-                for (Object object : bindingResult.getAllErrors()) {
-                    if(object instanceof FieldError) {
-                        FieldError fieldError = (FieldError) object;
-                        errors += messageSource.getMessage(fieldError, null);
-                    }
-                }
-                redirectAttributes.addFlashAttribute("css", "danger");
-                redirectAttributes.addFlashAttribute("msg", "Error! Profile does't change!");
-                return ResponseMessage.errorMessage(errors);
-            } else {
-                redirectAttributes.addFlashAttribute("css", "success");
-                redirectAttributes.addFlashAttribute("msg", "Done!");
-                return ResponseMessage.okMessage(contactDto);
-            }
         } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseMessage.errorMessage("Error! Profile does't change!");
+            logger.debug("Edit profile error!", e);
+            return ResponseMessage.errorMessage(e.getMessage());
         }
+        return ResponseMessage.okMessage(contactDto);
+    }
+
+    @RequestMapping(value = "/friends/{id}/remove", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseMessage removeFriend(@PathVariable("id") long id, HttpSession session) {
+        logger.warn("removeFriend() : {}", id);
+
+        Contact user = (Contact)session.getAttribute("USER");
+        Contact friend = service.findContactById(id);
+        String friendName = friend.getFirstName() +" "+ friend.getLastName();
+        try {
+            service.removeFriendship(user,friend);
+        } catch (Exception e) {
+            logger.debug("Remove friend error", e);
+            return ResponseMessage.errorMessage(e.getMessage());
+        }
+        return ResponseMessage.okMessage("Success! "+ friendName + " removed from friends:)" );
     }
 
     @RequestMapping(value = "/saveHobby", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseMessage saveHobby(@RequestBody HobbyDto hobbyDto, HttpSession session, BindingResult bindingResult, Model model){
+    public ResponseMessage saveHobby(@RequestBody HobbyDto hobbyDto, HttpSession session){
         logger.warn("saveHobby()");
         try {
             Hobby hobby = hobbyService.saveHobby(hobbyDto.getTitle(), hobbyDto.getDescription());
             Contact user = (Contact) session.getAttribute("USER");
             service.addHobbyToContact(user, hobby);
-
-            if (bindingResult.hasErrors()) {
-                String errors = "";
-                for (Object object : bindingResult.getAllErrors()) {
-                    if (object instanceof FieldError) {
-                        FieldError fieldError = (FieldError) object;
-                        errors += messageSource.getMessage(fieldError, null);
-                    }
-                }
-                return ResponseMessage.errorMessage(errors);
-            }else{
-                model.addAttribute("USER", user);
-                return ResponseMessage.okMessage(user);
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-            return ResponseMessage.errorMessage("Error! Hobby does't save!");
+        } catch (Exception e) {
+            logger.debug("Save hobby error!", e);
+            return ResponseMessage.errorMessage(e.getMessage());
         }
+        return ResponseMessage.okMessage("Success! New hobby saved:)");
     }
 
-    @RequestMapping(value = "/friends/{id}/delete", method = RequestMethod.POST)
-    public String deleteUser(@PathVariable("id") long id, Model model,HttpSession session, final RedirectAttributes redirectAttributes) {
-        logger.warn("deleteUser() : {}", id);
+    @RequestMapping(value = "/hobbies/{id}/edit", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseMessage editHobby(@PathVariable("id") long id, @RequestBody HobbyDto hobbyDto, HttpSession session) {
+        logger.warn("editHobby() : {}", id);
+        logger.warn(hobbyDto.getTitle());
+        Contact user = (Contact)session.getAttribute("USER");
+        Hobby hobby = hobbyService.findHobbyById(id);
+        hobby.setTitle(hobbyDto.getTitle());
+        hobby.setDescription(hobbyDto.getDescription());
+        try {
+            hobbyService.updateHobby(hobby);
+            service.updateContact(user);
+        } catch (Exception e) {
+            logger.debug("Edit hobby error", e);
+            return ResponseMessage.errorMessage(e.getMessage());
+        }
+        return ResponseMessage.okMessage(hobby);
+    }
+
+    @RequestMapping(value = "/hobbies/{id}/remove", method = RequestMethod.POST)
+     @ResponseBody
+     public ResponseMessage removeHobby(@PathVariable("id") long id, HttpSession session) {
+        logger.warn("removeHobby() : {}", id);
 
         Contact user = (Contact)session.getAttribute("USER");
-        Contact friend = service.findContactById(id);
-        System.out.println(user.getFriendList());
+        Hobby hobby = hobbyService.findHobbyById(id);
+        String hobbyTitle = hobby.getTitle();
         try {
-            service.removeFriendship(user,friend);
+            service.removeHobby(user,hobby);
+            hobbyService.deleteHobby(id);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.debug("Remove hobby error", e);
+            return ResponseMessage.errorMessage(e.getMessage());
         }
-
-        redirectAttributes.addFlashAttribute("css", "success");
-        redirectAttributes.addFlashAttribute("msg", "Friend was removed!");
-        model.addAttribute("user", user);
-        return "redirect:/home#tab_friends-panel";
-
+        return ResponseMessage.okMessage("Success! Hobby \"" + hobbyTitle + "\" removed:)");
     }
 
+    @RequestMapping(value = "/places/{id}/edit", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseMessage editPlace(@PathVariable("id") long id, @RequestBody PlaceDto placeDto, HttpSession session) {
+        logger.warn("editPlace() : {}", id);
+        logger.warn(placeDto.getTitle());
+        Contact user = (Contact)session.getAttribute("USER");
+        Place place = placeService.findPlaceById(id);
+        place.setTitle(placeDto.getTitle());
+        place.setDescription(placeDto.getDescription());
+        place.setLatitude(placeDto.getLatitude());
+        place.setLongitude(placeDto.getLongitude());
+        try {
+            placeService.updatePlace(place);
+            service.updateContact(user);
+        } catch (Exception e) {
+            logger.debug("Edit place error", e);
+            return ResponseMessage.errorMessage(e.getMessage());
+        }
+        return ResponseMessage.okMessage(place);
+    }
 
+    @RequestMapping(value = "/places/{id}/remove", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseMessage removePlace(@PathVariable("id") long id, HttpSession session) {
+        logger.warn("removePlace{() : {}", id);
+
+        Contact user = (Contact)session.getAttribute("USER");
+        Place place = placeService.findPlaceById(id);
+        String placeTitle = place.getTitle();
+
+        try {
+            service.removePlace(user, place);
+            placeService.deletePlace(id);
+        } catch (Exception e) {
+            logger.debug("Remove place error", e);
+            return ResponseMessage.errorMessage(e.getMessage());
+        }
+        return ResponseMessage.okMessage("Success! Place \"" + placeTitle + "\" removed:)");
+    }
 
     @ExceptionHandler(Exception.class)
     @ResponseBody

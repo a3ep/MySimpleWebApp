@@ -35,6 +35,18 @@ public class PlaceService {
         return placeDao.save(place);
     }
 
+    public Place updatePlace(Place place){
+        return placeDao.update(place);
+    }
+
+    public void deletePlace(Place place){
+        placeDao.delete(place);
+    }
+
+    public void deletePlace(long id){
+        placeDao.delete(id);
+    }
+
     public Place findPlaceById(long id) {
         return placeDao.findById(id);
     }

@@ -82,6 +82,36 @@ public class Place extends AbstractEntity{
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Place place = (Place) o;
+
+        if (Long.compare(place.getId(), super.getId()) !=0) return false;
+        if (Double.compare(place.latitude, latitude) != 0) return false;
+        if (Double.compare(place.longitude, longitude) != 0) return false;
+        if (title != null ? !title.equals(place.title) : place.title != null) return false;
+        if (description != null ? !description.equals(place.description) : place.description != null) return false;
+        return !(photo != null ? !photo.equals(place.photo) : place.photo != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = title != null ? title.hashCode() : 0;
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        temp = Double.doubleToLongBits(latitude);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(longitude);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (photo != null ? photo.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "Place{" +
                 "id=" + super.getId() +

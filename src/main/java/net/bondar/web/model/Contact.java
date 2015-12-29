@@ -182,6 +182,32 @@ public class Contact extends AbstractEntity{
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Contact contact = (Contact) o;
+
+        if (Long.compare(contact.getId(), super.getId()) !=0) return false;
+        if (firstName != null ? !firstName.equals(contact.firstName) : contact.firstName != null) return false;
+        if (lastName != null ? !lastName.equals(contact.lastName) : contact.lastName != null) return false;
+        if (birthDate != null ? !birthDate.equals(contact.birthDate) : contact.birthDate != null) return false;
+        if (userName != null ? !userName.equals(contact.userName) : contact.userName != null) return false;
+        return !(password != null ? !password.equals(contact.password) : contact.password != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = firstName != null ? firstName.hashCode() : 0;
+        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (birthDate != null ? birthDate.hashCode() : 0);
+        result = 31 * result + (userName != null ? userName.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "Contact{" +
                 "id='" + super.getId() + '\'' +

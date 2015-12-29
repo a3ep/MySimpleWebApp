@@ -17,8 +17,8 @@
     <script type="text/javascript" src="webjars/jquery/2.1.4/jquery.js"></script>
     <script type="text/javascript" src="webjars/bootstrap/3.3.6/js/bootstrap.js"></script>
     <script type="text/javascript" src="../../resources/js/home-script.js"></script>
-    <script type="text/javascript" src="../../resources/js/post.js"></script>
-    <script type="text/javascript" src="webjars/jquery.lazyload/1.9.3/jquery.lazyload.js"></script>
+    <%--<script type="text/javascript" src="../../resources/js/post.js"></script>--%>
+    <%--<script type="text/javascript" src="webjars/jquery.lazyload/1.9.3/jquery.lazyload.js"></script>--%>
 
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -27,17 +27,13 @@
 </head>
 <body>
 <div class="container-home">
-    <c:if test="${not empty msg}">
-        <div class="alert alert-${css} alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            <strong style=" text-align: center">${msg}</strong>
-            <strong id="response" style="text-align: center"></strong>
-        </div>
-    </c:if>
-
     <div class="header-home text-center">
+        <div id="alert" class="alert alert-dismissible fade in" role="alert" style="margin: 0;">
+            <%--<button type="button" class="close" data-dismiss="alert" aria-label="Close">--%>
+                <%--<span aria-hidden="true">&times;</span>--%>
+            <%--</button>--%>
+            <span id="alert-message" style="text-align:center; font-weight: bold"></span>
+        </div>
         <h1 id="h1" datatype="utf-8">Добро пожаловать ${user.firstName}!</h1>
     </div>
 
@@ -55,9 +51,9 @@
             <ul class="nav nav-tabs">
                 <li role="presentation" class="active"><a href="#user-info-panel" role="tab"
                                                           data-toggle="tab">Профиль</a></li>
-                <li role=presentation class="lazy"><a href="#friends-panel" role="tab" data-toggle="tab">Друзья</a></li>
-                <li role=presentation class="lazy"><a href="#hobbies-panel" role="tab" data-toggle="tab">Хобби</a></li>
-                <li role=presentation class="lazy"><a href="#places-panel" role="tab" data-toggle="tab">Места</a></li>
+                <li role=presentation <%--class="lazy"--%>><a href="#friends-panel" role="tab" data-toggle="tab">Друзья</a></li>
+                <li role=presentation <%--class="lazy"--%>><a href="#hobbies-panel" role="tab" data-toggle="tab">Хобби</a></li>
+                <li role=presentation <%--class="lazy"--%>><a href="#places-panel" role="tab" data-toggle="tab">Места</a></li>
             </ul>
 
             <div id="content" class="tab-content">
@@ -78,7 +74,7 @@
                                     <tr>
                                         <td id="profileFirstCol" class="fontBold">Имя</td>
                                         <td id="profileLastCol">
-                                            <input id="firstName" style="text-align: center; border: none"
+                                            <input id="firstName" style="text-align: center; border: none; background-color: transparent"
                                                    value="${user.firstName}"/>
                                         </td>
                                     </tr>
@@ -86,14 +82,14 @@
                                     <tr>
                                         <td class="fontBold">Фамилия</td>
                                         <td>
-                                            <input id="lastName" style="text-align: center; border: none"
+                                            <input id="lastName" style="text-align: center; border: none; background-color: transparent"
                                                    value="${user.lastName}"/>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="fontBold">День рождения</td>
                                         <td>
-                                            <input id="birthDate" style="text-align: center; border: none"
+                                            <input id="birthDate" style="text-align: center; border: none; background-color: transparent"
                                                    value="<fmt:formatDate value="${user.birthDate}" pattern="yyyy-MM-dd"/>"/>
                                         </td>
                                     </tr>
@@ -151,7 +147,7 @@
                                             <td id="friendCellBtn">
                                                 <spring:url value="/friends/${friend.id}/message" var="messageUrl"/>
                                                 <spring:url value="/friends/${friend.id}/post" var="postUrl"/>
-                                                <spring:url value="/friends/${friend.id}/delete" var="deleteUrl"/>
+                                                <spring:url value="/friends/${friend.id}/remove" var="deleteUrl"/>
                                                 <div class="btn-group">
                                                     <button id="messageBtn" class="btn btn-success" data-toggle="modal"
                                                             data-target="#modalMessage"><span
@@ -161,7 +157,7 @@
                                                             data-target="#modalPost"><span
                                                             class="glyphicon glyphicon-comment"
                                                             aria-hidden="true"></span></button>
-                                                    <button class="btn btn-danger" onclick="post('${deleteUrl}')"><span
+                                                    <button id="removeFriendBtn" class="btn btn-danger" onclick="removeFriend(${friend.id}, this.closest('tr'))"><span
                                                             class="glyphicon glyphicon-trash"
                                                             aria-hidden="true"></span></button>
                                                 </div>
@@ -308,7 +304,7 @@
                                             <a role="button" data-toggle="collapse"
                                                data-parent="#hobbyCollapseGroup" href="#hobbyCollapseOne"
                                                aria-expanded="false" aria-controls="hobbyCollapseOne">
-                                                Добавить новое хобби
+                                                Добавить новое хобби?
                                             </a>
                                         </h4>
                                     </div>
@@ -371,24 +367,23 @@
                                                 <c:forEach items="${user.hobbies}" var="hobby">
                                                     <tr>
                                                         <td id="hobby-title"
-                                                            style="text-align:center; vertical-align:middle">${hobby.title}</td>
+                                                            style="text-align:center; vertical-align:middle">
+                                                            <input id="hobbyTitle" style="text-align: center; border: none; background-color: transparent"
+                                                                   value="${hobby.title}"/>
+                                                            </td>
                                                         <td id="hobby-description"
-                                                            style="text-align:center; vertical-align:middle">${hobby.description}</td>
+                                                            style="text-align:center; vertical-align:middle">
+                                                            <input id="hobbyDescription" style="text-align: center; border: none; background-color: transparent"
+                                                                   value="${hobby.description}"/>
+                                                            </td>
                                                         <td class="hobbyCellBtn">
-                                                            <spring:url value="/hobies/${hobby.id}/edit"
-                                                                        var="editUrl"/>
-                                                            <spring:url value="/hobies/${hobby.id}/delete"
-                                                                        var="deleteUrl"/>
-                                                            <div class="btn-group" style=>
-                                                                <button class="btn btn-primary"
-                                                                        onclick="post(${editUrl})"
-                                                                        id="edit-hobby"><span
+                                                            <div class="btn-group">
+                                                                <button class="btn btn-primary" onclick="editHobby(${hobby.id})"><span
                                                                         class="glyphicon glyphicon-pencil"
                                                                         aria-hidden="true"></span>
                                                                 </button>
                                                                 <button class="btn btn-danger"
-                                                                        onclick="post(${deleteUrl})"
-                                                                        id="delete-hobby"><span
+                                                                        onclick="removeHobby(${hobby.id}, this.closest('tr'))"><span
                                                                         class="glyphicon glyphicon-trash"
                                                                         aria-hidden="true"></span></button>
                                                             </div>
@@ -410,14 +405,14 @@
                     <div class="row tab-home">
                         <div class="row row-home">
                             <div class="panel-group" id="placeCollapseGroup" role="tablist"
-                                 aria-multiselectable="true">
+                                 aria-multiselectable="true" style="width: 950px">
                                 <div class="panel panel-primary">
                                     <div class="panel-heading" role="tab" id="placeHeadingOne">
                                         <h4 class="panel-title">
                                             <a role="button" data-toggle="collapse"
                                                data-parent="#placeCollapseGroup" href="#placeCollapseOne"
                                                aria-expanded="false" aria-controls="placeCollapseOne">
-                                                Добавить новое место
+                                                Добавить новое место?
                                             </a>
                                         </h4>
                                     </div>
@@ -502,26 +497,33 @@
                                                                 class="img-rounded"
                                                                 height="30"></td>
                                                         <td id="place-title"
-                                                            style="text-align:center; vertical-align:middle">${place.title}</td>
+                                                            style="text-align:center; vertical-align:middle">
+                                                            <input id="placeTitle" style="text-align: center; border: none; background-color: transparent"
+                                                                   value="${place.title}"/>
+                                                            </td>
                                                         <td id="place-description"
-                                                            style="text-align:center; vertical-align:middle">${place.description}</td>
+                                                            style="text-align:center; vertical-align:middle">
+                                                            <input id="placeDescription" style="text-align: center; border: none; background-color: transparent"
+                                                                   value="${place.description}"/>
+                                                            </td>
                                                         <td id="place-latitude"
-                                                            style="text-align:center; vertical-align:middle">${place.latitude}</td>
+                                                            style="text-align:center; vertical-align:middle">
+                                                            <input id="placeLatitude" style="text-align: center; border: none; background-color: transparent"
+                                                                   value="${place.latitude}"/>
+                                                            </td>
                                                         <td id="place-longitude"
-                                                            style="text-align:center; vertical-align:middle">${place.longitude}</td>
+                                                            style="text-align:center; vertical-align:middle">
+                                                            <input id="placeLongitude" style="text-align: center; border: none; background-color: transparent"
+                                                                   value="${place.longitude}"/>
+                                                            </td>
                                                         <td class="placeCellBtn">
-                                                            <spring:url value="/places/${place.id}/edit" var="editUrl"/>
-                                                            <spring:url value="/places/${place.id}/delete"
-                                                                        var="deleteUrl"/>
                                                             <div class="btn-group">
                                                                 <button class="btn btn-primary"
-                                                                        onclick="post(${editUrl})"
-                                                                        id="edit-place"><span
+                                                                        onclick="editPlace(${place.id})"><span
                                                                         class="glyphicon glyphicon-pencil"
                                                                         aria-hidden="true"></span></button>
                                                                 <button class="btn btn-danger"
-                                                                        onclick="post(${deleteUrl})"
-                                                                        id="delete-place"><span
+                                                                        onclick="removePlace(${place.id}, this.closest('tr'))"><span
                                                                         class="glyphicon glyphicon-trash"
                                                                         aria-hidden="true"></span></button>
                                                             </div>

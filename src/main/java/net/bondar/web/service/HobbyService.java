@@ -1,8 +1,11 @@
 package net.bondar.web.service;
 
 import net.bondar.web.dao.inter.HobbyDao;
+import net.bondar.web.model.Contact;
 import net.bondar.web.model.Hobby;
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +33,18 @@ public class HobbyService {
 
     public Hobby saveHobby(Hobby hobby){
         return hobbyDao.save(hobby);
+    }
+
+    public Hobby updateHobby(Hobby hobby){
+        return hobbyDao.update(hobby);
+    }
+
+    public void deleteHobby(Hobby hobby){
+        hobbyDao.delete(hobby);
+    }
+
+    public void deleteHobby(long id){
+        hobbyDao.delete(id);
     }
 
     public Hobby findHobbyById(long id) {

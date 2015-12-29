@@ -9,7 +9,9 @@ public class ResponseMessage {
     private String status;
     private Contact contact;
     private ContactDto contactDto;
-    private String errorMessage;
+    private Hobby hobby;
+    private Place place;
+    private String message;
 
     public static ResponseMessage okMessage(Contact contact) {
         return new ResponseMessage("OK", contact);
@@ -17,6 +19,18 @@ public class ResponseMessage {
 
     public static ResponseMessage okMessage(ContactDto contactDto){
         return new ResponseMessage("OK", contactDto);
+    }
+
+    public static ResponseMessage okMessage(Hobby hobby){
+        return new ResponseMessage("OK", hobby);
+    }
+
+    public static ResponseMessage okMessage(Place place){
+        return new ResponseMessage("OK", place);
+    }
+
+    public static ResponseMessage okMessage(String message){
+        return new ResponseMessage("OK", message);
     }
 
     public static ResponseMessage errorMessage(String message) {
@@ -30,12 +44,22 @@ public class ResponseMessage {
 
     private ResponseMessage(String status, String errorMessage) {
         this.status = status;
-        this.errorMessage = errorMessage;
+        this.message = errorMessage;
     }
 
     private ResponseMessage(String status, ContactDto contactDto){
         this.status = status;
         this.contactDto = contactDto;
+    }
+
+    private ResponseMessage(String status, Hobby hobby){
+        this.status = status;
+        this.hobby = hobby;
+    }
+
+    public ResponseMessage(String status, Place place) {
+        this.status = status;
+        this.place = place;
     }
 
     public String getStatus() {
@@ -50,7 +74,15 @@ public class ResponseMessage {
         return contactDto;
     }
 
-    public String getErrorMessage() {
-        return errorMessage;
+    public String getMessage() {
+        return message;
+    }
+
+    public Hobby getHobby() {
+        return hobby;
+    }
+
+    public Place getPlace() {
+        return place;
     }
 }
