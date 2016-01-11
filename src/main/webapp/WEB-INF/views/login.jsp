@@ -69,7 +69,7 @@
                                          class="form-group ${status.error ? 'has-error' : ''}">
                                         <label class="label-login control-label active">Введите имя:</label>
 
-                                        <div class="input-login" style="margin-left:91px">
+                                        <div class="input-login" style="margin-left:93px">
                                             <form:input path="firstName" type="text" class="form-control"
                                                         id="firstName"
                                                         placeholder="Имя"/>
@@ -84,7 +84,7 @@
                                          class="form-group ${status.error ? 'has-error' : ''}">
                                         <label class="label-login control-label">Введите фамилию:</label>
 
-                                        <div class="input-login" style="margin-left:43px">
+                                        <div class="input-login" style="margin-left:47px">
                                             <form:input path="lastName" type="text" class="form-control" id="lastName"
                                                         placeholder="Фамилия"/>
                                             <form:errors path="lastName" class="control-label"/>
@@ -161,7 +161,7 @@
                                          class="form-group ${status.error ? 'has-error' : ''}">
                                         <label class="label-login control-label">Введите логин:</label>
 
-                                        <div class="input-login" style="margin-left:75px">
+                                        <div class="input-login" style="margin-left:77px">
                                             <form:input path="userName" type="text" class="form-control " id="userName"
                                                         placeholder="Логин"
                                                         value=""/>

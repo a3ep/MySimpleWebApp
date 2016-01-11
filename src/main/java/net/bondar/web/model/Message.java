@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * Created by Azeral on 28.10.2015.
@@ -15,7 +16,7 @@ public class Message extends AbstractEntity{
     @OneToOne
     private Contact from;
 
-    private LocalDateTime date;
+    private Date date;
 
     private String content;
 
@@ -28,7 +29,7 @@ public class Message extends AbstractEntity{
         super(id);
     }
 
-    public Message(Contact from, LocalDateTime date, String content) {
+    public Message(Contact from, Date date, String content) {
         this.from = from;
         this.date = date;
         this.content = content;
@@ -36,11 +37,11 @@ public class Message extends AbstractEntity{
 
 
 
-    public LocalDateTime getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

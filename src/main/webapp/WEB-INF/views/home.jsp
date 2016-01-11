@@ -17,8 +17,7 @@
     <script type="text/javascript" src="webjars/jquery/2.1.4/jquery.js"></script>
     <script type="text/javascript" src="webjars/bootstrap/3.3.6/js/bootstrap.js"></script>
     <script type="text/javascript" src="../../resources/js/home-script.js"></script>
-    <%--<script type="text/javascript" src="../../resources/js/post.js"></script>--%>
-    <%--<script type="text/javascript" src="webjars/jquery.lazyload/1.9.3/jquery.lazyload.js"></script>--%>
+    <script type="text/javascript" src="webjars/jquery.lazyload/1.9.3/jquery.lazyload.js"></script>
 
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -30,7 +29,7 @@
     <div class="header-home text-center">
         <div id="alert" class="alert alert-dismissible fade in" role="alert" style="margin: 0;">
             <%--<button type="button" class="close" data-dismiss="alert" aria-label="Close">--%>
-                <%--<span aria-hidden="true">&times;</span>--%>
+            <%--<span aria-hidden="true">&times;</span>--%>
             <%--</button>--%>
             <span id="alert-message" style="text-align:center; font-weight: bold"></span>
         </div>
@@ -51,9 +50,12 @@
             <ul class="nav nav-tabs">
                 <li role="presentation" class="active"><a href="#user-info-panel" role="tab"
                                                           data-toggle="tab">Профиль</a></li>
-                <li role=presentation <%--class="lazy"--%>><a href="#friends-panel" role="tab" data-toggle="tab">Друзья</a></li>
-                <li role=presentation <%--class="lazy"--%>><a href="#hobbies-panel" role="tab" data-toggle="tab">Хобби</a></li>
-                <li role=presentation <%--class="lazy"--%>><a href="#places-panel" role="tab" data-toggle="tab">Места</a></li>
+                <li role=presentation <%--class="lazy"--%>><a href="#friends-panel" role="tab"
+                                                              data-toggle="tab">Друзья</a></li>
+                <li role=presentation <%--class="lazy"--%>><a href="#hobbies-panel" role="tab"
+                                                              data-toggle="tab">Хобби</a></li>
+                <li role=presentation <%--class="lazy"--%>><a href="#places-panel" role="tab"
+                                                              data-toggle="tab">Места</a></li>
             </ul>
 
             <div id="content" class="tab-content">
@@ -74,7 +76,8 @@
                                     <tr>
                                         <td id="profileFirstCol" class="fontBold">Имя</td>
                                         <td id="profileLastCol">
-                                            <input id="firstName" style="text-align: center; border: none; background-color: transparent"
+                                            <input id="firstName"
+                                                   style="text-align: center; border: none; background-color: transparent"
                                                    value="${user.firstName}"/>
                                         </td>
                                     </tr>
@@ -82,14 +85,16 @@
                                     <tr>
                                         <td class="fontBold">Фамилия</td>
                                         <td>
-                                            <input id="lastName" style="text-align: center; border: none; background-color: transparent"
+                                            <input id="lastName"
+                                                   style="text-align: center; border: none; background-color: transparent"
                                                    value="${user.lastName}"/>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="fontBold">День рождения</td>
                                         <td>
-                                            <input id="birthDate" style="text-align: center; border: none; background-color: transparent"
+                                            <input id="birthDate"
+                                                   style="text-align: center; border: none; background-color: transparent"
                                                    value="<fmt:formatDate value="${user.birthDate}" pattern="yyyy-MM-dd"/>"/>
                                         </td>
                                     </tr>
@@ -149,144 +154,156 @@
                                                 <spring:url value="/friends/${friend.id}/post" var="postUrl"/>
                                                 <spring:url value="/friends/${friend.id}/remove" var="deleteUrl"/>
                                                 <div class="btn-group">
-                                                    <button id="messageBtn" class="btn btn-success" data-toggle="modal"
-                                                            data-target="#modalMessage"><span
+                                                    <button id="messageBtn" class="btn btn-success" <%--data-toggle="modal"
+                                                            data-target="#modalMessage"--%>
+                                                            onclick="modalMessage(${friend.id})"><span
                                                             class="glyphicon glyphicon-envelope"
                                                             aria-hidden="true"></span></button>
-                                                    <button id="postBtn" class="btn btn-info" data-toggle="modal"
-                                                            data-target="#modalPost"><span
+                                                    <button id="postBtn" class="btn btn-info" <%--data-toggle="modal"
+                                                            data-target="#modalPost"--%> onclick="invokeModalPost(${friend})"><span
                                                             class="glyphicon glyphicon-comment"
                                                             aria-hidden="true"></span></button>
-                                                    <button id="removeFriendBtn" class="btn btn-danger" onclick="removeFriend(${friend.id}, this.closest('tr'))"><span
+                                                    <button id="removeFriendBtn" class="btn btn-danger"
+                                                            onclick="removeFriend(${friend.id}, this.closest('tr'))"><span
                                                             class="glyphicon glyphicon-trash"
                                                             aria-hidden="true"></span></button>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <%----------------MODAL MESSAGE---------------%>
-                                        <div id="modalMessage" class="modal fade in"
-                                             aria-labelledby="modalMessageLabel" role="dialog" tabindex="-1">
-                                            <div class="modal-dialog" role="document"
-                                                 style="width: 700px; margin-top: 110px">
-                                                <div class="modal-content">
-                                                    <div class="modal-header"
-                                                         style="background-color: #337AB7; color: #ffffff">
-                                                        <button class="close" aria-label="Close"
-                                                                data-dismiss="modal" type="button">
-                                                            <span aria-hidden="false">×</span>
-                                                        </button>
 
-                                                        <h4 id="modalMessageLabel" class="modal-title"
-                                                            style="text-align: center"><span
-                                                                class="glyphicon glyphicon-envelope" style="font-size: 30px"> Чат</span></h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <label class="label label-primary"
-                                                               style="margin-bottom:10px"
-                                                                >Кому -> <span class="glyphicon glyphicon-user"></span> ${friend.firstName} ${friend.lastName}</label>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
 
-                                                        <div class="panel panel-primary">
-                                                            <div class="panel-body">
-                                                                <div class="popover-home">
-                                                                    <div class="popover right message">
-                                                                        <div class="arrow"></div>
-                                                                        <h3 style="background-color: #337AB7; color: #ffffff; text-align: right"
-                                                                            class="popover-title"><span
-                                                                                style="text-align:right">00:00</span>
-                                                                        </h3>
+                                <%----------------MODAL MESSAGE---------------%>
+                                <div id="modalMessage" class="modal fade in"
+                                     aria-labelledby="modalMessageLabel" role="dialog" tabindex="-1">
+                                    <div class="modal-dialog" role="document"
+                                         style="width: 700px; margin-top: 110px">
+                                        <div class="modal-content">
+                                            <div class="modal-header"
+                                                 style="background-color: #337AB7; color: #ffffff">
+                                                <button class="close" aria-label="Close"
+                                                        data-dismiss="modal" type="button">
+                                                    <span aria-hidden="false">×</span>
+                                                </button>
 
-                                                                        <div style="background-color:#EFEFEF"
-                                                                             class="popover-content">
-                                                                            Сообщение сообщение сообщение сообщение
-                                                                            сообщение сообщение сообщение
-                                                                            сообщение
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="popover-home">
-                                                                    <div class="popover left message">
-                                                                        <div class="arrow"></div>
-                                                                        <h3 style="background-color: #5CB85C; color: #ffffff; text-align: right"
-                                                                            class="popover-title">
-                                                                            <span>00:00</span></h3>
+                                                <h4 id="modalMessageLabel" class="modal-title"
+                                                    style="text-align: center"><span
+                                                        class="glyphicon glyphicon-envelope"
+                                                        style="font-size: 30px"> Чат</span></h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <label id="modalMessageBodyLabel" class="label label-primary"
+                                                       style="margin-bottom:10px"
+                                                        >Кому -> <span
+                                                        class="glyphicon glyphicon-user"></span> <span id="modalBodyLabel">${friend.firstName} ${friend.lastName}</span>
+                                                </label>
 
-                                                                        <div style="background-color:#EFEFEF"
-                                                                             class="popover-content">
-                                                                            Сообщение сообщение сообщение сообщение
-                                                                            сообщение сообщение сообщение
-                                                                            сообщение
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                                <div class="panel panel-primary">
+                                                    <div class="panel-body">
+                                                        <div id="messagesInModal">
+
+                                                            <%--<div class="popover-home">--%>
+                                                            <%--<div class="popover right message">--%>
+                                                            <%--<div class="arrow"></div>--%>
+                                                            <%--<h3 style="background-color: #337AB7; color: #ffffff; text-align: right"--%>
+                                                            <%--class="popover-title"><span>00:00</span>--%>
+                                                            <%--</h3>--%>
+
+                                                            <%--<div style="background-color:#EFEFEF"--%>
+                                                            <%--class="popover-content">--%>
+                                                            <%--Сообщение сообщение сообщение сообщение--%>
+                                                            <%--сообщение сообщение сообщение--%>
+                                                            <%--сообщение--%>
+                                                            <%--</div>--%>
+                                                            <%--</div>--%>
+                                                            <%--</div>--%>
+                                                            <%--<div class="popover-home">--%>
+                                                            <%--<div class="popover left message">--%>
+                                                            <%--<div class="arrow"></div>--%>
+                                                            <%--<h3 style="background-color: #5CB85C; color: #ffffff; text-align: right"--%>
+                                                            <%--class="popover-title">--%>
+                                                            <%--<span>00:00</span></h3>--%>
+
+                                                            <%--<div style="background-color:#EFEFEF"--%>
+                                                            <%--class="popover-content">--%>
+                                                            <%--Сообщение сообщение сообщение сообщение--%>
+                                                            <%--сообщение сообщение сообщение--%>
+                                                            <%--сообщение--%>
+                                                            <%--</div>--%>
+                                                            <%--</div>--%>
+                                                            <%--</div>--%>
+
                                                         </div>
                                                     </div>
-                                                    <div class="modal-footer" style="background-color: #337AB7">
-                                                        <div style="width: 135px">
-                                                            <label class="label label-default"
-                                                                   style="margin-bottom:10px; text-align: left"
-                                                                   for="messageArea">Введите сообщение</label><br>
-                                                        </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer" style="background-color: #337AB7">
+                                                <div style="width: 135px">
+                                                    <label class="label label-default"
+                                                           style="margin-bottom:10px; text-align: left"
+                                                           for="messageArea">Введите сообщение</label><br>
+                                                </div>
                                                                 <textarea class="form-control"
                                                                           style="width:660px;max-width: 660px; margin-bottom: 20px"
                                                                           id=messageArea
                                                                           name="message"></textarea>
-                                                        <button class="btn btn-success" type="button">Отправить
-                                                        </button>
-                                                        <button class="btn btn-danger" data-dismiss="modal"
-                                                                type="button">Закрыть
-                                                        </button>
-                                                    </div>
-                                                </div>
+                                                <button class="btn btn-success" type="button">Отправить
+                                                </button>
+                                                <button class="btn btn-danger" data-dismiss="modal"
+                                                        type="button">Закрыть
+                                                </button>
                                             </div>
                                         </div>
-                                        <%------------------------------MODAL POST--------------------------------%>
-                                        <div id="modalPost" class="modal fade in"
-                                             aria-labelledby="modalPostLabel" role="dialog" tabindex="-1">
-                                            <div class="modal-dialog" role="document"
-                                                 style="width: 700px; margin-top: 110px">
-                                                <div class="modal-content">
-                                                    <div class="modal-header"
-                                                         style="background-color: #337AB7; color: #ffffff">
-                                                        <button class="close" aria-label="Close"
-                                                                data-dismiss="modal" type="button">
-                                                            <span aria-hidden="false">×</span>
-                                                        </button>
+                                    </div>
+                                </div>
+                                <%------------------MODAL POST----------------%>
+                                <div id="modalPost" class="modal fade in"
+                                     aria-labelledby="modalPostLabel" role="dialog" tabindex="-1">
+                                    <div class="modal-dialog" role="document"
+                                         style="width: 700px; margin-top: 110px">
+                                        <div class="modal-content">
+                                            <div class="modal-header"
+                                                 style="background-color: #337AB7; color: #ffffff">
+                                                <button class="close" aria-label="Close"
+                                                        data-dismiss="modal" type="button">
+                                                    <span aria-hidden="false">×</span>
+                                                </button>
 
-                                                        <h4 id="modalPostLabel" class="modal-title"
-                                                            style="text-align: center"><span
-                                                                class="glyphicon glyphicon-comment" style="font-size: 30px"> Стена</span></h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div style="margin-bottom: 10px">
-                                                            <label class="label label-primary">Кому -> <span class="glyphicon glyphicon-user"></span> ${friend.firstName} ${friend.lastName}
-                                                            </label>
-                                                        </div>
+                                                <h4 id="modalPostLabel" class="modal-title"
+                                                    style="text-align: center"><span
+                                                        class="glyphicon glyphicon-comment"
+                                                        style="font-size: 30px"> Стена</span></h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div style="margin-bottom: 10px">
+                                                    <label id="modalPostBodyLabel" class="label label-primary">Кому -> <span
+                                                            class="glyphicon glyphicon-user"></span> ${friend.firstName} ${friend.lastName}
+                                                    </label>
+                                                </div>
 
 
-                                                        <div style="width: 135px">
-                                                            <label class="label label-default"
-                                                                   style="margin-bottom:10px; text-align: left"
-                                                                   for="postTextArea">Введите сообщение</label><br>
-                                                        </div>
+                                                <div style="width: 135px">
+                                                    <label class="label label-default"
+                                                           style="margin-bottom:10px; text-align: left"
+                                                           for="postTextArea">Введите сообщение</label><br>
+                                                </div>
                                                                 <textarea class="form-control"
                                                                           style="width:660px;max-width: 660px; margin-bottom: 20px"
                                                                           id="postTextArea" name="post">
                                                                 </textarea>
-                                                    </div>
-                                                    <div class="modal-footer" style="background-color: #337AB7">
-                                                        <button class="btn btn-success" type="button">Отправить
-                                                        </button>
-                                                        <button class="btn btn-danger" data-dismiss="modal"
-                                                                type="button">Закрыть
-                                                        </button>
-                                                    </div>
-                                                </div>
+                                            </div>
+                                            <div class="modal-footer" style="background-color: #337AB7">
+                                                <button class="btn btn-success" type="button">Отправить
+                                                </button>
+                                                <button class="btn btn-danger" data-dismiss="modal"
+                                                        type="button">Закрыть
+                                                </button>
                                             </div>
                                         </div>
-                                    </c:forEach>
-                                    </tbody>
-                                </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -368,17 +385,20 @@
                                                     <tr>
                                                         <td id="hobby-title"
                                                             style="text-align:center; vertical-align:middle">
-                                                            <input id="hobbyTitle" style="text-align: center; border: none; background-color: transparent"
+                                                            <input id="hobbyTitle"
+                                                                   style="text-align: center; border: none; background-color: transparent"
                                                                    value="${hobby.title}"/>
-                                                            </td>
+                                                        </td>
                                                         <td id="hobby-description"
                                                             style="text-align:center; vertical-align:middle">
-                                                            <input id="hobbyDescription" style="text-align: center; border: none; background-color: transparent"
+                                                            <input id="hobbyDescription"
+                                                                   style="text-align: center; border: none; background-color: transparent"
                                                                    value="${hobby.description}"/>
-                                                            </td>
+                                                        </td>
                                                         <td class="hobbyCellBtn">
                                                             <div class="btn-group">
-                                                                <button class="btn btn-primary" onclick="editHobby(${hobby.id})"><span
+                                                                <button class="btn btn-primary"
+                                                                        onclick="editHobby(${hobby.id})"><span
                                                                         class="glyphicon glyphicon-pencil"
                                                                         aria-hidden="true"></span>
                                                                 </button>
@@ -425,7 +445,7 @@
                                                     <th class="placeBtnTh">Фото</th>
                                                     <th class="placeTitleTh">Название</th>
                                                     <th class="placeDescriptionTh">Описание</th>
-                                                    <th class="placeLatitudeTh">Широта</th>
+                                                    <th class="placeLatitudeTh" style="width: 90px">Широта</th>
                                                     <th class="placeLongitudeTh">Долгота</th>
                                                     <th class="placePhotoTh"></th>
                                                 </tr>
@@ -498,24 +518,28 @@
                                                                 height="30"></td>
                                                         <td id="place-title"
                                                             style="text-align:center; vertical-align:middle">
-                                                            <input id="placeTitle" style="text-align: center; border: none; background-color: transparent"
+                                                            <input id="placeTitle" class="placeTitleTh"
+                                                                   style="text-align: center; border: none; background-color: transparent"
                                                                    value="${place.title}"/>
-                                                            </td>
+                                                        </td>
                                                         <td id="place-description"
                                                             style="text-align:center; vertical-align:middle">
-                                                            <input id="placeDescription" style="text-align: center; border: none; background-color: transparent"
+                                                            <input id="placeDescription" class="placeDescriptionTh"
+                                                                   style="text-align: center; border: none; background-color: transparent"
                                                                    value="${place.description}"/>
-                                                            </td>
+                                                        </td>
                                                         <td id="place-latitude"
                                                             style="text-align:center; vertical-align:middle">
-                                                            <input id="placeLatitude" style="text-align: center; border: none; background-color: transparent"
+                                                            <input id="placeLatitude" class="placeLatitudeTh"
+                                                                   style="text-align: center; border: none; background-color: transparent"
                                                                    value="${place.latitude}"/>
-                                                            </td>
+                                                        </td>
                                                         <td id="place-longitude"
                                                             style="text-align:center; vertical-align:middle">
-                                                            <input id="placeLongitude" style="text-align: center; border: none; background-color: transparent"
+                                                            <input id="placeLongitude" class="placeLongitudeTh"
+                                                                   style="text-align: center; border: none; background-color: transparent"
                                                                    value="${place.longitude}"/>
-                                                            </td>
+                                                        </td>
                                                         <td class="placeCellBtn">
                                                             <div class="btn-group">
                                                                 <button class="btn btn-primary"

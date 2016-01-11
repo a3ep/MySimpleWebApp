@@ -1,11 +1,7 @@
 package net.bondar.web.controller;
 
-import com.sun.deploy.net.HttpResponse;
-import net.bondar.web.model.Contact;
-import net.bondar.web.model.Hobby;
-import net.bondar.web.model.Place;
+import net.bondar.web.model.*;
 import net.bondar.web.model.dto.ContactDto;
-import net.bondar.web.model.ResponseMessage;
 import net.bondar.web.model.dto.HobbyDto;
 import net.bondar.web.model.dto.PlaceDto;
 import net.bondar.web.service.ContactService;
@@ -18,17 +14,15 @@ import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by AzeraL on 03.12.2015.
@@ -60,6 +54,7 @@ public class PageController {
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String getHome(Model model, HttpSession httpSession) {
         logger.debug("getHome()");
+
         Contact user = (Contact)httpSession.getAttribute("USER");
         model.addAttribute("user", user);
         return "home";
@@ -82,6 +77,32 @@ public class PageController {
             return ResponseMessage.errorMessage(e.getMessage());
         }
         return ResponseMessage.okMessage(contactDto);
+    }
+
+    @RequestMapping(value = "/friends/{id}/message", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseMessage message(@PathVariable("id") long id, HttpSession session) {
+        logger.warn("message()");
+
+        Contact user = (Contact)session.getAttribute("USER");
+        Contact friend = service.findContactById(id);
+        List<Message> messages = new ArrayList<>();
+        try {
+            for (Chat chat : user.getConversation()) {
+                if (chat.getUserTo().equals(friend)) {
+                    for (Message message : chat.getChatMessages()) {
+                        messages.add(message);
+                    }
+                }
+            }
+        }catch (Exception e){
+            return ResponseMessage.errorMessage(e.getMessage());
+        }
+        ContactDto friendDto = new ContactDto();
+        friendDto.setId(friend.getId());
+        friendDto.setFirstName(friend.getFirstName());
+        friendDto.setLastName(friend.getLastName());
+        return ResponseMessage.okMessage(friendDto, messages);
     }
 
     @RequestMapping(value = "/friends/{id}/remove", method = RequestMethod.POST)
@@ -120,19 +141,21 @@ public class PageController {
     @ResponseBody
     public ResponseMessage editHobby(@PathVariable("id") long id, @RequestBody HobbyDto hobbyDto, HttpSession session) {
         logger.warn("editHobby() : {}", id);
-        logger.warn(hobbyDto.getTitle());
         Contact user = (Contact)session.getAttribute("USER");
+        logger.info("User " + user.getFirstName() + " tries to edit hobby with id:" + id);
         Hobby hobby = hobbyService.findHobbyById(id);
         hobby.setTitle(hobbyDto.getTitle());
         hobby.setDescription(hobbyDto.getDescription());
         try {
             hobbyService.updateHobby(hobby);
+            service.refreshContact(user);
             service.updateContact(user);
+            session.setAttribute("USER", user);
         } catch (Exception e) {
             logger.debug("Edit hobby error", e);
             return ResponseMessage.errorMessage(e.getMessage());
         }
-        return ResponseMessage.okMessage(hobby);
+        return ResponseMessage.okMessage(hobbyService.findHobbyById(id));
     }
 
     @RequestMapping(value = "/hobbies/{id}/remove", method = RequestMethod.POST)
@@ -157,7 +180,7 @@ public class PageController {
     @ResponseBody
     public ResponseMessage editPlace(@PathVariable("id") long id, @RequestBody PlaceDto placeDto, HttpSession session) {
         logger.warn("editPlace() : {}", id);
-        logger.warn(placeDto.getTitle());
+
         Contact user = (Contact)session.getAttribute("USER");
         Place place = placeService.findPlaceById(id);
         place.setTitle(placeDto.getTitle());
@@ -166,7 +189,9 @@ public class PageController {
         place.setLongitude(placeDto.getLongitude());
         try {
             placeService.updatePlace(place);
+            service.refreshContact(user);
             service.updateContact(user);
+            session.setAttribute("USER", user);
         } catch (Exception e) {
             logger.debug("Edit place error", e);
             return ResponseMessage.errorMessage(e.getMessage());

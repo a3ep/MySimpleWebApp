@@ -59,10 +59,14 @@ public class UserValidator implements Validator{
         }
 
         if(contact.getPassword().length()<6||contact.getPassword().length()>16){
+            contact.setPassword("");
+            contact.setConfirmPassword("");
             errors.rejectValue("password", "contact.password.error.length");
         }
 
         if(!contact.getPassword().equals(contact.getConfirmPassword())){
+            contact.setPassword("");
+            contact.setConfirmPassword("");
             errors.rejectValue("password", "contact.password.error.equals");
         }
 

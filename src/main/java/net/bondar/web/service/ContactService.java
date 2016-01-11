@@ -47,6 +47,10 @@ public class ContactService {
         return contactDao.update(contact);
     }
 
+    public void refreshContact(Contact contact){
+        contactDao.refresh(contact);
+    }
+
     public void deleteContact(Contact contact) throws Exception {
         Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Contact.class, "contact");
         criteria.createAlias("contact.friendList", "friendList");

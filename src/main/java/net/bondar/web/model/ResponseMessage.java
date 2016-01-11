@@ -2,6 +2,8 @@ package net.bondar.web.model;
 
 import net.bondar.web.model.dto.ContactDto;
 
+import java.util.List;
+
 /**
  * Created by AzeraL on 30.11.2015.
  */
@@ -12,6 +14,7 @@ public class ResponseMessage {
     private Hobby hobby;
     private Place place;
     private String message;
+    private List<Message> messages;
 
     public static ResponseMessage okMessage(Contact contact) {
         return new ResponseMessage("OK", contact);
@@ -31,6 +34,10 @@ public class ResponseMessage {
 
     public static ResponseMessage okMessage(String message){
         return new ResponseMessage("OK", message);
+    }
+
+    public static ResponseMessage okMessage(ContactDto contactDto, List<Message> messages){
+        return new ResponseMessage("OK", contactDto, messages);
     }
 
     public static ResponseMessage errorMessage(String message) {
@@ -57,11 +64,16 @@ public class ResponseMessage {
         this.hobby = hobby;
     }
 
-    public ResponseMessage(String status, Place place) {
+    private ResponseMessage(String status, Place place) {
         this.status = status;
         this.place = place;
     }
 
+    private ResponseMessage(String status, ContactDto contactDto, List<Message> messages){
+        this.status = status;
+        this.contactDto = contactDto;
+        this.messages = messages;
+    }
     public String getStatus() {
         return status;
     }
@@ -84,5 +96,9 @@ public class ResponseMessage {
 
     public Place getPlace() {
         return place;
+    }
+
+    public List<Message> getMessages() {
+        return messages;
     }
 }

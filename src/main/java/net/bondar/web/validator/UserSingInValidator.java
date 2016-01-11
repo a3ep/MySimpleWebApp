@@ -35,6 +35,7 @@ public class UserSingInValidator implements Validator {
         if(contactInDB==null){
             errors.rejectValue("userName", "contact.userName.error.wrongUserName");
         }else if(!contactInDB.getPassword().equals(contact.getPassword())) {
+            contact.setPassword("");
             errors.rejectValue("password", "contact.password.error.wrongPass");
         }
     }

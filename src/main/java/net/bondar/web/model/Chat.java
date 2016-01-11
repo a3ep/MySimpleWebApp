@@ -1,9 +1,6 @@
 package net.bondar.web.model;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,7 +14,7 @@ public class Chat extends AbstractEntity{
     @OneToOne
     private Contact userTo;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private Set<Message> chatMessages;
 
 

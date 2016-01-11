@@ -25,6 +25,9 @@ public class ChatService {
         return chatDao.save(chat);
     }
 
+    public Chat saveChat(Chat chat){
+        return chatDao.save(chat);
+    }
     public Chat findChatById(long id) {
         return chatDao.findById(id);
     }

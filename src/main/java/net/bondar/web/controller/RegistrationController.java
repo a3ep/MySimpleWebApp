@@ -1,10 +1,7 @@
 package net.bondar.web.controller;
 
 import net.bondar.web.model.*;
-import net.bondar.web.service.ContactService;
-import net.bondar.web.service.HobbyService;
-import net.bondar.web.service.PlaceService;
-import net.bondar.web.service.PostService;
+import net.bondar.web.service.*;
 import net.bondar.web.validator.UserSingInValidator;
 import net.bondar.web.validator.UserValidator;
 import org.slf4j.Logger;
@@ -43,6 +40,12 @@ public class RegistrationController {
 
     @Autowired
     private PostService postService;
+
+    @Autowired
+    private ChatService chatService;
+
+    @Autowired
+    private MessageService messageService;
 
     @Autowired
     private MessageSource messageSource;
@@ -96,7 +99,17 @@ public class RegistrationController {
 //        Post post1 = new Post(contact2, "Привет!", new Date());
 //        postService.savePost(post1);
 //        service.addPostToContact(contact1, post1);
+        Chat chat1 = new Chat(contact2);
 
+        Message message1 = new Message(contact2, new Date(), "Привет!");
+        Message message2 = new Message(contact1, new Date(), "Azaz");
+        messageService.saveMessage(message1);
+        messageService.saveMessage(message2);
+
+        chat1.getChatMessages().add(message1);
+        chat1.getChatMessages().add(message2);
+        chatService.saveChat(chat1);
+        service.addChatToContact(contact1, chat1);
         return "redirect:/login";
     }
 
@@ -123,6 +136,7 @@ public class RegistrationController {
         logger.warn("singIn()");
         userSingInValidator.validate(contact, result);
         if (result.hasErrors()) {
+            contact.setPassword("");
             return "login-authorPanel";
         }
 
