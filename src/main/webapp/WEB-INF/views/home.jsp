@@ -160,7 +160,7 @@
                                                             class="glyphicon glyphicon-envelope"
                                                             aria-hidden="true"></span></button>
                                                     <button id="postBtn" class="btn btn-info" <%--data-toggle="modal"
-                                                            data-target="#modalPost"--%> onclick="invokeModalPost(${friend})"><span
+                                                            data-target="#modalPost"--%> onclick="modalPost(${friend.id})"><span
                                                             class="glyphicon glyphicon-comment"
                                                             aria-hidden="true"></span></button>
                                                     <button id="removeFriendBtn" class="btn btn-danger"
@@ -197,7 +197,7 @@
                                                 <label id="modalMessageBodyLabel" class="label label-primary"
                                                        style="margin-bottom:10px"
                                                         >Кому -> <span
-                                                        class="glyphicon glyphicon-user"></span> <span id="modalBodyLabel">${friend.firstName} ${friend.lastName}</span>
+                                                        class="glyphicon glyphicon-user"></span> <span id="modalBodyLabel"></span> <span id="modalFriendId" style="visibility:hidden"></span>
                                                 </label>
 
                                                 <div class="panel panel-primary">
@@ -249,7 +249,7 @@
                                                                           style="width:660px;max-width: 660px; margin-bottom: 20px"
                                                                           id=messageArea
                                                                           name="message"></textarea>
-                                                <button class="btn btn-success" type="button">Отправить
+                                                <button id="sendMessage" class="btn btn-success" type="button" onclick="sendMessage()">Отправить
                                                 </button>
                                                 <button class="btn btn-danger" data-dismiss="modal"
                                                         type="button">Закрыть
@@ -278,8 +278,8 @@
                                             </div>
                                             <div class="modal-body">
                                                 <div style="margin-bottom: 10px">
-                                                    <label id="modalPostBodyLabel" class="label label-primary">Кому -> <span
-                                                            class="glyphicon glyphicon-user"></span> ${friend.firstName} ${friend.lastName}
+                                                    <label class="label label-primary">Кому -> <span
+                                                            class="glyphicon glyphicon-user"></span> <span id="modalPostBodyLabel"></span>
                                                     </label>
                                                 </div>
 

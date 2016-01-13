@@ -83,6 +83,41 @@ function modalMessage(friendId) {
     });
 }
 
+function sendMessage(){
+    var message = $('#messageArea').val();
+    var friendId = $('#modalFriendId').text();
+    var url = "/sendMessage/" + friendId + "/send/";
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        data: '{"message": "' + message + '"}',
+        success: function (result) {
+            if(result.status==='OK'){
+                $('#messageArea').val("");
+                buildModal(result.contactDto, result.messages);
+
+            }
+        }
+    });
+}
+
+function modalPost(friendId){
+    var url = "/friends/" + friendId + "/post";
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            invokeModalPost(result.contactDto);
+        }
+    });
+}
+
 function removeFriend(friendId, element) {
     var url = "/friends/" + friendId + "/remove/";
 
@@ -243,6 +278,17 @@ function removePlace(placeId, element) {
 function invokeModalMessage(friend, messages) {
     var friendName = " " + friend.firstName + " " + friend.lastName;
     $('#modalBodyLabel').text(friendName);
+    $('#modalFriendId').text(friend.id);
+    buildModal(friend, messages);
+    $('#modalMessage').modal('show');
+}
+
+function invokeModalPost(friend) {
+    $('#modalPostBodyLabel').text(" " + friend.firstName + " " + friend.lastName);
+    $('#modalPost').modal('show');
+}
+
+function buildModal(friend, messages){
     for (var i = 0; i < messages.length; i++) {
         var message = messages[i];
 
@@ -310,10 +356,4 @@ function invokeModalMessage(friend, messages) {
             parentElem.appendChild(divPopoverHome);
         }
     }
-    $('#modalMessage').modal('show');
-}
-
-function invokeModalPost(friend) {
-    $('#modalPostBodyLabel').text(friend.firstName + " " + friend.lastName);
-    $('#modalPost').modal('show');
 }

@@ -39,6 +39,9 @@ public class ResponseMessage {
     public static ResponseMessage okMessage(ContactDto contactDto, List<Message> messages){
         return new ResponseMessage("OK", contactDto, messages);
     }
+    public static ResponseMessage okMessage(List<Message> messages){
+        return new ResponseMessage("OK", messages);
+    }
 
     public static ResponseMessage errorMessage(String message) {
         return new ResponseMessage("ERROR", message);
@@ -74,6 +77,12 @@ public class ResponseMessage {
         this.contactDto = contactDto;
         this.messages = messages;
     }
+
+    private ResponseMessage(String status, List<Message> messages){
+        this.status = status;
+        this.messages = messages;
+    }
+
     public String getStatus() {
         return status;
     }

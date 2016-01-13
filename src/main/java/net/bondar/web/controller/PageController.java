@@ -4,9 +4,7 @@ import net.bondar.web.model.*;
 import net.bondar.web.model.dto.ContactDto;
 import net.bondar.web.model.dto.HobbyDto;
 import net.bondar.web.model.dto.PlaceDto;
-import net.bondar.web.service.ContactService;
-import net.bondar.web.service.HobbyService;
-import net.bondar.web.service.PlaceService;
+import net.bondar.web.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +40,12 @@ public class PageController {
     private PlaceService placeService;
 
     @Autowired
+    private ChatService chatService;
+
+    @Autowired
+    private MessageService messageService;
+
+    @Autowired
     private MessageSource messageSource;
 
     @InitBinder
@@ -55,17 +59,17 @@ public class PageController {
     public String getHome(Model model, HttpSession httpSession) {
         logger.debug("getHome()");
 
-        Contact user = (Contact)httpSession.getAttribute("USER");
+        Contact user = (Contact) httpSession.getAttribute("USER");
         model.addAttribute("user", user);
         return "home";
     }
 
     @RequestMapping(value = "/edit/profile", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseMessage editProfile(@RequestBody ContactDto contactDto, HttpSession session){
+    public ResponseMessage editProfile(@RequestBody ContactDto contactDto, HttpSession session) {
         logger.debug("editProfile()");
         try {
-            Contact user = (Contact)session.getAttribute("USER");
+            Contact user = (Contact) session.getAttribute("USER");
             user.setFirstName(contactDto.getFirstName());
             user.setLastName(contactDto.getLastName());
             user.setBirthDate(contactDto.getBirthDate());
@@ -84,18 +88,61 @@ public class PageController {
     public ResponseMessage message(@PathVariable("id") long id, HttpSession session) {
         logger.warn("message()");
 
-        Contact user = (Contact)session.getAttribute("USER");
+        Contact user = (Contact) session.getAttribute("USER");
+        service.refreshContact(user);
         Contact friend = service.findContactById(id);
+        logger.debug(friend.getId() + " " + friend.getFirstName() + " " + friend.getLastName());
         List<Message> messages = new ArrayList<>();
         try {
+            if(user.getConversation().isEmpty()){
+                Chat newChat = new Chat(friend);
+                service.addChatToContact(user, newChat);
+            }
             for (Chat chat : user.getConversation()) {
                 if (chat.getUserTo().equals(friend)) {
+                    if(chat.getChatMessages().isEmpty()){
+                        break;
+                    }
                     for (Message message : chat.getChatMessages()) {
                         messages.add(message);
                     }
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
+            return ResponseMessage.errorMessage(e.getMessage());
+        }
+        ContactDto friendDto = new ContactDto();
+        friendDto.setId(friend.getId());
+        friendDto.setFirstName(friend.getFirstName());
+        friendDto.setLastName(friend.getLastName());
+        logger.debug(friendDto.toString());
+        return ResponseMessage.okMessage(friendDto, messages);
+    }
+
+    @RequestMapping(value = "/sendMessage/{id}/send", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseMessage sendMessage(@RequestBody String message, @PathVariable("id") long id, HttpSession session) {
+        logger.warn("sendMessage()");
+
+        Contact user = (Contact) session.getAttribute("USER");
+        service.refreshContact(user);
+        Contact friend = service.findContactById(id);
+        Message newMessage = new Message(user, new Date(), message);
+        List<Message> messages = new ArrayList<>();
+        try {
+            messageService.saveMessage(newMessage);
+            for (Chat chat : user.getConversation()) {
+                if (chat.getUserTo().equals(friend)) {
+                    Chat currentChat = chat;
+                    currentChat.getChatMessages().add(newMessage);
+                    chatService.updateChat(currentChat);
+                    for (Message m : currentChat.getChatMessages()) {
+                        messages.add(m);
+                    }
+                }
+            }
+            service.updateContact(user);
+        } catch (Exception e) {
             return ResponseMessage.errorMessage(e.getMessage());
         }
         ContactDto friendDto = new ContactDto();
@@ -105,26 +152,39 @@ public class PageController {
         return ResponseMessage.okMessage(friendDto, messages);
     }
 
+    @RequestMapping(value = "/friends/{id}/post", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseMessage post(@PathVariable("id") long id, HttpSession session) {
+        logger.warn("post()");
+
+        Contact friend = service.findContactById(id);
+        ContactDto friendDto = new ContactDto();
+        friendDto.setId(friend.getId());
+        friendDto.setFirstName(friend.getFirstName());
+        friendDto.setLastName(friend.getLastName());
+        return ResponseMessage.okMessage(friendDto);
+    }
+
     @RequestMapping(value = "/friends/{id}/remove", method = RequestMethod.POST)
     @ResponseBody
     public ResponseMessage removeFriend(@PathVariable("id") long id, HttpSession session) {
         logger.warn("removeFriend() : {}", id);
 
-        Contact user = (Contact)session.getAttribute("USER");
+        Contact user = (Contact) session.getAttribute("USER");
         Contact friend = service.findContactById(id);
-        String friendName = friend.getFirstName() +" "+ friend.getLastName();
+        String friendName = friend.getFirstName() + " " + friend.getLastName();
         try {
-            service.removeFriendship(user,friend);
+            service.removeFriendship(user, friend);
         } catch (Exception e) {
             logger.debug("Remove friend error", e);
             return ResponseMessage.errorMessage(e.getMessage());
         }
-        return ResponseMessage.okMessage("Success! "+ friendName + " removed from friends:)" );
+        return ResponseMessage.okMessage("Success! " + friendName + " removed from friends:)");
     }
 
     @RequestMapping(value = "/saveHobby", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseMessage saveHobby(@RequestBody HobbyDto hobbyDto, HttpSession session){
+    public ResponseMessage saveHobby(@RequestBody HobbyDto hobbyDto, HttpSession session) {
         logger.warn("saveHobby()");
         try {
             Hobby hobby = hobbyService.saveHobby(hobbyDto.getTitle(), hobbyDto.getDescription());
@@ -141,7 +201,7 @@ public class PageController {
     @ResponseBody
     public ResponseMessage editHobby(@PathVariable("id") long id, @RequestBody HobbyDto hobbyDto, HttpSession session) {
         logger.warn("editHobby() : {}", id);
-        Contact user = (Contact)session.getAttribute("USER");
+        Contact user = (Contact) session.getAttribute("USER");
         logger.info("User " + user.getFirstName() + " tries to edit hobby with id:" + id);
         Hobby hobby = hobbyService.findHobbyById(id);
         hobby.setTitle(hobbyDto.getTitle());
@@ -159,15 +219,15 @@ public class PageController {
     }
 
     @RequestMapping(value = "/hobbies/{id}/remove", method = RequestMethod.POST)
-     @ResponseBody
-     public ResponseMessage removeHobby(@PathVariable("id") long id, HttpSession session) {
+    @ResponseBody
+    public ResponseMessage removeHobby(@PathVariable("id") long id, HttpSession session) {
         logger.warn("removeHobby() : {}", id);
 
-        Contact user = (Contact)session.getAttribute("USER");
+        Contact user = (Contact) session.getAttribute("USER");
         Hobby hobby = hobbyService.findHobbyById(id);
         String hobbyTitle = hobby.getTitle();
         try {
-            service.removeHobby(user,hobby);
+            service.removeHobby(user, hobby);
             hobbyService.deleteHobby(id);
         } catch (Exception e) {
             logger.debug("Remove hobby error", e);
@@ -181,7 +241,7 @@ public class PageController {
     public ResponseMessage editPlace(@PathVariable("id") long id, @RequestBody PlaceDto placeDto, HttpSession session) {
         logger.warn("editPlace() : {}", id);
 
-        Contact user = (Contact)session.getAttribute("USER");
+        Contact user = (Contact) session.getAttribute("USER");
         Place place = placeService.findPlaceById(id);
         place.setTitle(placeDto.getTitle());
         place.setDescription(placeDto.getDescription());
@@ -204,7 +264,7 @@ public class PageController {
     public ResponseMessage removePlace(@PathVariable("id") long id, HttpSession session) {
         logger.warn("removePlace{() : {}", id);
 
-        Contact user = (Contact)session.getAttribute("USER");
+        Contact user = (Contact) session.getAttribute("USER");
         Place place = placeService.findPlaceById(id);
         String placeTitle = place.getTitle();
 
@@ -218,10 +278,10 @@ public class PageController {
         return ResponseMessage.okMessage("Success! Place \"" + placeTitle + "\" removed:)");
     }
 
-    @ExceptionHandler(Exception.class)
-    @ResponseBody
-    public ResponseMessage handleException(Exception e) {
-        logger.debug("handlerException()");
-        return ResponseMessage.errorMessage(e.getMessage());
-    }
+//    @ExceptionHandler(Exception.class)
+//    @ResponseBody
+//    public ResponseMessage handleException(Exception e) {
+//        logger.debug("handlerException()");
+//        return ResponseMessage.errorMessage(e.getMessage());
+//    }
 }
