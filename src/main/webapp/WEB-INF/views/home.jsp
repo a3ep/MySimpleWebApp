@@ -463,7 +463,7 @@
                                             <table class="table table-hover-my">
                                                 <thead>
                                                 <tr>
-                                                    <th class="placeBtnTh">Фото</th>
+                                                    <%--<th class="placeBtnTh">Фото</th>--%>
                                                     <th class="placeTitleTh">Название</th>
                                                     <th class="placeDescriptionTh">Описание</th>
                                                     <th class="placeLatitudeTh" style="width: 90px">Широта</th>
@@ -473,10 +473,10 @@
                                                 </thead>
                                                 <tbody>
                                                 <tr>
-                                                    <td style="text-align:center; vertical-align:middle">
-                                                        <input class="form-control" id="placePhotoInput"
-                                                               type="text">
-                                                    </td>
+                                                    <%--<td style="text-align:center; vertical-align:middle">--%>
+                                                        <%--<input class="form-control" id="placePhotoInput"--%>
+                                                               <%--type="text">--%>
+                                                    <%--</td>--%>
                                                     <td style="text-align:center; vertical-align:middle">
                                                         <input class="form-control" id="placeTitleInput"
                                                                type="text">
@@ -520,7 +520,7 @@
                                             <table class="table table-hover-my">
                                                 <thead>
                                                 <tr>
-                                                    <th class="placePhotoTh">Фото</th>
+                                                    <%--<th class="placePhotoTh">Фото</th>--%>
                                                     <th class="placeTitleTh">Название</th>
                                                     <th class="placeDescriptionTh">Описание</th>
                                                     <th class="placeLatitudeTh">Широта</th>
@@ -531,12 +531,12 @@
                                                 <tbody>
                                                 <c:forEach items="${user.places}" var="place">
                                                     <tr>
-                                                        <td id="place-photo"
-                                                            style="text-align:center; vertical-align:middle"><img
-                                                                src="${place.photo}"
-                                                                alt="../../resources/img/no-photo.png"
-                                                                class="img-rounded"
-                                                                height="30"></td>
+                                                        <%--<td id="place-photo"--%>
+                                                            <%--style="text-align:center; vertical-align:middle"><img--%>
+                                                                <%--src="${place.photo}"--%>
+                                                                <%--alt="../../resources/img/no-photo.png"--%>
+                                                                <%--class="img-rounded"--%>
+                                                                <%--height="30"></td>--%>
                                                         <td id="place-title"
                                                             style="text-align:center; vertical-align:middle">
                                                             <input id="placeTitle" class="placeTitleTh"

@@ -26,36 +26,25 @@ import java.util.Date;
  */
 @Controller
 public class RegistrationController {
-
     private final Logger logger = LoggerFactory.getLogger(RegistrationController.class);
-
     @Autowired
     private ContactService service;
-
     @Autowired
     private HobbyService hobbyService;
-
     @Autowired
     private PlaceService placeService;
-
     @Autowired
     private PostService postService;
-
     @Autowired
     private ChatService chatService;
-
     @Autowired
     private MessageService messageService;
-
     @Autowired
     private MessageSource messageSource;
-
     @Autowired
     private UserValidator userValidator;
-
     @Autowired
     private UserSingInValidator userSingInValidator;
-
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         CustomDateEditor editor = new CustomDateEditor(new SimpleDateFormat("dd.MM.yyyy"), true);

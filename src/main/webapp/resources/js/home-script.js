@@ -41,7 +41,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "POST",
-            url: '/saveHobby',
+            url: 'hobbies/saveHobby',
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             data: '{"title": "' + hobbyTitle + '", "description": "' + hobbyDescription + '"}',
@@ -70,18 +70,56 @@ $(document).ready(function () {
         });
     });
 
+    $('#savePlaceBtn').click(function(){
+        var placeTitle = $('#placeTitleInput').val();
+        var placeDescription = $('#placeDescriptionInput').val();
+        var placeLatitude = $('#placeLatitudeInput').val();
+        var placeLongitude = $('#placeLongitudeInput').val();
+
+        $.ajax({
+            type: "POST",
+            url: 'places/savePlace',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: '{"title": "' + placeTitle + '", "description": "' + placeDescription + '", "latitude": "' + placeLatitude + '", "longitude": "' + placeLongitude + '"}',
+            success: function (result) {
+                if (result.status === 'OK') {
+                    $('#placeTitleInput').val("");
+                    $('#placeDescriptionInput').val("");
+                    $('#placeLatitudeInput').val("");
+                    $('#placeLongitudeInput').val("");
+                    $('#myPlacePanelBody').load(document.URL + ' #myPlacePanelBody');
+                    $('#alert').addClass("alert-success");
+                    $('#alert-message').text(result.message);
+                    $('#alert').alert();
+                    $("#alert").fadeTo(5000, 500).slideUp(500, function () {
+                        $("#alert").hide();
+                    });
+                } else {
+                    $('#hobbyTitleInput').val("");
+                    $('#hobbyDescriptionInput').val("");
+                    $('#alert').addClass("alert-danger");
+                    $('#alert-message').text(result.message);
+                    $('#alert').alert();
+                    $("#alert").fadeTo(5000, 500).slideUp(500, function () {
+                        $("#alert").alert('close');
+                    });
+                }
+            }
+        });
+    });
+
     $('#alert').hide();
 
 });
 
 function logout(){
     $.ajax({
-        type: "POST",
+        type: "GET",
         url: "/logout",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function(result){
-
         }
     });
 }
