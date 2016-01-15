@@ -89,9 +89,8 @@ public class ContactService {
         return contactDao.count(userName);
     }
 
-    public Collection<Contact> findAllContacts() {
-        Collection<Contact> result = contactDao.getAll();
-        return result;
+    public Set<Contact> findAllContacts() {
+        return contactDao.getAll();
     }
 
     public Collection<Contact>findAllContactsWithHobby(Hobby hobby) {

@@ -66,7 +66,10 @@ public class RegistrationController {
     public String getLogin(Model model) {
         logger.warn("getLogin()");
         model.addAttribute("userForm", new Contact());
-        return "login";
+        if(service.findAllContacts().isEmpty()){
+            return "redirect:/test";
+        }
+        return "login-authorPanel";
     }
 
     @RequestMapping(value = "/test", method=RequestMethod.GET)
@@ -74,10 +77,12 @@ public class RegistrationController {
         logger.warn("test()");
         Contact contact1 = new Contact("Всеволод", "Бондарь", new Date(1990-1900, 9, 18), "azeral", "258456", "258456", "resources/img/my.png");
         Contact contact2 = new Contact("Святослав", "Бондарь", new Date(1992-1900, 7, 24), "ctumyji", "258456", "258456", "resources/img/slavik.jpg");
-        Contact contact3 = new Contact("Илья", "Коверя", new Date(1992-1900, 8 , 14), "gold", "258456", "258456", "resources/img/illia.jpg");
+        Contact contact3 = new Contact("Илья", "Коверя", new Date(1992-1900, 8 , 14), "goldLady", "258456", "258456", "resources/img/illia.jpg");
+        Contact contact4 = new Contact("Иван", "Иванов", new Date(1900-1900, 4, 13), "azazaz", "258456", "258456", "resources/img/no-photo.png");
         service.saveContact(contact1);
         service.saveContact(contact2);
         service.saveContact(contact3);
+        service.saveContact(contact4);
         service.addFriendship(contact1, contact2);
         service.addFriendship(contact1, contact3);
 
@@ -99,27 +104,26 @@ public class RegistrationController {
 //        Post post1 = new Post(contact2, "Привет!", new Date());
 //        postService.savePost(post1);
 //        service.addPostToContact(contact1, post1);
-        Chat chat1 = new Chat(contact2);
 
-        Message message1 = new Message(contact2, new Date(), "Привет!");
-        Message message2 = new Message(contact1, new Date(), "Azaz");
-        messageService.saveMessage(message1);
-        messageService.saveMessage(message2);
-
-        chat1.getChatMessages().add(message1);
-        chat1.getChatMessages().add(message2);
-        chatService.saveChat(chat1);
-        service.addChatToContact(contact1, chat1);
+//                        Ошибка!!!
+//        Chat chat1 = new Chat(contact2);
+//        Message message1 = new Message(contact2, new Date(), "Привет!");
+//        Message message2 = new Message(contact1, new Date(), "Azaz");
+//        messageService.saveMessage(message1);
+//        messageService.saveMessage(message2);
+//
+//        chat1.getChatMessages().add(message1);
+//        chat1.getChatMessages().add(message2);
+//        chatService.saveChat(chat1);
+//        service.addChatToContact(contact1, chat1);
         return "redirect:/login";
     }
 
     @RequestMapping(value = "/saveContact", method = RequestMethod.POST)
     public String saveContact(@ModelAttribute("userForm") @Validated Contact contact, BindingResult result, Model model, final RedirectAttributes redirectAttributes) {
         logger.warn("saveContact()");
-        logger.warn(contact.getFirstName());
         userValidator.validate(contact, result);
         if (result.hasErrors()) {
-//            model.addAttribute("userForm", contact);
             return "login";
         } else {
             redirectAttributes.addFlashAttribute("css", "success");
@@ -136,7 +140,6 @@ public class RegistrationController {
         logger.warn("singIn()");
         userSingInValidator.validate(contact, result);
         if (result.hasErrors()) {
-            contact.setPassword("");
             return "login-authorPanel";
         }
 

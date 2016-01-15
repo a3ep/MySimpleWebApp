@@ -113,7 +113,7 @@ body{
     margin: 0 auto;
 }
 .row-home {
-    width: 880px;
+    width: 950px;
     padding: 0 10px;
     margin: 0 auto;
     /*outline: 2px solid #cccccc;*/
@@ -276,3 +276,28 @@ body{
 .placeCellBtn .btn-group button{
     width: 50px;
 }
+
+            /*PEOPLE*/
+
+#userPhotoTh{
+    width: 100px;
+    text-align: center;
+}
+#userLastNameTh{
+    width: 300px;
+    text-align: center;
+}
+#userFirstNameTh{
+    width: 300px;
+    text-align: center;
+}
+#userBthTh{
+    width: 100px;
+}
+#userCellBtn .btn-group {
+    width: 100px;
+}
+#userCellBtn .btn-group button {
+    width: 50px;
+}
+

@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Azeral on 11.11.2015.
@@ -67,16 +69,21 @@ public abstract class AbstractDaoImpl<T> implements AbstractDao<T> {
         return (T)getSession().get(getPersistentClass(), id);
     }
 
-    public Collection<T> getAll(){
+    public Set<T> getAll(){
         return findByCriteria();
     }
 
-    protected Collection<T> findByCriteria(Criterion... criterion){
+    protected Set<T> findByCriteria(Criterion... criterion){
         Criteria criteria = getSession().createCriteria(getPersistentClass());
         for(Criterion c:criterion){
             criteria.add(c);
         }
-        return criteria.list();
+        Collection<T> collection = criteria.list();
+        Set<T> set = new HashSet<>();
+        for(T t:collection){
+            set.add(t);
+        }
+        return set;
     }
 
     public void flush() {

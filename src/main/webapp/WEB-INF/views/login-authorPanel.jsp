@@ -177,7 +177,7 @@
                                         <label class="label-login control-label">Введите пароль:</label>
 
                                         <div class="input-login" style="margin-left:65px">
-                                            <form:input path="password" type="text" class="form-control " id="password"
+                                            <form:input path="password" type="password" class="form-control " id="password"
                                                         placeholder="Пароль"
                                                         value=""/>
                                             <form:errors path="password" class="control-label"/>
@@ -247,7 +247,7 @@
                                 <div style="width: 500px; margin: 0 auto" class="form-group ${status.error ? 'has-error' : ''}">
                                     <label class="label-login control-label active">Введите пароль</label>
                                     <div class="input-login" style="margin-left:-11px">
-                                        <form:input path="password" type="text" class="form-control"
+                                        <form:input path="password" type="password" class="form-control"
                                                     id="password"
                                                     placeholder="Пароль"/>
                                         <form:errors path="password" class="control-label"/>

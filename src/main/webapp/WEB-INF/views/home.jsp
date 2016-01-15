@@ -33,7 +33,9 @@
             <%--</button>--%>
             <span id="alert-message" style="text-align:center; font-weight: bold"></span>
         </div>
+        <button style="float: right" class="btn btn-danger" onclick="logout()"><span class="glyphicon glyphicon-off" aria-hidden="true"></span></button>
         <h1 id="h1" datatype="utf-8">Добро пожаловать ${user.firstName}!</h1>
+
     </div>
 
     <div class="row">
@@ -56,9 +58,144 @@
                                                               data-toggle="tab">Хобби</a></li>
                 <li role=presentation <%--class="lazy"--%>><a href="#places-panel" role="tab"
                                                               data-toggle="tab">Места</a></li>
+                <li role="presentation"><a href="#people-panel" role="tab" data-toggle="tab">Люди</a></li>
             </ul>
 
             <div id="content" class="tab-content">
+                <%----------------MODAL MESSAGE---------------%>
+                <div id="modalMessage" class="modal fade in"
+                     aria-labelledby="modalMessageLabel" role="dialog" tabindex="-1">
+                    <div class="modal-dialog" role="document"
+                         style="width: 700px; margin-top: 110px">
+                        <div class="modal-content">
+                            <div class="modal-header"
+                                 style="background-color: #337AB7; color: #ffffff">
+                                <button class="close" aria-label="Close"
+                                        data-dismiss="modal" type="button">
+                                    <span aria-hidden="false">×</span>
+                                </button>
+
+                                <h4 id="modalMessageLabel" class="modal-title"
+                                    style="text-align: center"><span
+                                        class="glyphicon glyphicon-envelope"
+                                        style="font-size: 30px"> Чат</span></h4>
+                            </div>
+                            <div class="modal-body">
+                                <label id="modalMessageBodyLabel" class="label label-primary"
+                                       style="margin-bottom:10px"
+                                        >Кому -> <span
+                                        class="glyphicon glyphicon-user"></span> <span
+                                        id="modalBodyLabel"></span> <span id="modalMessageFriendId"
+                                                                          style="visibility:hidden"></span>
+                                </label>
+
+                                <div class="panel panel-primary">
+                                    <div class="panel-body">
+                                        <div id="messagesInModal">
+
+                                            <%--<div class="popover-home">--%>
+                                            <%--<div class="popover right message">--%>
+                                            <%--<div class="arrow"></div>--%>
+                                            <%--<h3 style="background-color: #337AB7; color: #ffffff; text-align: right"--%>
+                                            <%--class="popover-title"><span>00:00</span>--%>
+                                            <%--</h3>--%>
+
+                                            <%--<div style="background-color:#EFEFEF"--%>
+                                            <%--class="popover-content">--%>
+                                            <%--Сообщение сообщение сообщение сообщение--%>
+                                            <%--сообщение сообщение сообщение--%>
+                                            <%--сообщение--%>
+                                            <%--</div>--%>
+                                            <%--</div>--%>
+                                            <%--</div>--%>
+                                            <%--<div class="popover-home">--%>
+                                            <%--<div class="popover left message">--%>
+                                            <%--<div class="arrow"></div>--%>
+                                            <%--<h3 style="background-color: #5CB85C; color: #ffffff; text-align: right"--%>
+                                            <%--class="popover-title">--%>
+                                            <%--<span>00:00</span></h3>--%>
+
+                                            <%--<div style="background-color:#EFEFEF"--%>
+                                            <%--class="popover-content">--%>
+                                            <%--Сообщение сообщение сообщение сообщение--%>
+                                            <%--сообщение сообщение сообщение--%>
+                                            <%--сообщение--%>
+                                            <%--</div>--%>
+                                            <%--</div>--%>
+                                            <%--</div>--%>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer" style="background-color: #337AB7">
+                                <div style="width: 135px">
+                                    <label class="label label-default"
+                                           style="margin-bottom:10px; text-align: left"
+                                           for="messageArea">Введите сообщение</label><br>
+                                </div>
+                                                                <textarea class="form-control"
+                                                                          style="width:660px;max-width: 660px; margin-bottom: 20px"
+                                                                          id=messageArea
+                                                                          name="message"></textarea>
+                                <button id="sendMessage" class="btn btn-success" type="button"
+                                        onclick="sendMessage()">Отправить
+                                </button>
+                                <button class="btn btn-danger" data-dismiss="modal"
+                                        type="button">Закрыть
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <%------------------MODAL POST----------------%>
+                <div id="modalPost" class="modal fade in"
+                     aria-labelledby="modalPostLabel" role="dialog" tabindex="-1">
+                    <div class="modal-dialog" role="document"
+                         style="width: 700px; margin-top: 110px">
+                        <div class="modal-content">
+                            <div class="modal-header"
+                                 style="background-color: #337AB7; color: #ffffff">
+                                <button class="close" aria-label="Close"
+                                        data-dismiss="modal" type="button">
+                                    <span aria-hidden="false">×</span>
+                                </button>
+
+                                <h4 id="modalPostLabel" class="modal-title"
+                                    style="text-align: center"><span
+                                        class="glyphicon glyphicon-comment"
+                                        style="font-size: 30px"> Стена</span></h4>
+                            </div>
+                            <div class="modal-body">
+                                <div style="margin-bottom: 10px">
+                                    <label class="label label-primary">Кому -> <span
+                                            class="glyphicon glyphicon-user"></span> <span
+                                            id="modalPostBodyLabel"></span> <span id="modalPostFriendId"
+                                                                                  style="visibility:hidden"></span>
+                                    </label>
+                                </div>
+
+
+                                <div style="width: 135px">
+                                    <label class="label label-default"
+                                           style="margin-bottom:10px; text-align: left"
+                                           for="postTextArea">Введите сообщение</label><br>
+                                </div>
+                                                                <textarea class="form-control"
+                                                                          style="width:660px;max-width: 660px; margin-bottom: 20px"
+                                                                          id="postTextArea" name="post">
+                                                                </textarea>
+                            </div>
+                            <div class="modal-footer" style="background-color: #337AB7">
+                                <button class="btn btn-success" type="button" onclick="sendPost()">Отправить
+                                </button>
+                                <button class="btn btn-danger" data-dismiss="modal"
+                                        type="button">Закрыть
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <%--TAB USER-PROFILE--%>
                 <div role="tabpanel" class="tab-pane active" id="user-info-panel">
@@ -129,178 +266,62 @@
                     <div class="row tab-home">
 
                         <div class="row row-home">
-                            <div class="table-home">
-                                <table class="table table-hover-my">
-                                    <thead>
-                                    <tr>
-                                        <th id="friendPhotoTh">Фото</th>
-                                        <th id="friendLastNameTh">Фамилия</th>
-                                        <th id="friendFirstNameTh">Имя</th>
-                                        <th id="friendBthTh"></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <c:forEach items="${user.friendList}" var="friend">
-                                        <tr>
-                                            <td id="friend-photo" style="text-align:center; vertical-align:middle"><img
-                                                    src="${friend.photo}" alt="../img/no-photo.png" class="img-rounded"
-                                                    height="30"></td>
-                                            <td id="friend-last-name"
-                                                style="text-align:center; vertical-align:middle">${friend.lastName}</td>
-                                            <td id="friend-first-name"
-                                                style="text-align:center; vertical-align:middle">${friend.firstName}</td>
-                                            <td id="friendCellBtn">
-                                                <spring:url value="/friends/${friend.id}/message" var="messageUrl"/>
-                                                <spring:url value="/friends/${friend.id}/post" var="postUrl"/>
-                                                <spring:url value="/friends/${friend.id}/remove" var="deleteUrl"/>
-                                                <div class="btn-group">
-                                                    <button id="messageBtn" class="btn btn-success" <%--data-toggle="modal"
-                                                            data-target="#modalMessage"--%>
-                                                            onclick="modalMessage(${friend.id})"><span
-                                                            class="glyphicon glyphicon-envelope"
-                                                            aria-hidden="true"></span></button>
-                                                    <button id="postBtn" class="btn btn-info" <%--data-toggle="modal"
-                                                            data-target="#modalPost"--%> onclick="modalPost(${friend.id})"><span
-                                                            class="glyphicon glyphicon-comment"
-                                                            aria-hidden="true"></span></button>
-                                                    <button id="removeFriendBtn" class="btn btn-danger"
-                                                            onclick="removeFriend(${friend.id}, this.closest('tr'))"><span
-                                                            class="glyphicon glyphicon-trash"
-                                                            aria-hidden="true"></span></button>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                    </c:forEach>
-                                    </tbody>
-                                </table>
-
-                                <%----------------MODAL MESSAGE---------------%>
-                                <div id="modalMessage" class="modal fade in"
-                                     aria-labelledby="modalMessageLabel" role="dialog" tabindex="-1">
-                                    <div class="modal-dialog" role="document"
-                                         style="width: 700px; margin-top: 110px">
-                                        <div class="modal-content">
-                                            <div class="modal-header"
-                                                 style="background-color: #337AB7; color: #ffffff">
-                                                <button class="close" aria-label="Close"
-                                                        data-dismiss="modal" type="button">
-                                                    <span aria-hidden="false">×</span>
-                                                </button>
-
-                                                <h4 id="modalMessageLabel" class="modal-title"
-                                                    style="text-align: center"><span
-                                                        class="glyphicon glyphicon-envelope"
-                                                        style="font-size: 30px"> Чат</span></h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <label id="modalMessageBodyLabel" class="label label-primary"
-                                                       style="margin-bottom:10px"
-                                                        >Кому -> <span
-                                                        class="glyphicon glyphicon-user"></span> <span id="modalBodyLabel"></span> <span id="modalFriendId" style="visibility:hidden"></span>
-                                                </label>
-
-                                                <div class="panel panel-primary">
-                                                    <div class="panel-body">
-                                                        <div id="messagesInModal">
-
-                                                            <%--<div class="popover-home">--%>
-                                                            <%--<div class="popover right message">--%>
-                                                            <%--<div class="arrow"></div>--%>
-                                                            <%--<h3 style="background-color: #337AB7; color: #ffffff; text-align: right"--%>
-                                                            <%--class="popover-title"><span>00:00</span>--%>
-                                                            <%--</h3>--%>
-
-                                                            <%--<div style="background-color:#EFEFEF"--%>
-                                                            <%--class="popover-content">--%>
-                                                            <%--Сообщение сообщение сообщение сообщение--%>
-                                                            <%--сообщение сообщение сообщение--%>
-                                                            <%--сообщение--%>
-                                                            <%--</div>--%>
-                                                            <%--</div>--%>
-                                                            <%--</div>--%>
-                                                            <%--<div class="popover-home">--%>
-                                                            <%--<div class="popover left message">--%>
-                                                            <%--<div class="arrow"></div>--%>
-                                                            <%--<h3 style="background-color: #5CB85C; color: #ffffff; text-align: right"--%>
-                                                            <%--class="popover-title">--%>
-                                                            <%--<span>00:00</span></h3>--%>
-
-                                                            <%--<div style="background-color:#EFEFEF"--%>
-                                                            <%--class="popover-content">--%>
-                                                            <%--Сообщение сообщение сообщение сообщение--%>
-                                                            <%--сообщение сообщение сообщение--%>
-                                                            <%--сообщение--%>
-                                                            <%--</div>--%>
-                                                            <%--</div>--%>
-                                                            <%--</div>--%>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer" style="background-color: #337AB7">
-                                                <div style="width: 135px">
-                                                    <label class="label label-default"
-                                                           style="margin-bottom:10px; text-align: left"
-                                                           for="messageArea">Введите сообщение</label><br>
-                                                </div>
-                                                                <textarea class="form-control"
-                                                                          style="width:660px;max-width: 660px; margin-bottom: 20px"
-                                                                          id=messageArea
-                                                                          name="message"></textarea>
-                                                <button id="sendMessage" class="btn btn-success" type="button" onclick="sendMessage()">Отправить
-                                                </button>
-                                                <button class="btn btn-danger" data-dismiss="modal"
-                                                        type="button">Закрыть
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <div class="panel panel-primary" style="width: 900px">
+                                <div class="panel-heading" role="tab" id="friendHeading">
+                                    <h4 class="panel-title">
+                                        <a role="button" data-toggle="collapse"
+                                           href="#friendCollapse"
+                                           aria-expanded="false" aria-controls="friendCollapse">
+                                            Мои друзья
+                                        </a>
+                                    </h4>
                                 </div>
-                                <%------------------MODAL POST----------------%>
-                                <div id="modalPost" class="modal fade in"
-                                     aria-labelledby="modalPostLabel" role="dialog" tabindex="-1">
-                                    <div class="modal-dialog" role="document"
-                                         style="width: 700px; margin-top: 110px">
-                                        <div class="modal-content">
-                                            <div class="modal-header"
-                                                 style="background-color: #337AB7; color: #ffffff">
-                                                <button class="close" aria-label="Close"
-                                                        data-dismiss="modal" type="button">
-                                                    <span aria-hidden="false">×</span>
-                                                </button>
+                                <div id="friendCollapse" class="panel-collapse collapse in" role="tabpanel"
+                                     aria-labelledby="friendHeading" aria-expanded="true" style="">
+                                    <div class="panel-body">
+                                        <div class="table-home">
+                                            <table class="table table-hover-my">
+                                                <thead>
+                                                <tr>
+                                                    <th id="friendPhotoTh">Фото</th>
+                                                    <th id="friendLastNameTh">Фамилия</th>
+                                                    <th id="friendFirstNameTh">Имя</th>
+                                                    <th id="friendBthTh"></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <c:forEach items="${user.friendList}" var="friend">
+                                                    <tr>
+                                                        <td id="friend-photo" style="text-align:center; vertical-align:middle"><img
+                                                                src="${friend.photo}" alt="../img/no-photo.png" class="img-rounded"
+                                                                height="30"></td>
+                                                        <td id="friend-last-name"
+                                                            style="text-align:center; vertical-align:middle">${friend.lastName}</td>
+                                                        <td id="friend-first-name"
+                                                            style="text-align:center; vertical-align:middle">${friend.firstName}</td>
+                                                        <td id="friendCellBtn">
+                                                            <div class="btn-group">
+                                                                <button id="messageBtn" class="btn btn-success" <%--data-toggle="modal"
+                                                            data-target="#modalMessage"--%>
+                                                                        onclick="invokeMessage(${friend.id})"><span
+                                                                        class="glyphicon glyphicon-envelope"
+                                                                        aria-hidden="true"></span></button>
+                                                                <button id="postBtn" class="btn btn-info" <%--data-toggle="modal"
+                                                            data-target="#modalPost"--%>
+                                                                        onclick="invokePost(${friend.id})"><span
+                                                                        class="glyphicon glyphicon-comment"
+                                                                        aria-hidden="true"></span></button>
+                                                                <button id="removeFriendBtn" class="btn btn-danger"
+                                                                        onclick="removeFriend(${friend.id}, this.closest('tr'))"><span
+                                                                        class="glyphicon glyphicon-trash"
+                                                                        aria-hidden="true"></span></button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
 
-                                                <h4 id="modalPostLabel" class="modal-title"
-                                                    style="text-align: center"><span
-                                                        class="glyphicon glyphicon-comment"
-                                                        style="font-size: 30px"> Стена</span></h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div style="margin-bottom: 10px">
-                                                    <label class="label label-primary">Кому -> <span
-                                                            class="glyphicon glyphicon-user"></span> <span id="modalPostBodyLabel"></span>
-                                                    </label>
-                                                </div>
-
-
-                                                <div style="width: 135px">
-                                                    <label class="label label-default"
-                                                           style="margin-bottom:10px; text-align: left"
-                                                           for="postTextArea">Введите сообщение</label><br>
-                                                </div>
-                                                                <textarea class="form-control"
-                                                                          style="width:660px;max-width: 660px; margin-bottom: 20px"
-                                                                          id="postTextArea" name="post">
-                                                                </textarea>
-                                            </div>
-                                            <div class="modal-footer" style="background-color: #337AB7">
-                                                <button class="btn btn-success" type="button">Отправить
-                                                </button>
-                                                <button class="btn btn-danger" data-dismiss="modal"
-                                                        type="button">Закрыть
-                                                </button>
-                                            </div>
+                                                </c:forEach>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
@@ -319,7 +340,7 @@
                                     <div class="panel-heading" role="tab" id="hobbyHeadingOne">
                                         <h4 class="panel-title">
                                             <a role="button" data-toggle="collapse"
-                                               data-parent="#hobbyCollapseGroup" href="#hobbyCollapseOne"
+                                               data-parent="#<%--hobbyCollapseGroup--%>" href="#hobbyCollapseOne"
                                                aria-expanded="false" aria-controls="hobbyCollapseOne">
                                                 Добавить новое хобби?
                                             </a>
@@ -327,7 +348,7 @@
                                     </div>
                                     <div id="hobbyCollapseOne" class="panel-collapse collapse" role="tabpanel"
                                          aria-labelledby="hobbyHeadingOne" aria-expanded="false" style="height: 0px">
-                                        <div class="panel-body">
+                                        <div class="panel-body" style="height: 110px">
                                             <table class="table table-hover-my">
                                                 <thead>
                                                 <tr>
@@ -363,7 +384,7 @@
                                     <div class="panel-heading" role="tab" id="hobbyHeadingTwo">
                                         <h4 class="panel-title">
                                             <a class="" role="button" data-toggle="collapse"
-                                               data-parent="#hobbyCollapseGroup" href="#hobbyCollapseTwo"
+                                               data-parent="#<%--hobbyCollapseGroup--%>" href="#hobbyCollapseTwo"
                                                aria-expanded="true" aria-controls="hobbyCollapseTwo">
                                                 Мои хобби
                                             </a>
@@ -371,7 +392,7 @@
                                     </div>
                                     <div id="hobbyCollapseTwo" class="panel-collapse collapse in" role="tabpanel"
                                          aria-labelledby="hobbyHeadingTwo" aria-expanded="true" style="">
-                                        <div class="panel-body">
+                                        <div id="myHobbyPanelBody" class="panel-body">
                                             <table class="table table-hover-my">
                                                 <thead>
                                                 <tr>
@@ -430,7 +451,7 @@
                                     <div class="panel-heading" role="tab" id="placeHeadingOne">
                                         <h4 class="panel-title">
                                             <a role="button" data-toggle="collapse"
-                                               data-parent="#placeCollapseGroup" href="#placeCollapseOne"
+                                               data-parent="#<%--placeCollapseGroup--%>" href="#placeCollapseOne"
                                                aria-expanded="false" aria-controls="placeCollapseOne">
                                                 Добавить новое место?
                                             </a>
@@ -438,7 +459,7 @@
                                     </div>
                                     <div id="placeCollapseOne" class="panel-collapse collapse" role="tabpanel"
                                          aria-labelledby="placeHeadingOne" aria-expanded="false" style="height: 0px">
-                                        <div class="panel-body">
+                                        <div class="panel-body" style="height: 110px">
                                             <table class="table table-hover-my">
                                                 <thead>
                                                 <tr>
@@ -487,7 +508,7 @@
                                     <div class="panel-heading" role="tab" id="placeHeadingTwo">
                                         <h4 class="panel-title">
                                             <a class="" role="button" data-toggle="collapse"
-                                               data-parent="#placeCollapseGroup" href="#placeCollapseTwo"
+                                               data-parent="#<%--placeCollapseGroup--%>" href="#placeCollapseTwo"
                                                aria-expanded="true" aria-controls="placeCollapseTwo">
                                                 Мои места
                                             </a>
@@ -495,7 +516,7 @@
                                     </div>
                                     <div id="placeCollapseTwo" class="panel-collapse collapse in" role="tabpanel"
                                          aria-labelledby="placeHeadingTwo" aria-expanded="true" style="">
-                                        <div class="panel-body">
+                                        <div id="myPlacePanelBody" class="panel-body">
                                             <table class="table table-hover-my">
                                                 <thead>
                                                 <tr>
@@ -549,6 +570,68 @@
                                                                 <button class="btn btn-danger"
                                                                         onclick="removePlace(${place.id}, this.closest('tr'))"><span
                                                                         class="glyphicon glyphicon-trash"
+                                                                        aria-hidden="true"></span></button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </c:forEach>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <%--TAB PEOPLE--%>
+                <div role="tabpanel" class="tab-pane fade in" id="people-panel">
+                    <div class="row tab-home">
+
+                        <div class="row row-home">
+                            <div class="panel panel-primary" style="width: 900px">
+                                <div class="panel-heading" role="tab" id="peopleHeading">
+                                    <h4 class="panel-title">
+                                        <a role="button" data-toggle="collapse"
+                                           href="#peopleCollapse"
+                                           aria-expanded="false" aria-controls="peopleCollapse">
+                                            Люди
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="peopleCollapse" class="panel-collapse collapse in" role="tabpanel"
+                                     aria-labelledby="peopleHeading" aria-expanded="true" style="">
+                                    <div class="panel-body">
+                                        <div class="table-home">
+                                            <table class="table table-hover-my">
+                                                <thead>
+                                                <tr>
+                                                    <th id="userPhotoTh">Фото</th>
+                                                    <th id="userLastNameTh">Фамилия</th>
+                                                    <th id="userFirstNameTh">Имя</th>
+                                                    <th id="userBthTh"></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <c:forEach items="${contacts}" var="user">
+                                                    <tr>
+                                                        <td id="user-photo" style="text-align:center; vertical-align:middle"><img
+                                                                src="${user.photo}" alt="../img/no-photo.png" class="img-rounded"
+                                                                height="30"></td>
+                                                        <td id="user-last-name"
+                                                            style="text-align:center; vertical-align:middle">${user.lastName}</td>
+                                                        <td id="user-first-name"
+                                                            style="text-align:center; vertical-align:middle">${user.firstName}</td>
+                                                        <td id="userCellBtn">
+                                                            <div class="btn-group">
+                                                                <button id="addFriendBtn" class="btn btn-primary"
+                                                                        onclick="addFriend(${user.id})"><span
+                                                                        class="glyphicon glyphicon-plus"
+                                                                        aria-hidden="true"></span></button>
+                                                                <button class="btn btn-success"
+                                                                        onclick="invokeMessage(${user.id})"><span
+                                                                        class="glyphicon glyphicon-envelope"
                                                                         aria-hidden="true"></span></button>
                                                             </div>
                                                         </td>

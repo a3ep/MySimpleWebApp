@@ -17,10 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by AzeraL on 03.12.2015.
@@ -46,6 +43,9 @@ public class PageController {
     private MessageService messageService;
 
     @Autowired
+    private PostService postService;
+
+    @Autowired
     private MessageSource messageSource;
 
     @InitBinder
@@ -61,8 +61,22 @@ public class PageController {
 
         Contact user = (Contact) httpSession.getAttribute("USER");
         model.addAttribute("user", user);
+
+        Set<Contact> contacts = service.findAllContacts();
+        contacts.remove(user);
+        logger.debug(contacts.toString());
+        model.addAttribute("contacts", contacts);
         return "home";
     }
+
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    public String logout(Model model, HttpSession session) {
+        logger.debug("logout()");
+        session.invalidate();
+        model.addAttribute("userForm", new Contact());
+        return "redirect:/login";
+    }
+
 
     @RequestMapping(value = "/edit/profile", method = RequestMethod.POST)
     @ResponseBody
@@ -83,10 +97,10 @@ public class PageController {
         return ResponseMessage.okMessage(contactDto);
     }
 
-    @RequestMapping(value = "/friends/{id}/message", method = RequestMethod.POST)
+    @RequestMapping(value = "/friends/{id}/invokeMessage", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseMessage message(@PathVariable("id") long id, HttpSession session) {
-        logger.warn("message()");
+    public ResponseMessage invokeMessage(@PathVariable("id") long id, HttpSession session) {
+        logger.warn("invokeMessage()");
 
         Contact user = (Contact) session.getAttribute("USER");
         service.refreshContact(user);
@@ -96,6 +110,7 @@ public class PageController {
         try {
             if(user.getConversation().isEmpty()){
                 Chat newChat = new Chat(friend);
+                chatService.saveChat(newChat);
                 service.addChatToContact(user, newChat);
             }
             for (Chat chat : user.getConversation()) {
@@ -119,7 +134,7 @@ public class PageController {
         return ResponseMessage.okMessage(friendDto, messages);
     }
 
-    @RequestMapping(value = "/sendMessage/{id}/send", method = RequestMethod.POST)
+    @RequestMapping(value = "/friends/{id}/sendMessage", method = RequestMethod.POST)
     @ResponseBody
     public ResponseMessage sendMessage(@RequestBody String message, @PathVariable("id") long id, HttpSession session) {
         logger.warn("sendMessage()");
@@ -152,10 +167,10 @@ public class PageController {
         return ResponseMessage.okMessage(friendDto, messages);
     }
 
-    @RequestMapping(value = "/friends/{id}/post", method = RequestMethod.POST)
+    @RequestMapping(value = "/friends/{id}/invokePost", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseMessage post(@PathVariable("id") long id, HttpSession session) {
-        logger.warn("post()");
+    public ResponseMessage invokePost(@PathVariable("id") long id, HttpSession session) {
+        logger.warn("invokePost()");
 
         Contact friend = service.findContactById(id);
         ContactDto friendDto = new ContactDto();
@@ -163,6 +178,46 @@ public class PageController {
         friendDto.setFirstName(friend.getFirstName());
         friendDto.setLastName(friend.getLastName());
         return ResponseMessage.okMessage(friendDto);
+    }
+
+    @RequestMapping(value = "/friends/{id}/sendPost", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseMessage sendPost(@RequestBody String message, @PathVariable("id") long id, HttpSession session) {
+        logger.warn("sendPost()");
+
+        Contact user = (Contact) session.getAttribute("USER");
+        service.refreshContact(user);
+        Contact friend = service.findContactById(id);
+        Post newPost = new Post(user, message, new Date());
+        try {
+            service.addPostToContact(friend, postService.savePost(newPost));
+        } catch (Exception e) {
+            return ResponseMessage.errorMessage(e.getMessage());
+        }
+        return ResponseMessage.okMessage("");
+    }
+
+    @RequestMapping(value = "/friends/{id}/add", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseMessage addFriend(@PathVariable("id") long id, HttpSession session) {
+        logger.warn("addFriend() : {}", id);
+
+        Contact user = (Contact) session.getAttribute("USER");
+        service.refreshContact(user);
+        Contact friend = service.findContactById(id);
+        try {
+            service.addFriendship(user, friend);
+            service.updateContact(user);
+        } catch (Exception e) {
+            logger.debug("Add friend error", e);
+            return ResponseMessage.errorMessage(e.getMessage());
+        }
+        session.setAttribute("USER", user);
+        ContactDto newFriend = new ContactDto();
+        newFriend.setId(friend.getId());
+        newFriend.setFirstName(friend.getFirstName());
+        newFriend.setLastName(friend.getLastName());
+        return ResponseMessage.okMessage(newFriend);
     }
 
     @RequestMapping(value = "/friends/{id}/remove", method = RequestMethod.POST)
@@ -189,6 +244,7 @@ public class PageController {
         try {
             Hobby hobby = hobbyService.saveHobby(hobbyDto.getTitle(), hobbyDto.getDescription());
             Contact user = (Contact) session.getAttribute("USER");
+            service.refreshContact(user);
             service.addHobbyToContact(user, hobby);
         } catch (Exception e) {
             logger.debug("Save hobby error!", e);

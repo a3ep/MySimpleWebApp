@@ -47,6 +47,9 @@ $(document).ready(function () {
             data: '{"title": "' + hobbyTitle + '", "description": "' + hobbyDescription + '"}',
             success: function (result) {
                 if (result.status === 'OK') {
+                    $('#hobbyTitleInput').val("");
+                    $('#hobbyDescriptionInput').val("");
+                    $('#myHobbyPanelBody').load(document.URL + ' #myHobbyPanelBody');
                     $('#alert').addClass("alert-success");
                     $('#alert-message').text(result.message);
                     $('#alert').alert();
@@ -54,6 +57,8 @@ $(document).ready(function () {
                         $("#alert").hide();
                     });
                 } else {
+                    $('#hobbyTitleInput').val("");
+                    $('#hobbyDescriptionInput').val("");
                     $('#alert').addClass("alert-danger");
                     $('#alert-message').text(result.message);
                     $('#alert').alert();
@@ -69,8 +74,20 @@ $(document).ready(function () {
 
 });
 
-function modalMessage(friendId) {
-    var url = "/friends/" + friendId + "/message";
+function logout(){
+    $.ajax({
+        type: "POST",
+        url: "/logout",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function(result){
+
+        }
+    });
+}
+
+function invokeMessage(friendId) {
+    var url = "/friends/" + friendId + "/invokeMessage";
 
     $.ajax({
         type: "POST",
@@ -83,10 +100,18 @@ function modalMessage(friendId) {
     });
 }
 
+function invokeModalMessage(friend, messages) {
+    var friendName = " " + friend.firstName + " " + friend.lastName;
+    $('#modalBodyLabel').text(friendName);
+    $('#modalMessageFriendId').text(friend.id);
+    buildModal(friend, messages);
+    $('#modalMessage').modal('show');
+}
+
 function sendMessage(){
     var message = $('#messageArea').val();
-    var friendId = $('#modalFriendId').text();
-    var url = "/sendMessage/" + friendId + "/send/";
+    var friendId = $('#modalMessageFriendId').text();
+    var url = "/friends/" + friendId + "/sendMessage/";
 
     $.ajax({
         type: "POST",
@@ -104,8 +129,8 @@ function sendMessage(){
     });
 }
 
-function modalPost(friendId){
-    var url = "/friends/" + friendId + "/post";
+function invokePost(friendId){
+    var url = "/friends/" + friendId + "/invokePost";
 
     $.ajax({
         type: "POST",
@@ -116,6 +141,110 @@ function modalPost(friendId){
             invokeModalPost(result.contactDto);
         }
     });
+}
+
+function invokeModalPost(friend) {
+    $('#modalPostBodyLabel').text(" " + friend.firstName + " " + friend.lastName);
+    $('#modalPostFriendId').text(friend.id);
+    $('#modalPost').modal('show');
+}
+
+function sendPost(){
+    var message = $('#postTextArea').val();
+    var friendId = $('#modalPostFriendId').text();
+    var url = "/friends/" + friendId + "/sendPost/";
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        data: '{"message": "' + message + '"}',
+        success: function (result) {
+            if(result.status==='OK'){
+                $('#postTextArea').val("");
+            }else {
+                $('#postTextArea').val("");
+                $('#modalPost').modal('hide');
+                $('#alert').addClass("alert-danger");
+                $('#alert-message').text(result.message);
+                $('#alert').alert();
+                $("#alert").fadeTo(5000, 500).slideUp(500, function () {
+                    $("#alert").alert('close');
+                });
+            }
+        }
+    });
+}
+
+function buildModal(friend, messages){
+    for (var i = 0; i < messages.length; i++) {
+        var message = messages[i];
+
+        if (message.from.id === friend.id) {
+            var divPopoverHome = document.createElement('div');
+            divPopoverHome.className("popover-home");
+
+            var divPopoverRightMessage = document.createElement('div');
+            divPopoverRightMessage.className("popover right message");
+
+            var divArrow = document.createElement('div');
+            divArrow.className("arrow");
+
+            var h3PopoverTitle = document.createElement('h3');
+            h3PopoverTitle.style("background-color: #337AB7; color: #ffffff; text-align: right");
+            h3PopoverTitle.className("popover-title");
+
+            var innerSpan = document.createElement('span');
+            innerSpan.innerHTML(message.date);
+
+            h3PopoverTitle.appendChild(innerSpan);
+            divPopoverRightMessage.appendChild(divArrow);
+            divPopoverRightMessage.appendChild(h3PopoverTitle);
+
+            var divPopoverContent = document.createElement('div');
+            divPopoverContent.style("background-color:#EFEFEF");
+            divPopoverContent.className("popover-content");
+            divPopoverContent.innerHTML(message.content);
+
+            divPopoverRightMessage.appendChild(divPopoverContent);
+            divPopoverHome.appendChild(divPopoverRightMessage);
+
+            var parentElem = document.getElementById("messagesInModal");
+            parentElem.appendChild(divPopoverHome);
+        } else {
+            var divPopoverHome = document.createElement('div');
+            divPopoverHome.className("popover-home");
+
+            var divPopoverLeftMessage = document.createElement('div');
+            divPopoverLeftMessage.className("popover left message");
+
+            var divArrow = document.createElement('div');
+            divArrow.className("arrow");
+
+            var h3PopoverTitle = document.createElement('h3');
+            h3PopoverTitle.style("background-color: #5CB85C/*; color: #ffffff; text-align: right*/");
+            h3PopoverTitle.className("popover-title");
+
+            var innerSpan = document.createElement('span');
+            innerSpan.innerHTML(message.date);
+
+            h3PopoverTitle.appendChild(innerSpan);
+            divPopoverLeftMessage.appendChild(divArrow);
+            divPopoverLeftMessage.appendChild(h3PopoverTitle);
+
+            var divPopoverContent = document.createElement('div');
+            divPopoverContent.style("background-color:#EFEFEF");
+            divPopoverContent.className("popover-content");
+            divPopoverContent.innerHTML(message.content);
+
+            divPopoverLeftMessage.appendChild(divPopoverContent);
+            divPopoverHome.appendChild(divPopoverLeftMessage);
+
+            var parentElem = document.getElementById("messagesInModal");
+            parentElem.appendChild(divPopoverHome);
+        }
+    }
 }
 
 function removeFriend(friendId, element) {
@@ -275,85 +404,30 @@ function removePlace(placeId, element) {
     });
 }
 
-function invokeModalMessage(friend, messages) {
-    var friendName = " " + friend.firstName + " " + friend.lastName;
-    $('#modalBodyLabel').text(friendName);
-    $('#modalFriendId').text(friend.id);
-    buildModal(friend, messages);
-    $('#modalMessage').modal('show');
-}
+function addFriend(friendId){
+    var url = "/friends/" + friendId + "/add/";
 
-function invokeModalPost(friend) {
-    $('#modalPostBodyLabel').text(" " + friend.firstName + " " + friend.lastName);
-    $('#modalPost').modal('show');
-}
-
-function buildModal(friend, messages){
-    for (var i = 0; i < messages.length; i++) {
-        var message = messages[i];
-
-        if (message.from.id === friend.id) {
-            var divPopoverHome = document.createElement('div');
-            divPopoverHome.className("popover-home");
-
-            var divPopoverRightMessage = document.createElement('div');
-            divPopoverRightMessage.className("popover right message");
-
-            var divArrow = document.createElement('div');
-            divArrow.className("arrow");
-
-            var h3PopoverTitle = document.createElement('h3');
-            h3PopoverTitle.style("background-color: #337AB7; color: #ffffff; text-align: right");
-            h3PopoverTitle.className("popover-title");
-
-            var innerSpan = document.createElement('span');
-            innerSpan.innerHTML(message.date);
-
-            h3PopoverTitle.appendChild(innerSpan);
-            divPopoverRightMessage.appendChild(divArrow);
-            divPopoverRightMessage.appendChild(h3PopoverTitle);
-
-            var divPopoverContent = document.createElement('div');
-            divPopoverContent.style("background-color:#EFEFEF");
-            divPopoverContent.className("popover-content");
-            divPopoverContent.innerHTML(message.content);
-
-            divPopoverRightMessage.appendChild(divPopoverContent);
-            divPopoverHome.appendChild(divPopoverRightMessage);
-
-            var parentElem = document.getElementById("messagesInModal");
-            parentElem.appendChild(divPopoverHome);
-        } else {
-            var divPopoverHome = document.createElement('div');
-            divPopoverHome.className("popover-home");
-
-            var divPopoverLeftMessage = document.createElement('div');
-            divPopoverLeftMessage.className("popover left message");
-
-            var divArrow = document.createElement('div');
-            divArrow.className("arrow");
-
-            var h3PopoverTitle = document.createElement('h3');
-            h3PopoverTitle.style("background-color: #5CB85C/*; color: #ffffff; text-align: right*/");
-            h3PopoverTitle.className("popover-title");
-
-            var innerSpan = document.createElement('span');
-            innerSpan.innerHTML(message.date);
-
-            h3PopoverTitle.appendChild(innerSpan);
-            divPopoverLeftMessage.appendChild(divArrow);
-            divPopoverLeftMessage.appendChild(h3PopoverTitle);
-
-            var divPopoverContent = document.createElement('div');
-            divPopoverContent.style("background-color:#EFEFEF");
-            divPopoverContent.className("popover-content");
-            divPopoverContent.innerHTML(message.content);
-
-            divPopoverLeftMessage.appendChild(divPopoverContent);
-            divPopoverHome.appendChild(divPopoverLeftMessage);
-
-            var parentElem = document.getElementById("messagesInModal");
-            parentElem.appendChild(divPopoverHome);
+    $.ajax({
+        type: "POST",
+        url: url,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            if (result.status === 'OK') {
+                $('#alert').addClass("alert-success");
+                $('#alert-message').text("Success! " + result.contactDto.firstName + " " + result.contactDto.lastName + " added to friend list:)");
+                $('#alert').alert();
+                $("#alert").fadeTo(5000, 500).slideUp(500, function () {
+                    $("#alert").hide();
+                });
+            } else {
+                $('#alert').addClass("alert-danger");
+                $('#alert-message').text(result.message);
+                $('#alert').alert();
+                $("#alert").fadeTo(5000, 500).slideUp(500, function () {
+                    $("#alert").alert('close');
+                });
+            }
         }
-    }
+    });
 }
