@@ -192,7 +192,7 @@
                                         <label class="label-login control-label">Подтвердите пароль:</label>
 
                                         <div class="input-login" style="margin-left:27px">
-                                            <form:input path="confirmPassword" type="text" class="form-control "
+                                            <form:input path="confirmPassword" type="password" class="form-control "
                                                         id="confirmPassword" placeholder="Пароль"
                                                         value=""/>
                                             <form:errors path="confirmPassword" class="control-label"/>

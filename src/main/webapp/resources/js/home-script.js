@@ -113,6 +113,16 @@ $(document).ready(function () {
 
 });
 
+function showTooltip(elemenId){
+    var id = "#"+elemenId;
+    $(id).tooltip('show');
+}
+
+function hideTooltip(elemenId){
+    var id = "#"+elemenId;
+    $(id).tooltip('hide');
+}
+
 function logout(){
     $.ajax({
         type: "GET",
@@ -452,6 +462,7 @@ function addFriend(friendId){
         dataType: "json",
         success: function (result) {
             if (result.status === 'OK') {
+                $('#myFriendBodyPanel').load(document.URL + ' #myFriendBodyPanel');
                 $('#alert').addClass("alert-success");
                 $('#alert-message').text("Success! " + result.contactDto.firstName + " " + result.contactDto.lastName + " added to friend list:)");
                 $('#alert').alert();

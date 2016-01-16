@@ -33,7 +33,7 @@
             <%--</button>--%>
             <span id="alert-message" style="text-align:center; font-weight: bold"></span>
         </div>
-        <button style="float: right" class="btn btn-danger" onclick="logout()"><span class="glyphicon glyphicon-off" aria-hidden="true"></span></button>
+        <button id="logoutBtn" style="float: right" class="btn btn-danger" onclick="logout()" onmouseover="showTooltip(id)" onmouseout="hideTooltip(id)" data-toggle="tooltip" data-placement="bottom" type="button" data-original-title="Выход"><span class="glyphicon glyphicon-off" aria-hidden="true"></span></button>
         <h1 id="h1" datatype="utf-8">Добро пожаловать ${user.firstName}!</h1>
 
     </div>
@@ -205,7 +205,7 @@
                                 <img src="${user.photo}" alt="Фото" class="img-rounded">
                             </div>
                             <div id="profileChangeBtn">
-                                <button class="btn btn-primary" id="edit-profile-btn"><span
+                                <button id="edit-profile-btn" class="btn btn-primary" onmouseover="showTooltip(id)" onmouseout="hideTooltip(id)" data-toggle="tooltip" data-placement="bottom" type="button" data-original-title="Редактировать профиль"><span
                                         class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
                             </div>
                             <div id="profileInfo">
@@ -278,7 +278,7 @@
                                 </div>
                                 <div id="friendCollapse" class="panel-collapse collapse in" role="tabpanel"
                                      aria-labelledby="friendHeading" aria-expanded="true" style="">
-                                    <div class="panel-body">
+                                    <div id="myFriendBodyPanel" class="panel-body">
                                         <div class="table-home">
                                             <table class="table table-hover-my">
                                                 <thead>
@@ -303,16 +303,16 @@
                                                             <div class="btn-group">
                                                                 <button id="messageBtn" class="btn btn-success" <%--data-toggle="modal"
                                                             data-target="#modalMessage"--%>
-                                                                        onclick="invokeMessage(${friend.id})"><span
+                                                                        onclick="invokeMessage(${friend.id})" onmouseover="showTooltip(id)" onmouseout="hideTooltip(id)" data-toggle="tooltip" data-placement="top" type="button" data-original-title="Отправить сообщение в чат"><span
                                                                         class="glyphicon glyphicon-envelope"
                                                                         aria-hidden="true"></span></button>
                                                                 <button id="postBtn" class="btn btn-info" <%--data-toggle="modal"
                                                             data-target="#modalPost"--%>
-                                                                        onclick="invokePost(${friend.id})"><span
+                                                                        onclick="invokePost(${friend.id})" onmouseover="showTooltip(id)" onmouseout="hideTooltip(id)" data-toggle="tooltip" data-placement="top" type="button" data-original-title="Отправить сообщение на стену"><span
                                                                         class="glyphicon glyphicon-comment"
                                                                         aria-hidden="true"></span></button>
                                                                 <button id="removeFriendBtn" class="btn btn-danger"
-                                                                        onclick="removeFriend(${friend.id}, this.closest('tr'))"><span
+                                                                        onclick="removeFriend(${friend.id}, this.closest('tr'))" onmouseover="showTooltip(id)" onmouseout="hideTooltip(id)" data-toggle="tooltip" data-placement="bottom" type="button" data-original-title="Удалить из друзей"><span
                                                                         class="glyphicon glyphicon-trash"
                                                                         aria-hidden="true"></span></button>
                                                             </div>
@@ -369,7 +369,7 @@
                                                     </td>
                                                     <td>
                                                         <button id="saveHobbyBtn" style="width: 160px"
-                                                                class="btn btn-success"><span
+                                                                class="btn btn-success" onmouseover="showTooltip(id)" onmouseout="hideTooltip(id)" data-toggle="tooltip" data-placement="top" type="button" data-original-title="Добавить хобби"><span
                                                                 class="glyphicon glyphicon-save"
                                                                 aria-hidden="true"></span>
                                                         </button>
@@ -418,13 +418,13 @@
                                                         </td>
                                                         <td class="hobbyCellBtn">
                                                             <div class="btn-group">
-                                                                <button class="btn btn-primary"
-                                                                        onclick="editHobby(${hobby.id})"><span
+                                                                <button id="editHobbyBtn"class="btn btn-primary"
+                                                                        onclick="editHobby(${hobby.id})" onmouseover="showTooltip(id)" onmouseout="hideTooltip(id)" data-toggle="tooltip" data-placement="top" type="button" data-original-title="Редактировать"><span
                                                                         class="glyphicon glyphicon-pencil"
                                                                         aria-hidden="true"></span>
                                                                 </button>
-                                                                <button class="btn btn-danger"
-                                                                        onclick="removeHobby(${hobby.id}, this.closest('tr'))"><span
+                                                                <button id="removeHobbyBtn"class="btn btn-danger"
+                                                                        onclick="removeHobby(${hobby.id}, this.closest('tr'))" onmouseover="showTooltip(id)" onmouseout="hideTooltip(id)" data-toggle="tooltip" data-placement="top" type="button" data-original-title="Удалить"><span
                                                                         class="glyphicon glyphicon-trash"
                                                                         aria-hidden="true"></span></button>
                                                             </div>
@@ -494,7 +494,7 @@
                                                                type="text">
                                                     </td>
                                                     <td class="placeCellBtn">
-                                                        <button id="savePlaceBtn" class="btn btn-success"><span
+                                                        <button id="savePlaceBtn" class="btn btn-success" onmouseover="showTooltip(id)" onmouseout="hideTooltip(id)" data-toggle="tooltip" data-placement="top" type="button" data-original-title="Добавить место"><span
                                                                 class="glyphicon glyphicon-save"
                                                                 aria-hidden="true"></span></button>
                                                     </td>
@@ -563,12 +563,12 @@
                                                         </td>
                                                         <td class="placeCellBtn">
                                                             <div class="btn-group">
-                                                                <button class="btn btn-primary"
-                                                                        onclick="editPlace(${place.id})"><span
+                                                                <button id="editPlaceBtn" class="btn btn-primary"
+                                                                        onclick="editPlace(${place.id})" onmouseover="showTooltip(id)" onmouseout="hideTooltip(id)" data-toggle="tooltip" data-placement="top" type="button" data-original-title="Редактировать"><span
                                                                         class="glyphicon glyphicon-pencil"
                                                                         aria-hidden="true"></span></button>
-                                                                <button class="btn btn-danger"
-                                                                        onclick="removePlace(${place.id}, this.closest('tr'))"><span
+                                                                <button id="removePlaceBtn" class="btn btn-danger"
+                                                                        onclick="removePlace(${place.id}, this.closest('tr'))" onmouseover="showTooltip(id)" onmouseout="hideTooltip(id)" data-toggle="top" data-placement="bottom" type="button" data-original-title="Удалить"><span
                                                                         class="glyphicon glyphicon-trash"
                                                                         aria-hidden="true"></span></button>
                                                             </div>
@@ -626,11 +626,11 @@
                                                         <td id="userCellBtn">
                                                             <div class="btn-group">
                                                                 <button id="addFriendBtn" class="btn btn-primary"
-                                                                        onclick="addFriend(${user.id})"><span
+                                                                        onclick="addFriend(${user.id})" onmouseover="showTooltip(id)" onmouseout="hideTooltip(id)" data-toggle="tooltip" data-placement="top" type="button" data-original-title="Добавить в друзья"><span
                                                                         class="glyphicon glyphicon-plus"
                                                                         aria-hidden="true"></span></button>
-                                                                <button class="btn btn-success"
-                                                                        onclick="invokeMessage(${user.id})"><span
+                                                                <button id="peopleSendMessageBtn" class="btn btn-success"
+                                                                        onclick="invokeMessage(${user.id})" onmouseover="showTooltip(id)" onmouseout="hideTooltip(id)" data-toggle="tooltip" data-placement="top" type="button" data-original-title="Отправить сообщение"><span
                                                                         class="glyphicon glyphicon-envelope"
                                                                         aria-hidden="true"></span></button>
                                                             </div>

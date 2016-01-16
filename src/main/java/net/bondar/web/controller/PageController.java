@@ -236,6 +236,7 @@ public class PageController {
         Contact friend = service.findContactById(id);
         String friendName = friend.getFirstName() + " " + friend.getLastName();
         try {
+            service.refreshContact(user);
             service.removeFriendship(user, friend);
         } catch (Exception e) {
             logger.debug("Remove friend error", e);
