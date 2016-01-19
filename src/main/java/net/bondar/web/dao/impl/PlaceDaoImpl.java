@@ -2,6 +2,8 @@ package net.bondar.web.dao.impl;
 
 import net.bondar.web.dao.inter.PlaceDao;
 import net.bondar.web.model.Place;
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -9,4 +11,9 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class PlaceDaoImpl extends AbstractDaoImpl<Place> implements PlaceDao {
+    public Place findPlaceByTitle(String title) {
+        Criteria criteria = getSession().createCriteria(Place.class);
+        criteria.add(Restrictions.eq("title", title));
+        return (Place) criteria.uniqueResult();
+    }
 }

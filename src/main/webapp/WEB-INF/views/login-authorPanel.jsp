@@ -33,7 +33,8 @@
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
-            <strong>${msg}</strong>
+            <span id="alert-message" style="text-align:center; font-weight: bold">${msg}</span>
+            <strong style="text-align: center"></strong>
         </div>
     </c:if>
     <div class="header-login">
@@ -46,7 +47,7 @@
             <ul class="nav nav-tabs" id="login-or-register">
                 <li role="presentation"><a href="#register-panel" aria-controls="register" role="tab"
                                                           data-toggle="tab">Регистрация</a></li>
-                <li role="presentation" class="active"><a href="#author-panel" aria-controls="profile" role="tab"
+                <li role="presentation" class="active"><a aria-controls="profile" role="tab"
                                          data-toggle="tab">Авторизация</a></li>
             </ul>
 
@@ -55,7 +56,7 @@
                 <%--TAB REGISTRATION--%>
                 <div role="tabpanel" class="tab-pane fade in" id="register-panel">
 
-                    <div class="row tab-login">
+                    <div id="registerPage"class="row tab-login">
                         <div style="width: 800px; margin: 0 auto">
                             <h3 style="text-align: center">Зарегистрируйтесь, пожалуйста</h3><br/>
                         </div>

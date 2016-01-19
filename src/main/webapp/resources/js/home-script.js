@@ -152,7 +152,7 @@ function invokeModalMessage(friend, messages) {
     var friendName = " " + friend.firstName + " " + friend.lastName;
     $('#modalBodyLabel').text(friendName);
     $('#modalMessageFriendId').text(friend.id);
-    buildModal(friend, messages);
+    //buildModal(friend, messages);
     $('#modalMessage').modal('show');
 }
 
@@ -170,8 +170,8 @@ function sendMessage(){
         success: function (result) {
             if(result.status==='OK'){
                 $('#messageArea').val("");
-                buildModal(result.contactDto, result.messages);
-
+                $('#messagesInModal').load(document.URL + ' #messagesInModal');
+                //buildModal(result.contactDto, result.messages);
             }
         }
     });
@@ -469,6 +469,61 @@ function addFriend(friendId){
                 $("#alert").fadeTo(5000, 500).slideUp(500, function () {
                     $("#alert").hide();
                 });
+            } else {
+                $('#alert').addClass("alert-danger");
+                $('#alert-message').text(result.message);
+                $('#alert').alert();
+                $("#alert").fadeTo(5000, 500).slideUp(500, function () {
+                    $("#alert").alert('close');
+                });
+            }
+        }
+    });
+}
+
+function filter(){
+    var url = "/people/filter/add";
+    var selectNumber = $('#selectFilter').val();
+    var textFilter = $('#filterInput').val();
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        data: '{"selectNumber": "' + selectNumber + '", "textFilter": "' + textFilter + '"}',
+        success: function (result) {
+            if (result.status === 'OK') {
+                $('#myPeoplePanelBody').load(document.URL + ' #myPeoplePanelBody');
+                //$('#alert').addClass("alert-success");
+                //$('#alert-message').text("Success!");
+                //$('#alert').alert();
+                //$("#alert").fadeTo(5000, 500).slideUp(500, function () {
+                //    $("#alert").hide();
+                //});
+            } else {
+                $('#alert').addClass("alert-danger");
+                $('#alert-message').text(result.message);
+                $('#alert').alert();
+                $("#alert").fadeTo(5000, 500).slideUp(500, function () {
+                    $("#alert").alert('close');
+                });
+            }
+        }
+    });
+}
+
+function removeFilter(){
+    var url = "/people/filter/remove";
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            if (result.status === 'OK') {
+                $('#myPeoplePanelBody').load(document.URL + ' #myPeoplePanelBody');
             } else {
                 $('#alert').addClass("alert-danger");
                 $('#alert-message').text(result.message);

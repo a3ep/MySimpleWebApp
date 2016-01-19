@@ -33,7 +33,9 @@
             <%--</button>--%>
             <span id="alert-message" style="text-align:center; font-weight: bold"></span>
         </div>
-        <button id="logoutBtn" style="float: right" class="btn btn-danger" onclick="logout()" onmouseover="showTooltip(id)" onmouseout="hideTooltip(id)" data-toggle="tooltip" data-placement="bottom" type="button" data-original-title="Выход"><span class="glyphicon glyphicon-off" aria-hidden="true"></span></button>
+        <button id="logoutBtn" style="float: right" class="btn btn-danger" onclick="logout()"
+                onmouseover="showTooltip(id)" onmouseout="hideTooltip(id)" data-toggle="tooltip" data-placement="bottom"
+                type="button" data-original-title="Выход"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></button>
         <h1 id="h1" datatype="utf-8">Добро пожаловать ${user.firstName}!</h1>
 
     </div>
@@ -92,38 +94,34 @@
                                 <div class="panel panel-primary">
                                     <div class="panel-body">
                                         <div id="messagesInModal">
+                                            <c:forEach items="${messages}" var="message">
+                                                <div class="popover-home">
+                                                    <div class="popover right message">
+                                                        <div class="arrow"></div>
+                                                        <h3 style="background-color: #337AB7; color: #ffffff; text-align: right"
+                                                            class="popover-title">${message.from.firstName} ${message.from.lastName}<span> ${message.date}</span>
+                                                        </h3>
 
-                                            <%--<div class="popover-home">--%>
-                                            <%--<div class="popover right message">--%>
-                                            <%--<div class="arrow"></div>--%>
-                                            <%--<h3 style="background-color: #337AB7; color: #ffffff; text-align: right"--%>
-                                            <%--class="popover-title"><span>00:00</span>--%>
-                                            <%--</h3>--%>
+                                                        <div style="background-color:#EFEFEF"
+                                                             class="popover-content">${message.content}</div>
+                                                    </div>
+                                                </div>
+                                                <%--<div class="popover-home">--%>
+                                                    <%--<div class="popover left message">--%>
+                                                        <%--<div class="arrow"></div>--%>
+                                                        <%--<h3 style="background-color: #5CB85C; color: #ffffff; text-align: right"--%>
+                                                            <%--class="popover-title">--%>
+                                                            <%--<span>00:00</span></h3>--%>
 
-                                            <%--<div style="background-color:#EFEFEF"--%>
-                                            <%--class="popover-content">--%>
-                                            <%--Сообщение сообщение сообщение сообщение--%>
-                                            <%--сообщение сообщение сообщение--%>
-                                            <%--сообщение--%>
-                                            <%--</div>--%>
-                                            <%--</div>--%>
-                                            <%--</div>--%>
-                                            <%--<div class="popover-home">--%>
-                                            <%--<div class="popover left message">--%>
-                                            <%--<div class="arrow"></div>--%>
-                                            <%--<h3 style="background-color: #5CB85C; color: #ffffff; text-align: right"--%>
-                                            <%--class="popover-title">--%>
-                                            <%--<span>00:00</span></h3>--%>
-
-                                            <%--<div style="background-color:#EFEFEF"--%>
-                                            <%--class="popover-content">--%>
-                                            <%--Сообщение сообщение сообщение сообщение--%>
-                                            <%--сообщение сообщение сообщение--%>
-                                            <%--сообщение--%>
-                                            <%--</div>--%>
-                                            <%--</div>--%>
-                                            <%--</div>--%>
-
+                                                        <%--<div style="background-color:#EFEFEF"--%>
+                                                             <%--class="popover-content">--%>
+                                                            <%--Сообщение сообщение сообщение сообщение--%>
+                                                            <%--сообщение сообщение сообщение--%>
+                                                            <%--сообщение--%>
+                                                        <%--</div>--%>
+                                                    <%--</div>--%>
+                                                <%--</div>--%>
+                                            </c:forEach>
                                         </div>
                                     </div>
                                 </div>
@@ -300,19 +298,22 @@
                                                         <td id="friend-first-name"
                                                             style="text-align:center; vertical-align:middle">${friend.firstName}</td>
                                                         <td id="friendCellBtn">
+                                                            <spring:url value="${friend.id}messageBtn" var="messageBtn"/>
+                                                            <spring:url value="${friend.id}postBtn" var="postBtn"/>
+                                                            <spring:url value="${friend.id}removeFriendBtn" var="removeFriendBtn"/>
                                                             <div class="btn-group">
-                                                                <button id="messageBtn" class="btn btn-success" <%--data-toggle="modal"
+                                                                <button id="${messageBtn}" class="btn btn-success" <%--data-toggle="modal"
                                                             data-target="#modalMessage"--%>
                                                                         onclick="invokeMessage(${friend.id})" onmouseover="showTooltip(id)" onmouseout="hideTooltip(id)" data-toggle="tooltip" data-placement="top" type="button" data-original-title="Отправить сообщение в чат"><span
                                                                         class="glyphicon glyphicon-envelope"
                                                                         aria-hidden="true"></span></button>
-                                                                <button id="postBtn" class="btn btn-info" <%--data-toggle="modal"
+                                                                <button id="${postBtn}" class="btn btn-info" <%--data-toggle="modal"
                                                             data-target="#modalPost"--%>
                                                                         onclick="invokePost(${friend.id})" onmouseover="showTooltip(id)" onmouseout="hideTooltip(id)" data-toggle="tooltip" data-placement="top" type="button" data-original-title="Отправить сообщение на стену"><span
                                                                         class="glyphicon glyphicon-comment"
                                                                         aria-hidden="true"></span></button>
-                                                                <button id="removeFriendBtn" class="btn btn-danger"
-                                                                        onclick="removeFriend(${friend.id}, this.closest('tr'))" onmouseover="showTooltip(id)" onmouseout="hideTooltip(id)" data-toggle="tooltip" data-placement="bottom" type="button" data-original-title="Удалить из друзей"><span
+                                                                <button id="${removeFriendBtn}" class="btn btn-danger"
+                                                                        onclick="removeFriend(${friend.id}, this.closest('tr'))" onmouseover="showTooltip(id)" onmouseout="hideTooltip(id)" data-toggle="tooltip" data-placement="top" type="button" data-original-title="Удалить из друзей"><span
                                                                         class="glyphicon glyphicon-trash"
                                                                         aria-hidden="true"></span></button>
                                                             </div>
@@ -417,13 +418,15 @@
                                                                    value="${hobby.description}"/>
                                                         </td>
                                                         <td class="hobbyCellBtn">
+                                                            <spring:url value="${hobby.id}editHobbyBtn" var="editHobbyBtn"/>
+                                                            <spring:url value="${hobby.id}removeHobbyBtn" var="removeHobbyBtn"/>
                                                             <div class="btn-group">
-                                                                <button id="editHobbyBtn"class="btn btn-primary"
+                                                                <button id="${editHobbyBtn}"class="btn btn-primary"
                                                                         onclick="editHobby(${hobby.id})" onmouseover="showTooltip(id)" onmouseout="hideTooltip(id)" data-toggle="tooltip" data-placement="top" type="button" data-original-title="Редактировать"><span
                                                                         class="glyphicon glyphicon-pencil"
                                                                         aria-hidden="true"></span>
                                                                 </button>
-                                                                <button id="removeHobbyBtn"class="btn btn-danger"
+                                                                <button id="${removeHobbyBtn}"class="btn btn-danger"
                                                                         onclick="removeHobby(${hobby.id}, this.closest('tr'))" onmouseover="showTooltip(id)" onmouseout="hideTooltip(id)" data-toggle="tooltip" data-placement="top" type="button" data-original-title="Удалить"><span
                                                                         class="glyphicon glyphicon-trash"
                                                                         aria-hidden="true"></span></button>
@@ -562,13 +565,15 @@
                                                                    value="${place.longitude}"/>
                                                         </td>
                                                         <td class="placeCellBtn">
+                                                            <spring:url value="${place.id}editPlaceBtn" var="editPlaceBtn"/>
+                                                            <spring:url value="${place.id}removePlaceBtn" var="removePlaceBtn"/>
                                                             <div class="btn-group">
-                                                                <button id="editPlaceBtn" class="btn btn-primary"
+                                                                <button id="${editPlaceBtn}" class="btn btn-primary"
                                                                         onclick="editPlace(${place.id})" onmouseover="showTooltip(id)" onmouseout="hideTooltip(id)" data-toggle="tooltip" data-placement="top" type="button" data-original-title="Редактировать"><span
                                                                         class="glyphicon glyphicon-pencil"
                                                                         aria-hidden="true"></span></button>
-                                                                <button id="removePlaceBtn" class="btn btn-danger"
-                                                                        onclick="removePlace(${place.id}, this.closest('tr'))" onmouseover="showTooltip(id)" onmouseout="hideTooltip(id)" data-toggle="top" data-placement="bottom" type="button" data-original-title="Удалить"><span
+                                                                <button id="${removePlaceBtn}" class="btn btn-danger"
+                                                                        onclick="removePlace(${place.id}, this.closest('tr'))" onmouseover="showTooltip(id)" onmouseout="hideTooltip(id)" data-toggle="top" data-placement="top" type="button" data-original-title="Удалить"><span
                                                                         class="glyphicon glyphicon-trash"
                                                                         aria-hidden="true"></span></button>
                                                             </div>
@@ -590,19 +595,62 @@
                     <div class="row tab-home">
 
                         <div class="row row-home">
+                            <div class="panel-group" id="peopleCollapseGroup" role="tablist"
+                                 aria-multiselectable="true" style="width: 950px">
+                            <div class="panel panel-primary" style="width: 900px">
+                                <div class="panel-heading" role="tab" id="peopleHeadingOne">
+                                    <h4 class="panel-title">
+                                        <a role="button" data-toggle="collapse"
+                                           href="#peopleCollapseOne"
+                                           aria-expanded="false" aria-controls="peopleCollapseOne">
+                                            <strong>Фильтр</strong>
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="peopleCollapseOne" class="panel-collapse collapse" role="tabpanel"
+                                     aria-labelledby="peopleHeadingOne" aria-expanded="false" style="">
+                                    <div class="panel-body" style="height: 70px">
+                                        <label class="labelFilter control-label" style="margin-top: 7px; font-weight: normal">Фильтровать по</label>
+                                        <div class="selectFilter">
+                                            <select id="selectFilter" class="form-control">
+                                                <option value="1">Хобби</option>
+                                                <option value="2">Места</option>
+                                            </select>
+                                        </div>
+                                        <input id="filterInput" type="text" class="form-control inputFilter"/>
+                                        <div class="userCellBtn">
+                                            <div class="btn-group" style="padding: 0 15px">
+                                                <button id="filterBtn" class="btn btn-primary btnFilter"
+                                                        onclick="filter()" onmouseover="showTooltip(id)"
+                                                        onmouseout="hideTooltip(id)" data-toggle="tooltip"
+                                                        data-placement="top" type="button" data-original-title="Фильтр"><span
+                                                        class="glyphicon glyphicon-filter"
+                                                        aria-hidden="true"></span></button>
+                                                <button id="removeFilterBtn" class="btn btn-danger"
+                                                        onclick="removeFilter()" onmouseover="showTooltip(id)"
+                                                        onmouseout="hideTooltip(id)" data-toggle="tooltip"
+                                                        data-placement="top" type="button"
+                                                        data-original-title="Снять фильтр"><span
+                                                        class="glyphicon glyphicon-remove"
+                                                        aria-hidden="true"></span></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="panel panel-primary" style="width: 900px">
                                 <div class="panel-heading" role="tab" id="peopleHeading">
                                     <h4 class="panel-title">
                                         <a role="button" data-toggle="collapse"
                                            href="#peopleCollapse"
                                            aria-expanded="false" aria-controls="peopleCollapse">
-                                            Люди
+                                            <strong>Люди</strong>
                                         </a>
                                     </h4>
                                 </div>
                                 <div id="peopleCollapse" class="panel-collapse collapse in" role="tabpanel"
                                      aria-labelledby="peopleHeading" aria-expanded="true" style="">
-                                    <div class="panel-body">
+                                    <div id="myPeoplePanelBody" class="panel-body">
                                         <div class="table-home">
                                             <table class="table table-hover-my">
                                                 <thead>
@@ -623,13 +671,15 @@
                                                             style="text-align:center; vertical-align:middle">${user.lastName}</td>
                                                         <td id="user-first-name"
                                                             style="text-align:center; vertical-align:middle">${user.firstName}</td>
-                                                        <td id="userCellBtn">
+                                                        <td class="userCellBtn">
+                                                            <spring:url value="${user.id}addFriendBtn" var="addFriendBtn"/>
+                                                            <spring:url value="${user.id}peopleSendMessageBtn" var="peopleSendMessageBtn"/>
                                                             <div class="btn-group">
-                                                                <button id="addFriendBtn" class="btn btn-primary"
+                                                                <button id="${addFriendBtn}" class="btn btn-primary"
                                                                         onclick="addFriend(${user.id})" onmouseover="showTooltip(id)" onmouseout="hideTooltip(id)" data-toggle="tooltip" data-placement="top" type="button" data-original-title="Добавить в друзья"><span
                                                                         class="glyphicon glyphicon-plus"
                                                                         aria-hidden="true"></span></button>
-                                                                <button id="peopleSendMessageBtn" class="btn btn-success"
+                                                                <button id="${peopleSendMessageBtn}" class="btn btn-success"
                                                                         onclick="invokeMessage(${user.id})" onmouseover="showTooltip(id)" onmouseout="hideTooltip(id)" data-toggle="tooltip" data-placement="top" type="button" data-original-title="Отправить сообщение"><span
                                                                         class="glyphicon glyphicon-envelope"
                                                                         aria-hidden="true"></span></button>
@@ -642,6 +692,7 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
                             </div>
                         </div>
                     </div>

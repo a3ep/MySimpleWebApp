@@ -51,6 +51,10 @@ public class PlaceService {
         return placeDao.findById(id);
     }
 
+    public Place findPlaceByTitle(String title){
+        return placeDao.findPlaceByTitle(title);
+    }
+
     public Collection<Place> findAllPlaces() {
         return placeDao.getAll();
     }

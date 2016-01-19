@@ -93,14 +93,14 @@ public class ContactService {
         return contactDao.getAll();
     }
 
-    public Collection<Contact>findAllContactsWithHobby(Hobby hobby) {
-        Collection<Contact> result = contactDao.getAllContactsWithHobby(hobby);
+    public Set<Contact> findAllContactsWithHobby(Hobby hobby) {
+        Set<Contact> result = contactDao.getAllContactsWithHobby(hobby);
         if(result.isEmpty()) throw new ContactsNotFoundException();
         else return result;
     }
 
-    public Collection<Contact> findAllContactsForPlace(Place place) {
-        Collection<Contact> result = contactDao.getAllContactsForPlace(place);
+    public Set<Contact> findAllContactsForPlace(Place place) {
+        Set<Contact> result = contactDao.getAllContactsForPlace(place);
         if(result.isEmpty()) throw new ContactsNotFoundException();
         else return result;
     }

@@ -81,6 +81,8 @@ public class RegistrationController {
         hobbyService.saveHobby(hobby2);
         service.addHobbyToContact(contact1, hobby1);
         service.addHobbyToContact(contact1, hobby2);
+        service.addHobbyToContact(contact2, hobby1);
+        service.addHobbyToContact(contact3, hobby2);
 
         Place place1 = new Place("Home", "My Home", 12.0, 12.0);
         Place place2 = new Place("Work", "My Work", 21.0, 21.0);
@@ -88,6 +90,8 @@ public class RegistrationController {
         placeService.savePlace(place2);
         service.addPlaceToContact(contact1, place1);
         service.addPlaceToContact(contact1, place2);
+        service.addPlaceToContact(contact2, place1);
+        service.addPlaceToContact(contact4, place2);
 
 //                     Ошибка SQL!!!!!
 //        Post post1 = new Post(contact2, "Привет!", new Date());
@@ -109,7 +113,7 @@ public class RegistrationController {
     }
 
     @RequestMapping(value = "/saveContact", method = RequestMethod.POST)
-    public String saveContact(@ModelAttribute("userForm") @Validated Contact contact, BindingResult result, Model model, final RedirectAttributes redirectAttributes) {
+    public String saveContact(@ModelAttribute("userForm") @Validated Contact contact, BindingResult result, final RedirectAttributes redirectAttributes) {
         logger.warn("saveContact()");
         userValidator.validate(contact, result);
         if (result.hasErrors()) {
@@ -118,8 +122,8 @@ public class RegistrationController {
             redirectAttributes.addFlashAttribute("css", "success");
             redirectAttributes.addFlashAttribute("msg", "Congratulations " + contact.getFirstName() + ", registration successful!:)");
         }
-
-        service.saveContact(contact);
+        Contact newContact = new Contact(contact.getFirstName(), contact.getLastName(), contact.getBirthDate(), contact.getUserName(), contact.getPassword(), contact.getConfirmPassword(), "resources/img/no-photo.png");
+        service.saveContact(newContact);
 
         return "redirect:/login#tab_author-panel";
     }

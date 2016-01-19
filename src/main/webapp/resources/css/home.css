@@ -295,10 +295,38 @@ body{
 #userBthTh{
     width: 100px;
 }
-#userCellBtn .btn-group {
-    width: 100px;
+.userCellBtn .btn-group {
+    width: 130px;
 }
-#userCellBtn .btn-group button {
+.userCellBtn .btn-group button {
     width: 50px;
 }
+
+.labelFilter{
+    float: left;
+    position: relative;
+    padding: 0 15px;
+}
+
+.selectFilter{
+     width: 130px;
+     float: left;
+     position: relative;
+     padding: 0 15px;
+     margin: 0 0 20px 0;
+ }
+
+.inputFilter{
+    width: 435px;
+    float: left;
+    position: relative;
+    padding: 0 15px;
+    margin: 0 0 20px 0;
+}
+/*.btnFilter{*/
+    /*width: 100px;*/
+    /*float: left;*/
+    /*position: relative;*/
+    /*margin-left: 16px;*/
+/*}*/
 

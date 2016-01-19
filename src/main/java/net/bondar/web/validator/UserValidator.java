@@ -55,7 +55,7 @@ public class UserValidator implements Validator{
         if(contact.getUserName().length()<6){
             errors.rejectValue("userName", "contact.userName.error.minLength");
         }else if(contact.getUserName().length()>16){
-            errors.rejectValue("userName", "contact.userName.error.maxLength");
+            errors.rejectValue("userNameReg", "contact.userName.error.maxLength");
         }
 
         if(contact.getPassword().length()<6||contact.getPassword().length()>16){

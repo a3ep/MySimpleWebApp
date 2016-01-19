@@ -33,7 +33,8 @@
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
-            <strong>${msg}</strong>
+            <span id="alert-message" style="text-align:center; font-weight: bold">${msg}</span>
+            <strong style="text-align: center"></strong>
         </div>
     </c:if>
     <div class="header-login">
