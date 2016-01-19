@@ -45,10 +45,10 @@
 
         <div class="mainRow">
             <ul class="nav nav-tabs" id="login-or-register">
-                <li role="presentation" class="active"><a href="#register-panel" aria-controls="register" role="tab"
-                                                          data-toggle="tab">Регистрация</a></li>
-                <li role="presentation"><a href="#author-panel" aria-controls="profile" role="tab"
-                                         data-toggle="tab">Авторизация</a></li>
+                <li role="presentation"><a href="#register-panel" aria-controls="register" role="tab"
+                                           data-toggle="tab">Регистрация</a></li>
+                <li role="presentation" class="active"><a href="#author-panel" aria-controls="profile" role="tab"
+                                                          data-toggle="tab">Авторизация</a></li>
             </ul>
 
             <div id=content class="tab-content">

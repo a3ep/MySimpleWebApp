@@ -40,14 +40,14 @@
 
     </div>
 
-    <div class="row">
-        <div class="input-group search-block">
-            <input type="text" class="form-control" placeholder="Искать...">
-                <span class="input-group-btn">
-                    <button class="btn btn-primary btn-margin-and-height" type="button">Найти</button>
-                </span>
-        </div>
-    </div>
+    <%--<div class="row">--%>
+        <%--<div class="input-group search-block">--%>
+            <%--<input type="text" class="form-control" placeholder="Искать...">--%>
+                <%--<span class="input-group-btn">--%>
+                    <%--<button class="btn btn-primary btn-margin-and-height" type="button">Найти</button>--%>
+                <%--</span>--%>
+        <%--</div>--%>
+    <%--</div>--%>
 
     <div class="mainRow">
         <div class="tabbable tabs-left">
@@ -593,48 +593,31 @@
                 <%--TAB PEOPLE--%>
                 <div role="tabpanel" class="tab-pane fade in" id="people-panel">
                     <div class="row tab-home">
-
                         <div class="row row-home">
-                            <div class="panel-group" id="peopleCollapseGroup" role="tablist"
-                                 aria-multiselectable="true" style="width: 950px">
-                            <div class="panel panel-primary" style="width: 900px">
-                                <div class="panel-heading" role="tab" id="peopleHeadingOne">
-                                    <h4 class="panel-title">
-                                        <a role="button" data-toggle="collapse"
-                                           href="#peopleCollapseOne"
-                                           aria-expanded="false" aria-controls="peopleCollapseOne">
-                                            <strong>Фильтр</strong>
-                                        </a>
-                                    </h4>
+                            <div style="margin-bottom: 20px">
+                                <label class="labelFilter control-label" style="margin-top: 7px; font-weight: normal">Фильтровать по</label>
+                                <div class="selectFilter">
+                                    <select id="selectFilter" class="form-control">
+                                        <option value="1">Хобби</option>
+                                        <option value="2">Места</option>
+                                    </select>
                                 </div>
-                                <div id="peopleCollapseOne" class="panel-collapse collapse" role="tabpanel"
-                                     aria-labelledby="peopleHeadingOne" aria-expanded="false" style="">
-                                    <div class="panel-body" style="height: 70px">
-                                        <label class="labelFilter control-label" style="margin-top: 7px; font-weight: normal">Фильтровать по</label>
-                                        <div class="selectFilter">
-                                            <select id="selectFilter" class="form-control">
-                                                <option value="1">Хобби</option>
-                                                <option value="2">Места</option>
-                                            </select>
-                                        </div>
-                                        <input id="filterInput" type="text" class="form-control inputFilter"/>
-                                        <div class="userCellBtn">
-                                            <div class="btn-group" style="padding: 0 15px">
-                                                <button id="filterBtn" class="btn btn-primary btnFilter"
-                                                        onclick="filter()" onmouseover="showTooltip(id)"
-                                                        onmouseout="hideTooltip(id)" data-toggle="tooltip"
-                                                        data-placement="top" type="button" data-original-title="Фильтр"><span
-                                                        class="glyphicon glyphicon-filter"
-                                                        aria-hidden="true"></span></button>
-                                                <button id="removeFilterBtn" class="btn btn-danger"
-                                                        onclick="removeFilter()" onmouseover="showTooltip(id)"
-                                                        onmouseout="hideTooltip(id)" data-toggle="tooltip"
-                                                        data-placement="top" type="button"
-                                                        data-original-title="Снять фильтр"><span
-                                                        class="glyphicon glyphicon-remove"
-                                                        aria-hidden="true"></span></button>
-                                            </div>
-                                        </div>
+                                <input id="filterInput" type="text" class="form-control inputFilter"/>
+                                <div class="userCellBtn">
+                                    <div class="btn-group" style="padding: 0 15px">
+                                        <button id="filterBtn" class="btn btn-primary btnFilter"
+                                                onclick="filter()" onmouseover="showTooltip(id)"
+                                                onmouseout="hideTooltip(id)" data-toggle="tooltip"
+                                                data-placement="top" type="button" data-original-title="Фильтр"><span
+                                                class="glyphicon glyphicon-filter"
+                                                aria-hidden="true"></span></button>
+                                        <button id="removeFilterBtn" class="btn btn-danger"
+                                                onclick="removeFilter()" onmouseover="showTooltip(id)"
+                                                onmouseout="hideTooltip(id)" data-toggle="tooltip"
+                                                data-placement="top" type="button"
+                                                data-original-title="Снять фильтр"><span
+                                                class="glyphicon glyphicon-remove"
+                                                aria-hidden="true"></span></button>
                                     </div>
                                 </div>
                             </div>
@@ -692,7 +675,6 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
                             </div>
                         </div>
                     </div>
