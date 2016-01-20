@@ -64,10 +64,10 @@ public class RegistrationController {
     @RequestMapping(value = "/test", method=RequestMethod.GET)
     public String test(){
         logger.warn("test()");
-        Contact contact1 = new Contact("Всеволод", "Бондарь", new Date(1990-1900, 9, 18), "azeral", "258456", "258456", "resources/img/my.png");
-        Contact contact2 = new Contact("Святослав", "Бондарь", new Date(1992-1900, 7, 24), "ctumyji", "258456", "258456", "resources/img/slavik.jpg");
-        Contact contact3 = new Contact("Илья", "Коверя", new Date(1992-1900, 8 , 14), "goldLady", "258456", "258456", "resources/img/illia.jpg");
-        Contact contact4 = new Contact("Иван", "Иванов", new Date(1900-1900, 4, 13), "azazaz", "258456", "258456", "resources/img/no-photo.png");
+        Contact contact1 = new Contact("Всеволод", "Бондарь", new Date(1990-1900, 8, 18), "azeral", "258456", "258456", "resources/img/my.png");
+        Contact contact2 = new Contact("Святослав", "Бондарь", new Date(1992-1900, 6, 24), "ctumyji", "258456", "258456", "resources/img/slavik.jpg");
+        Contact contact3 = new Contact("Илья", "Коверя", new Date(1992-1900, 7 , 14), "goldLady", "258456", "258456", "resources/img/illia.jpg");
+        Contact contact4 = new Contact("Иван", "Иванов", new Date(1900-1900, 3, 13), "azazaz", "258456", "258456", "resources/img/no-photo.png");
         service.saveContact(contact1);
         service.saveContact(contact2);
         service.saveContact(contact3);

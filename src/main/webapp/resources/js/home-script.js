@@ -4,13 +4,14 @@ $(document).ready(function () {
         var firstName = $('#firstName').val();
         var lastName = $('#lastName').val();
         var birthDate = $('#birthDate').val();
+        var newDate = birthDate.substring(6,10)+"-"+birthDate.substring(3,5)+"-"+birthDate.substring(0,2);
 
         $.ajax({
             type: "POST",
             url: '/edit/profile',
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-            data: '{"firstName": "' + firstName + '", "lastName": "' + lastName + '", "birthDate": "' + birthDate + '"}',
+            data: '{"firstName": "' + firstName + '", "lastName": "' + lastName + '", "birthDate": "' + newDate + '"}',
             success: function (result) {
                 if (result.status === 'OK') {
                     $('h1').text("Добро пожаловать " + result.contactDto.firstName + "!");
