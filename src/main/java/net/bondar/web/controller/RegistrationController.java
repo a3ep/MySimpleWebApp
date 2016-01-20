@@ -135,7 +135,6 @@ public class RegistrationController {
         if (result.hasErrors()) {
             return "login-authorPanel";
         }
-
         try {
             session.setAttribute("USER", service.findContactByUserName(contact.getUserName()));
         } catch (Exception e) {

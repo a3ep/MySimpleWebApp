@@ -36,7 +36,7 @@
         <button id="logoutBtn" style="float: right" class="btn btn-danger" onclick="logout()"
                 onmouseover="showTooltip(id)" onmouseout="hideTooltip(id)" data-toggle="tooltip" data-placement="bottom"
                 type="button" data-original-title="Выход"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></button>
-        <h1 id="h1" datatype="utf-8">Добро пожаловать ${user.firstName}!</h1>
+        <h1 id="h1" datatype="utf-8">Добро пожаловать, ${user.firstName}!</h1>
 
     </div>
 

@@ -40,3 +40,9 @@ $(document).ready(function() {
 
 });
 
+function toggleTab(){
+    $('#reg').addClass('active');
+    $('#aut').removeClass('active');
+    $('#register-panel').addClass('active');
+    $('#author-panel').removeClass('active');
+}
