@@ -17,7 +17,6 @@
     <script type="text/javascript" src="webjars/jquery/2.1.4/jquery.js"></script>
     <script type="text/javascript" src="webjars/bootstrap/3.3.6/js/bootstrap.js"></script>
     <script type="text/javascript" src="../../resources/js/home-script.js"></script>
-    <script type="text/javascript" src="webjars/jquery.lazyload/1.9.3/jquery.lazyload.js"></script>
 
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -52,11 +51,11 @@
             <ul class="nav nav-tabs">
                 <li role="presentation" class="active"><a href="#user-info-panel" role="tab"
                                                           data-toggle="tab"><strong>Профиль</strong></a></li>
-                <li role=presentation <%--class="lazy"--%>><a href="#friends-panel" role="tab"
+                <li role=presentation><a href="#friends-panel" role="tab"
                                                               data-toggle="tab"><strong>Друзья</strong></a></li>
-                <li role=presentation <%--class="lazy"--%>><a href="#hobbies-panel" role="tab"
+                <li role=presentation><a href="#hobbies-panel" role="tab"
                                                               data-toggle="tab"><strong>Хобби</strong></a></li>
-                <li role=presentation <%--class="lazy"--%>><a href="#places-panel" role="tab"
+                <li role=presentation><a href="#places-panel" role="tab"
                                                               data-toggle="tab"><strong>Места</strong></a></li>
                 <li role="presentation"><a href="#people-panel" role="tab" data-toggle="tab"><strong>Люди</strong></a></li>
             </ul>
