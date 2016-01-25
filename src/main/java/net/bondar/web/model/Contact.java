@@ -1,18 +1,11 @@
 package net.bondar.web.model;
 
-import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 
 /**
@@ -51,7 +44,7 @@ public class Contact extends AbstractEntity{
     private Set<Chat> conversation;
 
     @OneToMany(fetch = FetchType.EAGER)
-    private Set<Post> posts;
+    private List<Post> posts;
 
 
     public Contact(){
@@ -74,7 +67,7 @@ public class Contact extends AbstractEntity{
         this.places = new HashSet<>();
         this.friendList = new HashSet<>();
         this.conversation = new HashSet<>();
-        this.posts = new HashSet<>();
+        this.posts = new ArrayList<>();
     }
 
     public int getAge() {
@@ -173,11 +166,11 @@ public class Contact extends AbstractEntity{
         this.conversation = conversation;
     }
 
-    public Set<Post> getPosts() {
+    public List<Post> getPosts() {
         return posts;
     }
 
-    public void setPosts(Set<Post> posts) {
+    public void setPosts(List<Post> posts) {
         this.posts = posts;
     }
 

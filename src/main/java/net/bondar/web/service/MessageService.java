@@ -20,7 +20,9 @@ public class MessageService {
     SessionFactory sessionFactory;
 
     public Message saveMessage(Message message){
-        return messageDao.save(message);
+        Message savedMessage = messageDao.save(message);
+        messageDao.flush();
+        return savedMessage;
     }
     public Message findMessageById(long id) {
         return messageDao.findById(id);

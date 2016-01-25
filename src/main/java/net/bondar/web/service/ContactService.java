@@ -40,15 +40,20 @@ public class ContactService {
 //    }
 
     public Contact saveContact(Contact contact) {
-        return contactDao.save(contact);
+        Contact savedContact = contactDao.save(contact);
+        contactDao.flush();
+        return savedContact;
     }
 
     public Contact updateContact(Contact contact){
-        return contactDao.update(contact);
+        Contact updatedContact = contactDao.update(contact);
+        contactDao.flush();
+        return updatedContact;
     }
 
     public void refreshContact(Contact contact){
         contactDao.refresh(contact);
+        contactDao.flush();
     }
 
     public void deleteContact(Contact contact) throws Exception {
@@ -60,6 +65,7 @@ public class ContactService {
             removeFriendship(user, contact);
         }
         contactDao.delete(contact);
+        contactDao.flush();
     }
 
     public void deleteContactById(long id) throws Exception {
@@ -72,6 +78,7 @@ public class ContactService {
             removeFriendship(user, contact);
         }
         contactDao.delete(id);
+        contactDao.flush();
     }
 
 

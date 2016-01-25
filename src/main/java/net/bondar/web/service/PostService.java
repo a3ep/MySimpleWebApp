@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -29,14 +30,16 @@ public class PostService {
     }
 
     public Post savePost(Post post){
-        return postDao.save(post);
+        Post savedPost = postDao.save(post);
+        postDao.flush();
+        return savedPost;
     }
 
     public Post findPostById(long id) {
         return postDao.findById(id);
     }
 
-    public Set<Post> findPosts(Contact contact) {
+    public List<Post> findPosts(Contact contact) {
         return contact.getPosts();
     }
 }

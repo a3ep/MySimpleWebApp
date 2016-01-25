@@ -176,13 +176,13 @@ body{
 }
 #postArea{
     /*outline: 2px solid #FF8000;*/
-    width: 880px;
+    width: 750px;
     margin: 0 auto;
 }
 .postMessage{
     /*outline: 2px solid #FF8000;*/
-    width: 850px;
-    max-width: 850px;
+    width: 700px;
+    max-width: 700px;
     margin: 0 0 20px 0;
 }
 

@@ -1,6 +1,7 @@
 package net.bondar.web.model;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -12,6 +13,7 @@ import java.util.Date;
 @Table(name = "POST")
 public class Post extends AbstractEntity{
 
+    @OneToOne
     private Contact contactFrom;
 
     private String content;

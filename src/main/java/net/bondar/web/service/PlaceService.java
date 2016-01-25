@@ -28,23 +28,31 @@ public class PlaceService {
         else if(latitude<-90||latitude>90) throw new IllegalArgumentException("Place latitude <-90 or >90");
         else if(longitude<-180||longitude>180) throw new IllegalArgumentException("Place longitude <-180 or >180");
         Place place = new Place(title, description, latitude, longitude);
-        return placeDao.save(place);
+        Place savedPlace = placeDao.save(place);
+        placeDao.flush();
+        return savedPlace;
     }
 
     public Place savePlace(Place place){
-        return placeDao.save(place);
+        Place savedPlace = placeDao.save(place);
+        placeDao.flush();
+        return savedPlace;
     }
 
     public Place updatePlace(Place place){
-        return placeDao.update(place);
+        Place updatedPlace = placeDao.update(place);
+        placeDao.flush();
+        return updatedPlace;
     }
 
     public void deletePlace(Place place){
         placeDao.delete(place);
+        placeDao.flush();
     }
 
     public void deletePlace(long id){
         placeDao.delete(id);
+        placeDao.flush();
     }
 
     public Place findPlaceById(long id) {

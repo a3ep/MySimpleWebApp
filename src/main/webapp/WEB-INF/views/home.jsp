@@ -29,10 +29,13 @@
         <div id="alert" class="alert alert-dismissible fade in" role="alert" style="margin: 0">
             <span id="alert-message" style="text-align:center; font-weight: bold"></span>
         </div>
-        <button id="logoutBtn" style="float: right" class="btn btn-danger" onclick="logout()"
-                onmouseover="showTooltip(id)" onmouseout="hideTooltip(id)" data-toggle="tooltip" data-placement="bottom"
-                type="button" data-original-title="Выход"><span class="glyphicon glyphicon-log-out"
-                                                                aria-hidden="true"></span></button>
+        <form:form class="form-horizontal" method="get" action="/logout">
+            <button id="logoutBtn" style="float: right" class="btn btn-danger" <%--onclick="logout()"--%>
+                    onmouseover="showTooltip(this.id)" onmouseout="hideTooltip(this.id)" data-toggle="tooltip"
+                    data-placement="bottom"
+                    type="submit" data-original-title="Выход"><span class="glyphicon glyphicon-log-out"
+                                                                    aria-hidden="true"></span></button>
+        </form:form>
         <h1 id="h1" datatype="utf-8"><strong>Добро пожаловать, ${user.firstName}!</strong></h1>
 
     </div>
@@ -57,7 +60,7 @@
                                                               data-toggle="tab"><strong>Хобби</strong></a></li>
                 <li role=presentation><a href="#places-panel" role="tab"
                                                               data-toggle="tab"><strong>Места</strong></a></li>
-                <li role="presentation"><a href="#people-panel" role="tab" data-toggle="tab"><strong>Люди</strong></a></li>
+                <li role="presentation"><a href="#people-panel" role="tab" data-toggle="tab" onclick="showPeople()"><strong>Люди</strong></a></li>
             </ul>
 
             <div id="content" class="tab-content">
@@ -178,8 +181,7 @@
                                 </div>
                                                                 <textarea class="form-control"
                                                                           style="width:660px;max-width: 660px; margin-bottom: 20px"
-                                                                          id="postTextArea" name="post">
-                                                                </textarea>
+                                                                          id="postTextArea" name="post"></textarea>
                             </div>
                             <div class="modal-footer" style="background-color: #337AB7">
                                 <button class="btn btn-success" type="button" onclick="sendPost()">Отправить
@@ -196,11 +198,11 @@
                 <div role="tabpanel" class="tab-pane active" id="user-info-panel">
                     <div class="row tab-home" style="margin-left: 100px">
                         <div id="profilePhoto">
-                            <img src="${user.photo}" alt="Фото" class="img-rounded">
+                            <img src="${user.photo}" alt="Фото" class="img-rounded" style="width: 150px">
                         </div>
                         <div id="profileChangeBtn">
-                            <button id="edit-profile-btn" class="btn btn-primary" onmouseover="showTooltip(id)"
-                                    onmouseout="hideTooltip(id)" data-toggle="tooltip" data-placement="bottom"
+                            <button id="edit-profile-btn" class="btn btn-primary" onmouseover="showTooltip(this.id)"
+                                    onmouseout="hideTooltip(this.id)" data-toggle="tooltip" data-placement="bottom"
                                     type="button" data-original-title="Редактировать профиль"><span
                                     class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
                         </div>
@@ -232,16 +234,19 @@
                                 </tr>
                             </table>
                         </div>
-                        <div id="postRow" class="row">
-                            <div id="postArea">
-                                <c:forEach items="${user.posts}" var="post">
+                    </div>
+                    <div id="postRow" class="row">
+                        <div id="postArea">
+                            <c:forEach items="${user.posts}" var="post">
+                                <c:if test="${post.contactFrom.id==user.id}">
                                     <div class="popover-home">
-                                        <div class="popover right postMessage">
+                                        <div class="popover left postMessage">
                                             <div class="arrow"></div>
-                                            <h3 style="background-color: #337AB7; color: #ffffff" class="popover-title">
-                                                <span style="text-align: left">${post.contactFrom.firstName} ${post.contactFrom.lastName}</span> <span
-                                                    style="text-align:right"><fmt:formatDate value="${post.date}"
-                                                                                             pattern="hh:mm:ss"/></span>
+                                            <h3 style="background-color: #D9D9D9; color: #333333; height: 30px"
+                                                class="popover-title">
+                                                <span style="float: left">${post.contactFrom.firstName} ${post.contactFrom.lastName}</span>
+                                                <span style="float:right"><fmt:formatDate value="${post.date}"
+                                                                                          pattern="HH:mm"/></span>
                                             </h3>
 
                                             <div style="background-color:#EFEFEF" class="popover-content">
@@ -249,8 +254,25 @@
                                             </div>
                                         </div>
                                     </div>
-                                </c:forEach>
-                            </div>
+                                </c:if>
+                                <c:if test="${post.contactFrom.id!=user.id}">
+                                    <div class="popover-home">
+                                        <div class="popover right postMessage">
+                                            <div class="arrow"></div>
+                                            <h3 style="background-color: #337AB7; color: #ffffff; height: 30px"
+                                                class="popover-title">
+                                                <span style="float: left">${post.contactFrom.firstName} ${post.contactFrom.lastName}</span>
+                                                <span style="float:right"><fmt:formatDate value="${post.date}"
+                                                                                          pattern="HH:mm"/></span>
+                                            </h3>
+
+                                            <div style="background-color:#EFEFEF" class="popover-content">
+                                                    ${post.content}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </c:if>
+                            </c:forEach>
                         </div>
                     </div>
                 </div>
@@ -302,8 +324,8 @@
                                                             <button id="${messageBtn}" class="btn btn-success" <%--data-toggle="modal"
                                                             data-target="#modalMessage"--%>
                                                                     onclick="invokeMessage(${friend.id})"
-                                                                    onmouseover="showTooltip(id)"
-                                                                    onmouseout="hideTooltip(id)" data-toggle="tooltip"
+                                                                    onmouseover="showTooltip(this.id)"
+                                                                    onmouseout="hideTooltip(this.id)" data-toggle="tooltip"
                                                                     data-placement="top" type="button"
                                                                     data-original-title="Отправить сообщение в чат"><span
                                                                     class="glyphicon glyphicon-envelope"
@@ -311,16 +333,16 @@
                                                             <button id="${postBtn}" class="btn btn-info" <%--data-toggle="modal"
                                                             data-target="#modalPost"--%>
                                                                     onclick="invokePost(${friend.id})"
-                                                                    onmouseover="showTooltip(id)"
-                                                                    onmouseout="hideTooltip(id)" data-toggle="tooltip"
+                                                                    onmouseover="showTooltip(this.id)"
+                                                                    onmouseout="hideTooltip(this.id)" data-toggle="tooltip"
                                                                     data-placement="top" type="button"
                                                                     data-original-title="Отправить сообщение на стену"><span
                                                                     class="glyphicon glyphicon-comment"
                                                                     aria-hidden="true"></span></button>
                                                             <button id="${removeFriendBtn}" class="btn btn-danger"
                                                                     onclick="removeFriend(${friend.id}, this.closest('tr'))"
-                                                                    onmouseover="showTooltip(id)"
-                                                                    onmouseout="hideTooltip(id)" data-toggle="tooltip"
+                                                                    onmouseover="showTooltip(this.id)"
+                                                                    onmouseout="hideTooltip(this.id)" data-toggle="tooltip"
                                                                     data-placement="top" type="button"
                                                                     data-original-title="Удалить из друзей"><span
                                                                     class="glyphicon glyphicon-trash"
@@ -377,8 +399,8 @@
                                                 </td>
                                                 <td>
                                                     <button id="saveHobbyBtn" style="width: 160px"
-                                                            class="btn btn-success" onmouseover="showTooltip(id)"
-                                                            onmouseout="hideTooltip(id)" data-toggle="tooltip"
+                                                            class="btn btn-success" onmouseover="showTooltip(this.id)"
+                                                            onmouseout="hideTooltip(this.id)" data-toggle="tooltip"
                                                             data-placement="top" type="button"
                                                             data-original-title="Добавить хобби"><span
                                                             class="glyphicon glyphicon-save"
@@ -434,8 +456,8 @@
                                                         <div class="btn-group">
                                                             <button id="${editHobbyBtn}" class="btn btn-primary"
                                                                     onclick="editHobby(${hobby.id})"
-                                                                    onmouseover="showTooltip(id)"
-                                                                    onmouseout="hideTooltip(id)" data-toggle="tooltip"
+                                                                    onmouseover="showTooltip(this.id)"
+                                                                    onmouseout="hideTooltip(this.id)" data-toggle="tooltip"
                                                                     data-placement="top" type="button"
                                                                     data-original-title="Редактировать"><span
                                                                     class="glyphicon glyphicon-pencil"
@@ -443,8 +465,8 @@
                                                             </button>
                                                             <button id="${removeHobbyBtn}" class="btn btn-danger"
                                                                     onclick="removeHobby(${hobby.id}, this.closest('tr'))"
-                                                                    onmouseover="showTooltip(id)"
-                                                                    onmouseout="hideTooltip(id)" data-toggle="tooltip"
+                                                                    onmouseover="showTooltip(this.id)"
+                                                                    onmouseout="hideTooltip(this.id)" data-toggle="tooltip"
                                                                     data-placement="top" type="button"
                                                                     data-original-title="Удалить"><span
                                                                     class="glyphicon glyphicon-trash"
@@ -515,7 +537,7 @@
                                                 </td>
                                                 <td class="placeCellBtn">
                                                     <button id="savePlaceBtn" class="btn btn-success"
-                                                            onmouseover="showTooltip(id)" onmouseout="hideTooltip(id)"
+                                                            onmouseover="showTooltip(this.id)" onmouseout="hideTooltip(this.id)"
                                                             data-toggle="tooltip" data-placement="top" type="button"
                                                             data-original-title="Добавить место"><span
                                                             class="glyphicon glyphicon-save"
@@ -591,16 +613,16 @@
                                                         <div class="btn-group">
                                                             <button id="${editPlaceBtn}" class="btn btn-primary"
                                                                     onclick="editPlace(${place.id})"
-                                                                    onmouseover="showTooltip(id)"
-                                                                    onmouseout="hideTooltip(id)" data-toggle="tooltip"
+                                                                    onmouseover="showTooltip(this.id)"
+                                                                    onmouseout="hideTooltip(this.id)" data-toggle="tooltip"
                                                                     data-placement="top" type="button"
                                                                     data-original-title="Редактировать"><span
                                                                     class="glyphicon glyphicon-pencil"
                                                                     aria-hidden="true"></span></button>
                                                             <button id="${removePlaceBtn}" class="btn btn-danger"
                                                                     onclick="removePlace(${place.id}, this.closest('tr'))"
-                                                                    onmouseover="showTooltip(id)"
-                                                                    onmouseout="hideTooltip(id)" data-toggle="top"
+                                                                    onmouseover="showTooltip(this.id)"
+                                                                    onmouseout="hideTooltip(this.id)" data-toggle="top"
                                                                     data-placement="top" type="button"
                                                                     data-original-title="Удалить"><span
                                                                     class="glyphicon glyphicon-trash"
@@ -636,14 +658,14 @@
                             <div class="userCellBtn">
                                 <div class="btn-group" style="padding: 0 15px">
                                     <button id="filterBtn" class="btn btn-primary btnFilter"
-                                            onclick="filter()" onmouseover="showTooltip(id)"
-                                            onmouseout="hideTooltip(id)" data-toggle="tooltip"
+                                            onclick="filter()" onmouseover="showTooltip(this.id)"
+                                            onmouseout="hideTooltip(this.id)" data-toggle="tooltip"
                                             data-placement="top" type="button" data-original-title="Фильтр"><span
                                             class="glyphicon glyphicon-filter"
                                             aria-hidden="true"></span></button>
                                     <button id="removeFilterBtn" class="btn btn-danger"
-                                            onclick="removeFilter()" onmouseover="showTooltip(id)"
-                                            onmouseout="hideTooltip(id)" data-toggle="tooltip"
+                                            onclick="removeFilter()" onmouseover="showTooltip(this.id)"
+                                            onmouseout="hideTooltip(this.id)" data-toggle="tooltip"
                                             data-placement="top" type="button"
                                             data-original-title="Снять фильтр"><span
                                             class="glyphicon glyphicon-remove"
@@ -693,16 +715,16 @@
                                                         <div class="btn-group">
                                                             <button id="${addFriendBtn}" class="btn btn-primary"
                                                                     onclick="addFriend(${user.id})"
-                                                                    onmouseover="showTooltip(id)"
-                                                                    onmouseout="hideTooltip(id)" data-toggle="tooltip"
+                                                                    onmouseover="showTooltip(this.id)"
+                                                                    onmouseout="hideTooltip(this.id)" data-toggle="tooltip"
                                                                     data-placement="top" type="button"
                                                                     data-original-title="Добавить в друзья"><span
                                                                     class="glyphicon glyphicon-plus"
                                                                     aria-hidden="true"></span></button>
                                                             <button id="${peopleSendMessageBtn}" class="btn btn-success"
                                                                     onclick="invokeMessage(${user.id})"
-                                                                    onmouseover="showTooltip(id)"
-                                                                    onmouseout="hideTooltip(id)" data-toggle="tooltip"
+                                                                    onmouseover="showTooltip(this.id)"
+                                                                    onmouseout="hideTooltip(this.id)" data-toggle="tooltip"
                                                                     data-placement="top" type="button"
                                                                     data-original-title="Отправить сообщение"><span
                                                                     class="glyphicon glyphicon-envelope"

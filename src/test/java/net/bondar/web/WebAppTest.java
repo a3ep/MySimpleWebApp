@@ -78,6 +78,8 @@ public class WebAppTest {
         Contact user = contactDao.findById(1);
         System.out.println(user.getId() +" "+user.getFirstName());
         doReturn(user).when(contactDao).save(user);
-        assertTrue(user.equals(contactService.saveContact(user)));
+        Contact savedUser = contactService.saveContact(user);
+        System.out.println(savedUser.getId() + " " + savedUser.getFirstName());
+        assertTrue(user.equals(savedUser));
     }
 }

@@ -28,23 +28,31 @@ public class HobbyService {
         if(title==null) throw new IllegalArgumentException("Hobby title is null");
         else if(description==null) throw new IllegalArgumentException("Hobby description is null");
         Hobby hobby=new Hobby(title, description);
-        return hobbyDao.save(hobby);
+        Hobby savedHobby = hobbyDao.save(hobby);
+        hobbyDao.flush();
+        return savedHobby;
     }
 
     public Hobby saveHobby(Hobby hobby){
-        return hobbyDao.save(hobby);
+        Hobby savedHobby = hobbyDao.save(hobby);
+        hobbyDao.flush();
+        return savedHobby;
     }
 
     public Hobby updateHobby(Hobby hobby){
-        return hobbyDao.update(hobby);
+        Hobby updatedHobby = hobbyDao.update(hobby);
+        hobbyDao.flush();
+        return updatedHobby;
     }
 
     public void deleteHobby(Hobby hobby){
         hobbyDao.delete(hobby);
+        hobbyDao.flush();
     }
 
     public void deleteHobby(long id){
         hobbyDao.delete(id);
+        hobbyDao.flush();
     }
 
     public Hobby findHobbyById(long id) {

@@ -94,9 +94,21 @@ public class RegistrationController {
         service.addPlaceToContact(contact4, place2);
 
 //                     Ошибка SQL!!!!!
-//        Post post1 = new Post(contact2, "Привет!", new Date());
-//        postService.savePost(post1);
-//        service.addPostToContact(contact1, post1);
+        Post post1 = new Post(contact2, "Привет!", new Date());
+        Post post2 = new Post(contact2, "Как дела?", new Date());
+        Post post3 = new Post(contact2, "Как погода?", new Date());
+        Post post4 = new Post(contact2, "Азаза", new Date());
+        Post post5 = new Post(contact1, "Лол", new Date());
+        postService.savePost(post1);
+        postService.savePost(post2);
+        postService.savePost(post3);
+        postService.savePost(post4);
+        postService.savePost(post5);
+        service.addPostToContact(contact1, post1);
+        service.addPostToContact(contact1, post2);
+        service.addPostToContact(contact1, post3);
+        service.addPostToContact(contact1, post4);
+        service.addPostToContact(contact1, post5);
 
 //                        Ошибка!!!
 //        Chat chat1 = new Chat(contact2);
@@ -128,12 +140,30 @@ public class RegistrationController {
         return "redirect:/login#tab_author-panel";
     }
 
+//    @RequestMapping(value = "/author", method = RequestMethod.GET)
+//     public String signIn(@ModelAttribute("userForm") @Validated Contact contact, BindingResult result, Model model, HttpSession session) {
+//        logger.warn("singIn()");
+//        userSingInValidator.validate(contact, result);
+//        if (result.hasErrors()) {
+//            return "login-authorPanel";
+//        }
+//        try {
+//            session.setAttribute("USER", service.findContactByUserName(contact.getUserName()));
+//        } catch (Exception e) {
+//            model.addAttribute("error", e.getMessage());
+//            return "redirect:/home";
+//        }
+//        return "redirect:/home";
+//    }
+
     @RequestMapping(value = "/author", method = RequestMethod.GET)
-    public String signIn(@ModelAttribute("userForm") @Validated Contact contact, BindingResult result, Model model, HttpSession session) {
+    public String signIn(@ModelAttribute("userForm")Contact contact, RedirectAttributes redirectAttributes, Model model, HttpSession session) {
         logger.warn("singIn()");
-        userSingInValidator.validate(contact, result);
-        if (result.hasErrors()) {
-            return "login-authorPanel";
+        Contact contactInDB = service.findContactByUserName(contact.getUserName());
+        if(contactInDB==null||!(contact.getPassword().equals(contactInDB.getPassword()))){
+            redirectAttributes.addFlashAttribute("css", "danger");
+            redirectAttributes.addFlashAttribute("msg", "Wrong login or password, please try again.");
+            return "redirect:login";
         }
         try {
             session.setAttribute("USER", service.findContactByUserName(contact.getUserName()));

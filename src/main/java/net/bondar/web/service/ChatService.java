@@ -22,15 +22,21 @@ public class ChatService {
 
     public Chat saveChat(Contact userTo) {
         Chat chat = new Chat(userTo);
-        return chatDao.save(chat);
+        Chat savedChat = chatDao.save(chat);
+        chatDao.flush();
+        return savedChat;
     }
 
     public Chat saveChat(Chat chat){
-        return chatDao.save(chat);
+        Chat savedChat = chatDao.save(chat);
+        chatDao.flush();
+        return savedChat;
     }
 
     public Chat updateChat(Chat chat){
-        return chatDao.update(chat);
+        Chat updatedChat = chatDao.update(chat);
+        chatDao.flush();
+        return updatedChat;
     }
     public Chat findChatById(long id) {
         return chatDao.findById(id);

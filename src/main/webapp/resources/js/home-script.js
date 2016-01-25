@@ -482,6 +482,28 @@ function addFriend(friendId){
     });
 }
 
+function showPeople(){
+    var url = "people/show";
+    $.ajax({
+        type: "POST",
+        url: url,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            if (result.status === 'OK') {
+                $('#myPeoplePanelBody').load(document.URL + ' #myPeoplePanelBody');
+            } else {
+                $('#alert').addClass("alert-danger");
+                $('#alert-message').text(result.message);
+                $('#alert').alert();
+                $("#alert").fadeTo(5000, 500).slideUp(500, function () {
+                    $("#alert").alert('close');
+                });
+            }
+        }
+    });
+}
+
 function filter(){
     var url = "/people/filter/add";
     var selectNumber = $('#selectFilter').val();

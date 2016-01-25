@@ -1,10 +1,7 @@
 package net.bondar.web.controller;
 
 import net.bondar.web.model.*;
-import net.bondar.web.model.dto.ContactDto;
-import net.bondar.web.model.dto.Filter;
-import net.bondar.web.model.dto.HobbyDto;
-import net.bondar.web.model.dto.PlaceDto;
+import net.bondar.web.model.dto.*;
 import net.bondar.web.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +23,6 @@ import java.util.*;
 @Controller
 public class PageController {
     private final Logger logger = LoggerFactory.getLogger(RegistrationController.class);
-    private int loadCount = 0;
     @Autowired
     private ContactService service;
     @Autowired
@@ -53,15 +49,6 @@ public class PageController {
 
         Contact user = (Contact) httpSession.getAttribute("USER");
         model.addAttribute("user", user);
-
-        if(loadCount==0) {
-            Set<Contact> contacts = service.findAllContacts();
-            contacts.remove(user);
-            logger.debug(contacts.toString());
-            model.addAttribute("contacts", contacts);
-            loadCount++;
-            return "home";
-        }
         return "home";
     }
 
@@ -129,12 +116,12 @@ public class PageController {
 
     @RequestMapping(value = "/friends/{id}/sendMessage", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseMessage sendMessage(@RequestBody String message, @PathVariable("id") long id, HttpSession session) {
+    public ResponseMessage sendMessage(@RequestBody SendMessageDto message, @PathVariable("id") long id, HttpSession session) {
         logger.warn("sendMessage()");
 
         Contact user = (Contact) session.getAttribute("USER");
         Contact friend = service.findContactById(id);
-        Message newMessage = new Message(user, new Date(), message);
+        Message newMessage = new Message(user, new Date(), message.getMessage());
         List<Message> messages = new ArrayList<>();
         try {
             service.refreshContact(user);
@@ -200,13 +187,12 @@ public class PageController {
 
     @RequestMapping(value = "/friends/{id}/sendPost", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseMessage sendPost(@RequestBody String message, @PathVariable("id") long id, HttpSession session) {
+    public ResponseMessage sendPost(@RequestBody SendMessageDto message, @PathVariable("id") long id, HttpSession session) {
         logger.warn("sendPost()");
-
         Contact user = (Contact) session.getAttribute("USER");
         service.refreshContact(user);
         Contact friend = service.findContactById(id);
-        Post newPost = new Post(user, message, new Date());
+        Post newPost = new Post(user, message.getMessage(), new Date());
         try {
             service.addPostToContact(friend, postService.savePost(newPost));
         } catch (Exception e) {
@@ -374,6 +360,19 @@ public class PageController {
         return ResponseMessage.okMessage("Success! Place \"" + placeTitle + "\" removed:)");
     }
 
+    @RequestMapping(value = "/people/show", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseMessage showPeople(HttpSession session, Model model) {
+        logger.warn("showPeople()");
+
+        Contact user = (Contact) session.getAttribute("USER");
+        service.refreshContact(user);
+        Set<Contact> contacts = service.findAllContacts();
+        contacts.remove(user);
+        logger.debug(contacts.toString());
+        session.setAttribute("contacts", contacts);
+        return ResponseMessage.okMessage("");
+    }
 
     @RequestMapping(value = "/people/filter/add", method = RequestMethod.POST)
     @ResponseBody

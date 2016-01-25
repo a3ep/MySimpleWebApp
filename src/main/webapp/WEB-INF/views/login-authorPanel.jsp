@@ -17,8 +17,6 @@
     <script type="text/javascript" src="webjars/jquery/2.1.4/jquery.min.js"></script>
     <script type="text/javascript" src="webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../resources/js/login-script.js"></script>
-    <script type="text/javascript" src="webjars/jquery.lazyload/1.9.3/jquery.lazyload.js"></script>
-
 
     <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -32,8 +30,9 @@
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
-            <span id="alert-message" style="text-align:center; font-weight: bold">${msg}</span>
-            <strong style="text-align: center"></strong>
+            <div style="margin: 0 auto; width: 340px">
+                <span id="alert-message" style="font-weight: bold">${msg}</span>
+            </div>
         </div>
     </c:if>
     <div class="header-login">
@@ -278,46 +277,46 @@
                                 <form:form class="form-horizontal" modelAttribute="userForm" method="get"
                                            action="/author">
                                 <tr>
-                                    <spring:bind path="userName">
+                                    <%--<spring:bind path="userName">--%>
                                         <td>
-                                            <div class="form-group ${status.error ? 'has-error' : ''}">
+                                            <div class="form-group<%-- ${status.error ? 'has-error' : ''}--%>">
                                                 <label class="label-login control-label active">Введите
                                                     логин</label>
                                             </div>
                                         </td>
                                         <td>
-                                            <div class="input-login ${status.error ? 'has-error' : ''}">
-                                                <form:input path="userName" type="text" class="form-control"
+                                            <div class="input-login<%-- ${status.error ? 'has-error' : ''}--%>">
+                                                <input <%--path="userName"--%> type="text" class="form-control"
                                                             id="userName"
                                                             placeholder="Логин"/>
-                                                <form:errors path="userName" class="control-label"/>
+                                                <%--<form:errors path="userName" class="control-label"/>--%>
                                             </div>
                                             <div class="span-login">
                                                 <span class="required text-danger">*</span>
                                             </div>
                                         </td>
-                                    </spring:bind>
+                                    <%--</spring:bind>--%>
                                 </tr>
                                 <tr>
-                                    <spring:bind path="password">
+                                    <%--<spring:bind path="password">--%>
                                         <td class="fontBold">
-                                            <div class="form-group ${status.error ? 'has-error' : ''}">
+                                            <div class="form-group <%--${status.error ? 'has-error' : ''}--%>">
                                                 <label class="label-login control-label active">Введите
                                                     пароль</label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="input-login ${status.error ? 'has-error' : ''}">
-                                                <form:input path="password" type="password" class="form-control"
+                                                <input <%--path="password"--%> type="password" class="form-control"
                                                             id="password"
                                                             placeholder="Пароль"/>
-                                                <form:errors path="password" class="control-label"/>
+                                                <%--<form:errors path="password" class="control-label"/>--%>
                                             </div>
                                             <div class="span-login">
                                                 <span class="required text-danger">*</span>
                                             </div>
                                         </td>
-                                    </spring:bind>
+                                    <%--</spring:bind>--%>
                                 </tr>
 
                             </table>
