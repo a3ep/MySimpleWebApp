@@ -2,7 +2,6 @@ package net.bondar.web.controller;
 
 import net.bondar.web.model.*;
 import net.bondar.web.service.*;
-import net.bondar.web.validator.UserSingInValidator;
 import net.bondar.web.validator.UserValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,15 +35,9 @@ public class RegistrationController {
     @Autowired
     private PostService postService;
     @Autowired
-    private ChatService chatService;
-    @Autowired
-    private MessageService messageService;
-    @Autowired
     private MessageSource messageSource;
     @Autowired
     private UserValidator userValidator;
-    @Autowired
-    private UserSingInValidator userSingInValidator;
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         CustomDateEditor editor = new CustomDateEditor(new SimpleDateFormat("dd.MM.yyyy"), true);
@@ -98,7 +91,7 @@ public class RegistrationController {
         Post post2 = new Post(contact2, "Как дела?", new Date());
         Post post3 = new Post(contact2, "Как погода?", new Date());
         Post post4 = new Post(contact2, "Азаза", new Date());
-        Post post5 = new Post(contact1, "Лол", new Date());
+        Post post5 = new Post(contact1, "Лол, нарм", new Date());
         postService.savePost(post1);
         postService.savePost(post2);
         postService.savePost(post3);
@@ -137,7 +130,7 @@ public class RegistrationController {
         Contact newContact = new Contact(contact.getFirstName(), contact.getLastName(), contact.getBirthDate(), contact.getUserName(), contact.getPassword(), contact.getConfirmPassword(), "resources/img/no-photo.png");
         service.saveContact(newContact);
 
-        return "redirect:/login#tab_author-panel";
+        return "redirect:/login";
     }
 
 //    @RequestMapping(value = "/author", method = RequestMethod.GET)

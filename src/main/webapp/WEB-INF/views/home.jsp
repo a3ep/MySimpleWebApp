@@ -1,3 +1,4 @@
+<jsp:useBean id="user" scope="request" type="net.bondar.web.model.Contact"/>
 <%--
   Created by IntelliJ IDEA.
   User: AzeraL

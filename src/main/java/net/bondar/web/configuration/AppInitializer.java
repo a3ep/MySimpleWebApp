@@ -29,7 +29,7 @@ public class AppInitializer implements WebApplicationInitializer{
         ServletRegistration.Dynamic servlet = servletContext.addServlet("dispatcher", new DispatcherServlet(context));
         servlet.addMapping("/");
         servlet.setLoadOnStartup(1);
-
+//
 //        FilterRegistration.Dynamic hibernateFilter = servletContext.addFilter("hibernateFilter", new OpenSessionInViewFilter());
 //        hibernateFilter.setInitParameter("sessionFactoryBeanName", "sessionFactory");
 //        hibernateFilter.addMappingForUrlPatterns(null, true, "/*");

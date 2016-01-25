@@ -26,17 +26,17 @@
 <body>
 <div class="container-login">
     <c:if test="${not empty msg}">
-        <div class="alert alert-${css} alert-dismissible" role="alert">
+        <div class="alert alert-${css} alert-dismissible" role="alert" style="margin-bottom: 0px; border-radius: 0px">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
-            <div style="margin: 0 auto; width: 340px">
-                <span id="alert-message" style="font-weight: bold">${msg}</span>
+            <div style="margin: 0 auto; width: 420px; text-align: center">
+                <span id="alert-message" class="fontBold">${msg}</span>
             </div>
         </div>
     </c:if>
     <div class="header-login">
-        <h1>Добро пожаловать!</h1>
+        <h1 class="fontBold">Добро пожаловать!</h1>
     </div>
 
     <div style="width: 880px; margin: 0 auto">
@@ -275,54 +275,49 @@
                             <table class="table" style="width: 500px; margin: 0 auto">
                                 <%----------------------------------------------------------------------------------------------                          --%>
                                 <form:form class="form-horizontal" modelAttribute="userForm" method="get"
-                                           action="/author">
-                                <tr>
-                                    <%--<spring:bind path="userName">--%>
+                                      action="/author">
+                                    <tr>
+
                                         <td>
-                                            <div class="form-group<%-- ${status.error ? 'has-error' : ''}--%>">
+                                            <div class="form-group">
                                                 <label class="label-login control-label active">Введите
                                                     логин</label>
                                             </div>
                                         </td>
                                         <td>
-                                            <div class="input-login<%-- ${status.error ? 'has-error' : ''}--%>">
-                                                <input <%--path="userName"--%> type="text" class="form-control"
-                                                            id="userName"
-                                                            placeholder="Логин"/>
-                                                <%--<form:errors path="userName" class="control-label"/>--%>
+                                            <div class="input-login">
+                                                <form:input path="userName" type="text" class="form-control"
+                                                       id="userName"
+                                                       placeholder="Логин"/>
                                             </div>
                                             <div class="span-login">
                                                 <span class="required text-danger">*</span>
                                             </div>
                                         </td>
-                                    <%--</spring:bind>--%>
-                                </tr>
-                                <tr>
-                                    <%--<spring:bind path="password">--%>
+                                    </tr>
+                                    <tr>
                                         <td class="fontBold">
-                                            <div class="form-group <%--${status.error ? 'has-error' : ''}--%>">
+                                            <div class="form-group">
                                                 <label class="label-login control-label active">Введите
                                                     пароль</label>
                                             </div>
                                         </td>
                                         <td>
-                                            <div class="input-login ${status.error ? 'has-error' : ''}">
-                                                <input <%--path="password"--%> type="password" class="form-control"
-                                                            id="password"
-                                                            placeholder="Пароль"/>
-                                                <%--<form:errors path="password" class="control-label"/>--%>
+                                            <div class="input-login">
+                                                <form:input path="password" type="password" class="form-control"
+                                                       id="password"
+                                                       placeholder="Пароль"/>
                                             </div>
                                             <div class="span-login">
                                                 <span class="required text-danger">*</span>
                                             </div>
                                         </td>
-                                    <%--</spring:bind>--%>
-                                </tr>
+                                    </tr>
 
                             </table>
-
                             <div style="width: 325px; margin: 20px auto">
-                                <span class="required text-danger">*</span> - поля, обязательные для заполнения.
+                                <span class="required text-danger">*</span> - поля, обязательные для
+                                заполнения.
                             </div>
                             <p></p>
 
@@ -332,6 +327,7 @@
                                        value="Войти">
                             </div>
                             </form:form>
+
                             <%--<spring:url value="/author" var="userAuthUrl"/>--%>
                             <%--<form:form class="form-horizontal" method="get" modelAttribute="userForm"--%>
                             <%--action="${userAuthUrl}">--%>
