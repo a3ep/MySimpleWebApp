@@ -31,19 +31,19 @@ public class Contact extends AbstractEntity{
 
     private String photo;
 
-    @ManyToMany/*(fetch = FetchType.EAGER)*/
+    @ManyToMany
     private Set<Hobby> hobbies;
 
-    @ManyToMany/*(fetch = FetchType.EAGER)*/
+    @ManyToMany
     private Set<Place> places;
 
-    @ManyToMany/*(fetch = FetchType.EAGER)*/
+    @ManyToMany
     private Set<Contact> friendList;
 
-    @OneToMany/*(fetch = FetchType.EAGER)*/
+    @OneToMany
     private Set<Chat> conversation;
 
-    @OneToMany/*(fetch = FetchType.EAGER)*/
+    @OneToMany
     private List<Post> posts;
 
 

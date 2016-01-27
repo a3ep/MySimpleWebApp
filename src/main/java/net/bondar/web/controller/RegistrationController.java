@@ -44,7 +44,7 @@ public class RegistrationController {
         binder.registerCustomEditor(Date.class, editor);
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public String getLogin(Model model) {
         logger.warn("getLogin()");
         model.addAttribute("userForm", new Contact());
@@ -101,7 +101,7 @@ public class RegistrationController {
         service.addPostToContact(contact1, post3);
         service.addPostToContact(contact1, post4);
         service.addPostToContact(contact1, post5);
-        return "redirect:/login";
+        return "redirect:/";
     }
 
     @RequestMapping(value = "/saveContact", method = RequestMethod.POST)
@@ -117,7 +117,7 @@ public class RegistrationController {
         Contact newContact = new Contact(contact.getFirstName(), contact.getLastName(), contact.getBirthDate(), contact.getUserName(), contact.getPassword(), contact.getConfirmPassword(), "resources/img/no-photo.png");
         service.saveContact(newContact);
 
-        return "redirect:/login";
+        return "redirect:/";
     }
 
     @RequestMapping(value = "/author", method = RequestMethod.GET)
@@ -127,7 +127,7 @@ public class RegistrationController {
         if(contactInDB==null||!(contact.getPassword().equals(contactInDB.getPassword()))){
             redirectAttributes.addFlashAttribute("css", "danger");
             redirectAttributes.addFlashAttribute("msg", "Wrong login or password, please try again.");
-            return "redirect:login";
+            return "redirect:/";
         }
         try {
             session.setAttribute("USER", service.findContactByUserName(contact.getUserName()));

@@ -55,12 +55,13 @@
                 <li role="presentation" class="active"><a href="#user-info-panel" role="tab"
                                                           data-toggle="tab"><strong>Профиль</strong></a></li>
                 <li role=presentation><a href="#friends-panel" role="tab"
-                                                              data-toggle="tab"><strong>Друзья</strong></a></li>
+                                         data-toggle="tab"><strong>Друзья</strong></a></li>
                 <li role=presentation><a href="#hobbies-panel" role="tab"
-                                                              data-toggle="tab"><strong>Хобби</strong></a></li>
+                                         data-toggle="tab"><strong>Хобби</strong></a></li>
                 <li role=presentation><a href="#places-panel" role="tab"
-                                                              data-toggle="tab"><strong>Места</strong></a></li>
-                <li role="presentation"><a href="#people-panel" role="tab" data-toggle="tab" onclick="showPeople()"><strong>Люди</strong></a></li>
+                                         data-toggle="tab"><strong>Места</strong></a></li>
+                <li role="presentation"><a href="#people-panel" role="tab" data-toggle="tab"
+                                           onclick="showPeople()"><strong>Люди</strong></a></li>
             </ul>
 
             <div id="content" class="tab-content">
@@ -92,20 +93,21 @@
                                 </label>
 
                                 <div class="panel panel-primary">
-                                    <div class="panel-body" style="padding: 0px; height:300px; max-height: 300px; overflow: auto">
+                                    <div class="panel-body"
+                                         style="padding: 0px; height:300px; max-height: 300px; overflow: auto">
                                         <div id="messagesInModal">
                                             <%--<c:forEach items="${messages}" var="message">--%>
-                                                <%--<div class="popover-home">--%>
-                                                    <%--<div class="popover right message">--%>
-                                                        <%--<div class="arrow"></div>--%>
-                                                        <%--<h3 style="background-color: #337AB7; color: #ffffff; text-align: right"--%>
-                                                            <%--class="popover-title">${message.from.firstName} ${message.from.lastName}<span> ${message.date}</span>--%>
-                                                        <%--</h3>--%>
+                                            <%--<div class="popover-home">--%>
+                                            <%--<div class="popover right message">--%>
+                                            <%--<div class="arrow"></div>--%>
+                                            <%--<h3 style="background-color: #337AB7; color: #ffffff; text-align: right"--%>
+                                            <%--class="popover-title">${message.from.firstName} ${message.from.lastName}<span> ${message.date}</span>--%>
+                                            <%--</h3>--%>
 
-                                                        <%--<div style="background-color:#EFEFEF"--%>
-                                                             <%--class="popover-content">${message.content}</div>--%>
-                                                    <%--</div>--%>
-                                                <%--</div>--%>
+                                            <%--<div style="background-color:#EFEFEF"--%>
+                                            <%--class="popover-content">${message.content}</div>--%>
+                                            <%--</div>--%>
+                                            <%--</div>--%>
                                             <%--</c:forEach>--%>
                                         </div>
                                     </div>
@@ -225,7 +227,7 @@
                             <c:forEach items="${user.posts}" var="post">
                                 <c:if test="${post.contactFrom.id==user.id}">
                                     <div class="popover-home">
-                                        <div class="popover left postMessage">
+                                        <div class="popover left postMessage" style="background-color: #EFEFEF">
                                             <div class="arrow"></div>
                                             <h3 style="background-color: #D9D9D9; color: #333333; height: 30px"
                                                 class="popover-title">
@@ -234,15 +236,25 @@
                                                                                           pattern="HH:mm"/></span>
                                             </h3>
 
-                                            <div style="background-color:#EFEFEF" class="popover-content">
+                                            <div class="popover-content" style="background-color:#EFEFEF">
                                                     ${post.content}
                                             </div>
+                                            <div class="popover-buttons">
+                                                    <%--<button class="btn btn-link" type="button" onclick="" style="color: #337AB7; font-size: 10px">--%>
+                                                    <%--Ответить--%>
+                                                    <%--</button>--%>
+                                                <button class="btn btn-link" type="button" onclick=""
+                                                        style="margin-left: 65px">
+                                                    Удалить
+                                                </button>
+                                            </div>
                                         </div>
+
                                     </div>
                                 </c:if>
                                 <c:if test="${post.contactFrom.id!=user.id}">
                                     <div class="popover-home">
-                                        <div class="popover right postMessage">
+                                        <div class="popover right postMessage" style="background-color: #EFEFEF">
                                             <div class="arrow"></div>
                                             <h3 style="background-color: #337AB7; color: #ffffff; height: 30px"
                                                 class="popover-title">
@@ -250,10 +262,74 @@
                                                 <span style="float:right"><fmt:formatDate value="${post.date}"
                                                                                           pattern="HH:mm"/></span>
                                             </h3>
-
                                             <div style="background-color:#EFEFEF" class="popover-content">
-                                                    ${post.content}
+                                                <div>${post.content}</div>
+                                                <%--<div id="comments">--%>
+                                                    <%--<c:if test="${not empty post.responses}">--%>
+                                                    <%--<c:forEach items="${post.responses}" var="response">--%>
+                                                        <%--<c:if test="${response.contactFrom.id!=user.id}">--%>
+                                                        <%--<div class="popover-home" style="margin-bottom: 10px">--%>
+                                                            <%--<div class="popover right postMessage"--%>
+                                                                 <%--style="background-color: #EFEFEF; width: 500px; margin: auto 0 auto auto">--%>
+                                                                <%--<h3 style="background-color: #337AB7; color: #ffffff; height: 30px"--%>
+                                                                    <%--class="popover-title">--%>
+                                                                    <%--<span style="float: left">${response.contactFrom.firstName} ${response.contactFrom.lastName}</span>--%>
+                                                                    <%--<span style="float:right"><fmt:formatDate value="${response.date}"--%>
+                                                                                          <%--pattern="HH:mm"/></span>--%>
+                                                                <%--</h3>--%>
+                                                                <%--<div style="background-color:#EFEFEF"--%>
+                                                                     <%--class="popover-content">--%>
+                                                                    <%--<div>${response.content}</div>--%>
+                                                                <%--</div>--%>
+                                                            <%--</div>--%>
+                                                        <%--</div>--%>
+                                                        <%--</c:if>--%>
+                                                        <%--<c:if test="${response.contactFrom.id==user.id}">--%>
+                                                            <%--<div class="popover-home" style="margin-bottom: 10px">--%>
+                                                                <%--<div class="popover right postMessage"--%>
+                                                                     <%--style="background-color: #EFEFEF; width: 500px; margin: auto 0 auto auto">--%>
+                                                                    <%--<h3 style="background-color: #D9D9D9; color: #333333; height: 30px"--%>
+                                                                        <%--class="popover-title">--%>
+                                                                        <%--<span style="float: left">${response.contactFrom.firstName} ${response.contactFrom.lastName}</span>--%>
+                                                                    <%--<span style="float:right"><fmt:formatDate value="${response.date}"--%>
+                                                                                                              <%--pattern="HH:mm"/></span>--%>
+                                                                    <%--</h3>--%>
+                                                                    <%--<div style="background-color:#EFEFEF"--%>
+                                                                         <%--class="popover-content">--%>
+                                                                        <%--<div>${response.content}</div>--%>
+                                                                    <%--</div>--%>
+                                                                <%--</div>--%>
+                                                            <%--</div>--%>
+                                                        <%--</c:if>--%>
+                                                    <%--</c:forEach>--%>
+                                                    <%--</c:if>--%>
+                                                <%--</div>--%>
                                             </div>
+                                            <div class="popover-buttons">
+                                                <%--<button class="btn btn-link" type="button"--%>
+                                                        <%--onclick="showResponsePost(${post.id})">--%>
+                                                    <%--Ответить--%>
+                                                <%--</button>--%>
+                                                <button class="btn btn-link" type="button" style="margin-left: 65px"
+                                                        onclick="deletePost(${post.id})">
+                                                    Удалить
+                                                </button>
+                                            </div>
+                                            <%--<spring:url value="${post.id}responseArea" var="responseArea"/>--%>
+                                            <%--<spring:url value="${post.id}textArea" var="textArea"/>--%>
+                                            <%--<div id="${responseArea}" class="responseBlock hideElement fade in">--%>
+                                            <%--<textarea id="${textArea}" class="form-control"--%>
+                                                      <%--style="width:655px; max-width: 655px; margin: 0 20px 5px 20px"--%>
+                                                      <%--name="message" placeholder="Комментировать..."></textarea>--%>
+                                                <%--<div class="btn-group">--%>
+                                                    <%--<button class="btn btn-success" type="button" onclick="sendResponsePost(${post.id})">--%>
+                                                        <%--Отправить--%>
+                                                    <%--</button>--%>
+                                                    <%--<button class="btn btn-danger" type="button"--%>
+                                                            <%--onclick="hideResponsePost(${post.id})">Закрыть--%>
+                                                    <%--</button>--%>
+                                                <%--</div>--%>
+                                            <%--</div>--%>
                                         </div>
                                     </div>
                                 </c:if>
@@ -306,11 +382,11 @@
                                                         <spring:url value="${friend.id}removeFriendBtn"
                                                                     var="removeFriendBtn"/>
                                                         <div class="btn-group">
-                                                            <button id="${messageBtn}" class="btn btn-success" <%--data-toggle="modal"
-                                                            data-target="#modalMessage"--%>
+                                                            <button id="${messageBtn}" class="btn btn-success"
                                                                     onclick="invokeMessage(${friend.id})"
                                                                     onmouseover="showTooltip(this.id)"
-                                                                    onmouseout="hideTooltip(this.id)" data-toggle="tooltip"
+                                                                    onmouseout="hideTooltip(this.id)"
+                                                                    data-toggle="tooltip"
                                                                     data-placement="top" type="button"
                                                                     data-original-title="Отправить сообщение в чат"><span
                                                                     class="glyphicon glyphicon-envelope"
@@ -319,7 +395,8 @@
                                                             data-target="#modalPost"--%>
                                                                     onclick="invokePost(${friend.id})"
                                                                     onmouseover="showTooltip(this.id)"
-                                                                    onmouseout="hideTooltip(this.id)" data-toggle="tooltip"
+                                                                    onmouseout="hideTooltip(this.id)"
+                                                                    data-toggle="tooltip"
                                                                     data-placement="top" type="button"
                                                                     data-original-title="Отправить сообщение на стену"><span
                                                                     class="glyphicon glyphicon-comment"
@@ -327,7 +404,8 @@
                                                             <button id="${removeFriendBtn}" class="btn btn-danger"
                                                                     onclick="removeFriend(${friend.id}, this.closest('tr'))"
                                                                     onmouseover="showTooltip(this.id)"
-                                                                    onmouseout="hideTooltip(this.id)" data-toggle="tooltip"
+                                                                    onmouseout="hideTooltip(this.id)"
+                                                                    data-toggle="tooltip"
                                                                     data-placement="top" type="button"
                                                                     data-original-title="Удалить из друзей"><span
                                                                     class="glyphicon glyphicon-trash"
@@ -442,7 +520,8 @@
                                                             <button id="${editHobbyBtn}" class="btn btn-primary"
                                                                     onclick="editHobby(${hobby.id})"
                                                                     onmouseover="showTooltip(this.id)"
-                                                                    onmouseout="hideTooltip(this.id)" data-toggle="tooltip"
+                                                                    onmouseout="hideTooltip(this.id)"
+                                                                    data-toggle="tooltip"
                                                                     data-placement="top" type="button"
                                                                     data-original-title="Редактировать"><span
                                                                     class="glyphicon glyphicon-pencil"
@@ -451,7 +530,8 @@
                                                             <button id="${removeHobbyBtn}" class="btn btn-danger"
                                                                     onclick="removeHobby(${hobby.id}, this.closest('tr'))"
                                                                     onmouseover="showTooltip(this.id)"
-                                                                    onmouseout="hideTooltip(this.id)" data-toggle="tooltip"
+                                                                    onmouseout="hideTooltip(this.id)"
+                                                                    data-toggle="tooltip"
                                                                     data-placement="top" type="button"
                                                                     data-original-title="Удалить"><span
                                                                     class="glyphicon glyphicon-trash"
@@ -522,7 +602,8 @@
                                                 </td>
                                                 <td class="placeCellBtn">
                                                     <button id="savePlaceBtn" class="btn btn-success"
-                                                            onmouseover="showTooltip(this.id)" onmouseout="hideTooltip(this.id)"
+                                                            onmouseover="showTooltip(this.id)"
+                                                            onmouseout="hideTooltip(this.id)"
                                                             data-toggle="tooltip" data-placement="top" type="button"
                                                             data-original-title="Добавить место"><span
                                                             class="glyphicon glyphicon-save"
@@ -599,7 +680,8 @@
                                                             <button id="${editPlaceBtn}" class="btn btn-primary"
                                                                     onclick="editPlace(${place.id})"
                                                                     onmouseover="showTooltip(this.id)"
-                                                                    onmouseout="hideTooltip(this.id)" data-toggle="tooltip"
+                                                                    onmouseout="hideTooltip(this.id)"
+                                                                    data-toggle="tooltip"
                                                                     data-placement="top" type="button"
                                                                     data-original-title="Редактировать"><span
                                                                     class="glyphicon glyphicon-pencil"
@@ -701,7 +783,8 @@
                                                             <button id="${addFriendBtn}" class="btn btn-primary"
                                                                     onclick="addFriend(${user.id})"
                                                                     onmouseover="showTooltip(this.id)"
-                                                                    onmouseout="hideTooltip(this.id)" data-toggle="tooltip"
+                                                                    onmouseout="hideTooltip(this.id)"
+                                                                    data-toggle="tooltip"
                                                                     data-placement="top" type="button"
                                                                     data-original-title="Добавить в друзья"><span
                                                                     class="glyphicon glyphicon-plus"
@@ -709,7 +792,8 @@
                                                             <button id="${peopleSendMessageBtn}" class="btn btn-success"
                                                                     onclick="invokeMessage(${user.id})"
                                                                     onmouseover="showTooltip(this.id)"
-                                                                    onmouseout="hideTooltip(this.id)" data-toggle="tooltip"
+                                                                    onmouseout="hideTooltip(this.id)"
+                                                                    data-toggle="tooltip"
                                                                     data-placement="top" type="button"
                                                                     data-original-title="Отправить сообщение"><span
                                                                     class="glyphicon glyphicon-envelope"

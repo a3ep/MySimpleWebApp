@@ -1,8 +1,7 @@
 package net.bondar.web.model;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by Azeral on 28.10.2015.
@@ -14,8 +13,8 @@ public class Chat extends AbstractEntity{
     @OneToOne
     private Contact userTo;
 
-    @ManyToMany/*(fetch = FetchType.EAGER)*/
-    private Set<Message> chatMessages;
+    @ManyToMany
+    private List<Message> chatMessages;
 
 
     public Chat(){
@@ -28,7 +27,7 @@ public class Chat extends AbstractEntity{
 
     public Chat(Contact userTo) {
         this.userTo = userTo;
-        this.chatMessages = new HashSet<>();
+        this.chatMessages = new ArrayList<>();
     }
 
 
@@ -41,11 +40,11 @@ public class Chat extends AbstractEntity{
         this.userTo = userTo;
     }
 
-    public Set<Message> getChatMessages() {
+    public List<Message> getChatMessages() {
         return chatMessages;
     }
 
-    public void setChatMessages(Set<Message> chatMessages) {
+    public void setChatMessages(List<Message> chatMessages) {
         this.chatMessages = chatMessages;
     }
 

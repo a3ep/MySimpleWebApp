@@ -143,6 +143,14 @@ public class ContactService {
         }
     }
 
+    public void removePost(Contact contact, Post post){
+        if(contact.getPosts().contains(post)){
+            contact.getPosts().remove(post);
+            contactDao.update(contact);
+            contactDao.flush();
+        }
+    }
+
     public void addFriendship(Contact who, Contact with) {
         if(who.getFriendList().contains(with)||with.getFriendList().contains(who)) throw new ExistingFriendException();
         addFriend(who, with);

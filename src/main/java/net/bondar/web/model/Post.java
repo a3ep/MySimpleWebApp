@@ -1,10 +1,13 @@
 package net.bondar.web.model;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Azeral on 28.10.2015.
@@ -19,6 +22,8 @@ public class Post extends AbstractEntity{
     private String content;
 
     private Date date;
+    @OneToMany
+    private List<Post> responses;
 
 
     public Post(){
@@ -33,6 +38,7 @@ public class Post extends AbstractEntity{
         this.contactFrom = contactFrom;
         this.content = content;
         this.date = date;
+        this.responses = new ArrayList<>();
     }
 
 
@@ -59,6 +65,14 @@ public class Post extends AbstractEntity{
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public List<Post> getResponses() {
+        return responses;
+    }
+
+    public void setResponses(List<Post> responses) {
+        this.responses = responses;
     }
 
     @Override

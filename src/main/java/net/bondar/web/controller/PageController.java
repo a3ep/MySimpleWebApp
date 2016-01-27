@@ -75,7 +75,7 @@ public class PageController {
     public String logout(HttpSession session) {
         logger.debug("logout()");
         session.invalidate();
-        return "redirect:/login";
+        return "redirect:/";
     }
 
     @RequestMapping(value = "/edit/profile", method = RequestMethod.POST)
@@ -122,6 +122,7 @@ public class PageController {
             return ResponseMessage.errorMessage(e.getMessage());
         }
         model.addAttribute("messages", messages);
+        session.setAttribute("user", user);
         String result = null;
         try {
             result = renderHtml(model, req, "messageTemplate");
@@ -154,7 +155,10 @@ public class PageController {
                 if (chat.getUserTo().equals(friend)) {
                     currentChat = chat;
                     currentChat.getChatMessages().add(newMessage);
+                    Chat friendChat = chatService.findChatByUserToId(user.getId());
+                    friendChat.getChatMessages().add(newMessage);
                     chatService.updateChat(currentChat);
+                    chatService.updateChat(friendChat);
                     for (Message m : currentChat.getChatMessages()) {
                         messages.add(m);
                     }
@@ -179,6 +183,7 @@ public class PageController {
             return ResponseMessage.errorMessage(e.getMessage());
         }
         model.addAttribute("messages", messages);
+        session.setAttribute("user", user);
         String result = null;
         try {
             result = renderHtml(model, req, "messageTemplate");
@@ -311,7 +316,7 @@ public class PageController {
         String hobbyTitle = hobby.getTitle();
         try {
             service.removeHobby(user, hobby);
-            hobbyService.deleteHobby(id);
+//            hobbyService.deleteHobby(id);
         } catch (Exception e) {
             logger.debug("Remove hobby error", e);
             return ResponseMessage.errorMessage(e.getMessage());
@@ -327,7 +332,7 @@ public class PageController {
             Place newPlace = placeService.savePlace(placeDto.getTitle(), placeDto.getDescription(), placeDto.getLatitude(), placeDto.getLongitude());
             logger.debug(newPlace.toString());
             Contact user = getPersistUser(session);
-            service.addPlaceToContact(user,newPlace);
+            service.addPlaceToContact(user, newPlace);
         } catch (Exception e) {
             logger.debug("Save place error!", e);
             return ResponseMessage.errorMessage(e.getMessage());
@@ -367,13 +372,50 @@ public class PageController {
         String placeTitle = place.getTitle();
         try {
             service.removePlace(user, place);
-            placeService.deletePlace(id);
+//            placeService.deletePlace(id);
         } catch (Exception e) {
             logger.debug("Remove place error", e);
             return ResponseMessage.errorMessage(e.getMessage());
         }
         return ResponseMessage.okMessage("Success! Place \"" + placeTitle + "\" removed:)");
     }
+
+    @RequestMapping(value = "/posts/{id}/delete", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseMessage deletePost(@PathVariable("id") long id, HttpSession session) {
+        logger.warn("deletePost{() : {}", id);
+
+        Contact user = getPersistUser(session);
+        Post post = postService.findPostById(id);
+        try {
+            service.removePost(user, post);
+            postService.deletePost(id);
+        } catch (Exception e) {
+            logger.debug("Delete post error", e);
+            return ResponseMessage.errorMessage(e.getMessage());
+        }
+        return ResponseMessage.okMessage("");
+    }
+
+//    @RequestMapping(value = "/posts/{id}/addResponse", method = RequestMethod.POST)
+//    @ResponseBody
+//    public ResponseMessage addResponse(@RequestBody SendMessageDto message, @PathVariable("id") long id, HttpSession session) {
+//        logger.warn("addResponse{() : {}", id);
+//
+//        Contact user = getPersistUser(session);
+//        Post post = postService.findPostById(id);
+//        Post response = new Post(user, message.getMessage(), new Date());
+//        try {
+//            response = postService.savePost(response);
+//            post.getResponses().add(response);
+//            postService.updatePost(post);
+//            service.updateContact(user);
+//        } catch (Exception e) {
+//            logger.debug("Delete post error", e);
+//            return ResponseMessage.errorMessage(e.getMessage());
+//        }
+//        return ResponseMessage.okMessage("");
+//    }
 
     @RequestMapping(value = "/people/show", method = RequestMethod.POST)
     @ResponseBody

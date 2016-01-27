@@ -124,16 +124,60 @@ function hideTooltip(elemenId){
     $(id).tooltip('hide');
 }
 
-function logout(){
+function showResponsePost(postId){
+    var id = "#"+postId+"responseArea";
+    $(id).removeClass('hideElement');
+    $(id).addClass('showElement');
+}
+
+function hideResponsePost(postId){
+    var id = "#"+postId+"responseArea";
+    $(id).removeClass('showElement');
+    $(id).addClass('hideElement');
+}
+
+function deletePost(postId){
+    var url = "/posts/" + postId + "/delete/";
+
     $.ajax({
-        type: "GET",
-        url: "/logout",
+        type: "POST",
+        url: url,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
-        success: function(result){
+        success: function (result) {
+            if (result.status === 'OK') {
+                $('#postArea').load(document.URL + ' #postArea');
+            } else {
+                $('#alert').addClass("alert-danger");
+                $('#alert-message').text(result.message);
+                $('#alert').alert();
+                $("#alert").fadeTo(5000, 500).slideUp(500, function () {
+                    $("#alert").alert('close');
+                });
+            }
         }
     });
 }
+
+//function sendResponsePost(postId){
+//    var id = "#"+postId+"textArea";
+//    var url = "/posts/" + postId + "/addResponse/";
+//    var message = $(id).val().replace(/\s+/g,' ');
+//
+//    $.ajax({
+//        type: "POST",
+//        url: url,
+//        contentType: "application/json; charset=utf-8",
+//        dataType: "json",
+//        data: '{"message": "' + message + '"}',
+//        success: function (result){
+//            $(id).val("");
+//            $('#comments').load(document.URL + ' #comments');
+//            hideResponsePost(postId);
+//        }
+//    });
+//
+//}
 
 function invokeMessage(friendId) {
     var url = "/friends/" + friendId + "/invokeMessage";
@@ -221,76 +265,6 @@ function sendPost(){
             }
         }
     });
-}
-
-function buildModal(friend, messages){
-    for (var i = 0; i < messages.length; i++) {
-        var message = messages[i];
-
-        if (message.from.id === friend.id) {
-            var divPopoverHome = document.createElement('div');
-            divPopoverHome.className("popover-home");
-
-            var divPopoverRightMessage = document.createElement('div');
-            divPopoverRightMessage.className("popover right message");
-
-            var divArrow = document.createElement('div');
-            divArrow.className("arrow");
-
-            var h3PopoverTitle = document.createElement('h3');
-            h3PopoverTitle.style("background-color: #337AB7; color: #ffffff; text-align: right");
-            h3PopoverTitle.className("popover-title");
-
-            var innerSpan = document.createElement('span');
-            innerSpan.innerHTML(message.date);
-
-            h3PopoverTitle.appendChild(innerSpan);
-            divPopoverRightMessage.appendChild(divArrow);
-            divPopoverRightMessage.appendChild(h3PopoverTitle);
-
-            var divPopoverContent = document.createElement('div');
-            divPopoverContent.style("background-color:#EFEFEF");
-            divPopoverContent.className("popover-content");
-            divPopoverContent.innerHTML(message.content);
-
-            divPopoverRightMessage.appendChild(divPopoverContent);
-            divPopoverHome.appendChild(divPopoverRightMessage);
-
-            var parentElem = document.getElementById("messagesInModal");
-            parentElem.appendChild(divPopoverHome);
-        } else {
-            var divPopoverHome = document.createElement('div');
-            divPopoverHome.className("popover-home");
-
-            var divPopoverLeftMessage = document.createElement('div');
-            divPopoverLeftMessage.className("popover left message");
-
-            var divArrow = document.createElement('div');
-            divArrow.className("arrow");
-
-            var h3PopoverTitle = document.createElement('h3');
-            h3PopoverTitle.style("background-color: #5CB85C/*; color: #ffffff; text-align: right*/");
-            h3PopoverTitle.className("popover-title");
-
-            var innerSpan = document.createElement('span');
-            innerSpan.innerHTML(message.date);
-
-            h3PopoverTitle.appendChild(innerSpan);
-            divPopoverLeftMessage.appendChild(divArrow);
-            divPopoverLeftMessage.appendChild(h3PopoverTitle);
-
-            var divPopoverContent = document.createElement('div');
-            divPopoverContent.style("background-color:#EFEFEF");
-            divPopoverContent.className("popover-content");
-            divPopoverContent.innerHTML(message.content);
-
-            divPopoverLeftMessage.appendChild(divPopoverContent);
-            divPopoverHome.appendChild(divPopoverLeftMessage);
-
-            var parentElem = document.getElementById("messagesInModal");
-            parentElem.appendChild(divPopoverHome);
-        }
-    }
 }
 
 function removeFriend(friendId, element) {

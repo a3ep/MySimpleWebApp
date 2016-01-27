@@ -35,6 +35,23 @@ public class PostService {
         return savedPost;
     }
 
+    public Post updatePost(Post post){
+        Post updatedPost = postDao.update(post);
+        postDao.flush();
+        return  updatedPost;
+
+    }
+
+    public void deletePost(Post post){
+        postDao.delete(post);
+        postDao.flush();
+    }
+
+    public void deletePost(long id){
+        postDao.delete(id);
+        postDao.flush();
+    }
+
     public Post findPostById(long id) {
         return postDao.findById(id);
     }

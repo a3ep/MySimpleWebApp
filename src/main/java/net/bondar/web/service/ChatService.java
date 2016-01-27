@@ -41,4 +41,8 @@ public class ChatService {
     public Chat findChatById(long id) {
         return chatDao.findById(id);
     }
+
+    public Chat findChatByUserToId(long id){
+        return chatDao.findChatByUserToId(id);
+    }
 }
