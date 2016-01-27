@@ -188,9 +188,13 @@
                             <img src="${user.photo}" alt="Фото" class="img-rounded" style="width: 150px">
                         </div>
                         <div id="profileChangeBtn">
-                            <button id="edit-profile-btn" class="btn btn-primary" onmouseover="showTooltip(this.id)"
+                            <button id="edit-profile-btn" class="btn btn-primary showElement fade in" onclick="showProfileEditFields()" onmouseover="showTooltip(this.id)"
                                     onmouseout="hideTooltip(this.id)" data-toggle="tooltip" data-placement="bottom"
                                     type="button" data-original-title="Редактировать профиль"><span
+                                    class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
+                            <button id="saveProfileChangesBtn" class="btn btn-success hideElement fade in" onmouseover="showTooltip(this.id)"
+                                    onmouseout="hideTooltip(this.id)" data-toggle="tooltip" data-placement="bottom"
+                                    type="button" data-original-title="Сохранить изменения"><span
                                     class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
                         </div>
                         <div id="profileInfo">
@@ -201,6 +205,9 @@
                                         <input id="firstName"
                                                style="text-align: center; border: none; background-color: transparent"
                                                value="${user.firstName}"/>
+                                        <div id="editFirtNameInput" class="hideElement fade in">
+                                            <input id="firstNameInput" class="form-control" style="text-align: center" placeholder="Введите имя"/>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -209,6 +216,9 @@
                                         <input id="lastName"
                                                style="text-align: center; border: none; background-color: transparent"
                                                value="${user.lastName}"/>
+                                        <div id="editLastNameInput" class="hideElement fade in">
+                                            <input id="lastNameInput" class="form-control" style="text-align: center" placeholder="Введите фамилию"/>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -217,6 +227,9 @@
                                         <input id="birthDate"
                                                style="text-align: center; border: none; background-color: transparent"
                                                value="<fmt:formatDate value="${user.birthDate}" pattern="dd.MM.yyyy"/>"/>
+                                        <div id="editBirthDateInput" class="hideElement fade in">
+                                            <input id="birthDateInput" class="form-control" style="text-align: center" placeholder="dd.mm.yyyy"/>
+                                        </div>
                                     </td>
                                 </tr>
                             </table>

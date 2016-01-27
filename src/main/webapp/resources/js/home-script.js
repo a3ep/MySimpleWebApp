@@ -1,9 +1,18 @@
 $(document).ready(function () {
 
-    $('#edit-profile-btn').click(function () {
-        var firstName = $('#firstName').val();
-        var lastName = $('#lastName').val();
-        var birthDate = $('#birthDate').val();
+    $('#saveProfileChangesBtn').click(function () {
+        var firstName = $('#firstNameInput').val();
+        if(firstName.length==0){
+            firstName=$('#firstName').val();
+        }
+        var lastName = $('#lastNameInput').val();
+        if(lastName.length==0){
+            lastName=$('#lastName').val();
+        }
+        var birthDate = $('#birthDateInput').val();
+        if(birthDate.length==0){
+            birthDate=$('#birthDate').val();
+        }
         var newDate = birthDate.substring(6,10)+"-"+birthDate.substring(3,5)+"-"+birthDate.substring(0,2);
 
         $.ajax({
@@ -15,9 +24,13 @@ $(document).ready(function () {
             success: function (result) {
                 if (result.status === 'OK') {
                     $('h1').text("Добро пожаловать " + result.contactDto.firstName + "!");
-                    $('#firstName').text(result.contactDto.firstName);
-                    $('#lastName').text(result.contactDto.lastName);
-                    $('#birthDate').text(result.contactDto.birthDate);
+                    $('#firstName').val(result.contactDto.firstName);
+                    $('#lastName').val(result.contactDto.lastName);
+                    $('#birthDate').val(birthDate);
+                    $('#firstNameInput').val("");
+                    $('#lastNameInput').val("");
+                    $('#birthDateInput').val("");
+                    hideProfileEditFields();
                     $('#alert').addClass("alert-success");
                     $('#alert-message').text("Success!");
                     $('#alert').alert();
@@ -122,6 +135,34 @@ function showTooltip(elemenId){
 function hideTooltip(elemenId){
     var id = "#"+elemenId;
     $(id).tooltip('hide');
+}
+
+function showProfileEditFields(){
+    $('#editFirtNameInput').removeClass('hideElement');
+    $('#editLastNameInput').removeClass('hideElement');
+    $('#editBirthDateInput').removeClass('hideElement');
+    $('#editFirtNameInput').addClass('showElement');
+    $('#editLastNameInput').addClass('showElement');
+    $('#editBirthDateInput').addClass('showElement');
+
+    $('#saveProfileChangesBtn').removeClass('hideElement');
+    $('#saveProfileChangesBtn').addClass('showElement');
+    $('#edit-profile-btn').removeClass('showElement')
+    $('#edit-profile-btn').addClass('hideElement');
+}
+
+function hideProfileEditFields(){
+    $('#editFirtNameInput').removeClass('showElement');
+    $('#editLastNameInput').removeClass('showElement');
+    $('#editBirthDateInput').removeClass('showElement');
+    $('#editFirtNameInput').addClass('hideElement');
+    $('#editLastNameInput').addClass('hideElement');
+    $('#editBirthDateInput').addClass('hideElement');
+
+    $('#saveProfileChangesBtn').removeClass('showElement');
+    $('#saveProfileChangesBtn').addClass('hideElement');
+    $('#edit-profile-btn').removeClass('hideElement')
+    $('#edit-profile-btn').addClass('showElement');
 }
 
 function showResponsePost(postId){

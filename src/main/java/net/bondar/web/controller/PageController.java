@@ -87,7 +87,6 @@ public class PageController {
             user.setFirstName(contactDto.getFirstName());
             user.setLastName(contactDto.getLastName());
             user.setBirthDate(contactDto.getBirthDate());
-
             service.updateContact(user);
 
         } catch (Exception e) {
