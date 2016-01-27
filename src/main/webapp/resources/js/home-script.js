@@ -3,15 +3,15 @@ $(document).ready(function () {
     $('#saveProfileChangesBtn').click(function () {
         var firstName = $('#firstNameInput').val();
         if(firstName.length==0){
-            firstName=$('#firstName').val();
+            firstName=$('#firstName').text();
         }
         var lastName = $('#lastNameInput').val();
         if(lastName.length==0){
-            lastName=$('#lastName').val();
+            lastName=$('#lastName').text();
         }
         var birthDate = $('#birthDateInput').val();
         if(birthDate.length==0){
-            birthDate=$('#birthDate').val();
+            birthDate=$('#birthDate').text();
         }
         var newDate = birthDate.substring(6,10)+"-"+birthDate.substring(3,5)+"-"+birthDate.substring(0,2);
 
@@ -24,9 +24,9 @@ $(document).ready(function () {
             success: function (result) {
                 if (result.status === 'OK') {
                     $('h1').text("Добро пожаловать " + result.contactDto.firstName + "!");
-                    $('#firstName').val(result.contactDto.firstName);
-                    $('#lastName').val(result.contactDto.lastName);
-                    $('#birthDate').val(birthDate);
+                    $('#firstName').text(result.contactDto.firstName);
+                    $('#lastName').text(result.contactDto.lastName);
+                    $('#birthDate').text(birthDate);
                     $('#firstNameInput').val("");
                     $('#lastNameInput').val("");
                     $('#birthDateInput').val("");

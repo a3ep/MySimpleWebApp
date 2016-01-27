@@ -202,9 +202,9 @@
                                 <tr>
                                     <td id="profileFirstCol" class="fontBold">Имя</td>
                                     <td id="profileLastCol">
-                                        <input id="firstName"
-                                               style="text-align: center; border: none; background-color: transparent"
-                                               value="${user.firstName}"/>
+                                        <div id="firstName" style="text-align: center; width: 150px">
+                                            ${user.firstName}
+                                        </div>
                                         <div id="editFirtNameInput" class="hideElement fade in">
                                             <input id="firstNameInput" class="form-control" style="text-align: center" placeholder="Введите имя"/>
                                         </div>
@@ -213,9 +213,9 @@
                                 <tr>
                                     <td class="fontBold">Фамилия</td>
                                     <td>
-                                        <input id="lastName"
-                                               style="text-align: center; border: none; background-color: transparent"
-                                               value="${user.lastName}"/>
+                                        <div id="lastName" style="text-align: center">
+                                            ${user.lastName}
+                                        </div>
                                         <div id="editLastNameInput" class="hideElement fade in">
                                             <input id="lastNameInput" class="form-control" style="text-align: center" placeholder="Введите фамилию"/>
                                         </div>
@@ -224,9 +224,9 @@
                                 <tr>
                                     <td class="fontBold">День рождения</td>
                                     <td>
-                                        <input id="birthDate"
-                                               style="text-align: center; border: none; background-color: transparent"
-                                               value="<fmt:formatDate value="${user.birthDate}" pattern="dd.MM.yyyy"/>"/>
+                                        <div id="birthDate" style="text-align: center">
+                                            <fmt:formatDate value="${user.birthDate}" pattern="dd.MM.yyyy"/>
+                                        </div>
                                         <div id="editBirthDateInput" class="hideElement fade in">
                                             <input id="birthDateInput" class="form-control" style="text-align: center" placeholder="dd.mm.yyyy"/>
                                         </div>
