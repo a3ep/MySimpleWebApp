@@ -9,17 +9,11 @@ import java.util.List;
  */
 public class ResponseMessage {
     private String status;
-    private Contact contact;
     private ContactDto contactDto;
     private Hobby hobby;
     private Place place;
     private String message;
     private String renderedHtml;
-    private List<Message> messages;
-
-    public static ResponseMessage okMessage(Contact contact) {
-        return new ResponseMessage("OK", contact);
-    }
 
     public static ResponseMessage okMessage(ContactDto contactDto){
         return new ResponseMessage("OK", contactDto);
@@ -41,21 +35,8 @@ public class ResponseMessage {
         return new ResponseMessage("OK", message);
     }
 
-    public static ResponseMessage okMessage(ContactDto contactDto, List<Message> messages){
-        return new ResponseMessage("OK", contactDto, messages);
-    }
-
-    public static ResponseMessage okMessage(List<Message> messages){
-        return new ResponseMessage("OK", messages);
-    }
-
     public static ResponseMessage errorMessage(String message) {
         return new ResponseMessage("ERROR", message);
-    }
-
-    private ResponseMessage(String status, Contact contact) {
-        this.status = status;
-        this.contact = contact;
     }
 
     private ResponseMessage(String status, String errorMessage) {
@@ -84,23 +65,8 @@ public class ResponseMessage {
         this.place = place;
     }
 
-    private ResponseMessage(String status, ContactDto contactDto, List<Message> messages){
-        this.status = status;
-        this.contactDto = contactDto;
-        this.messages = messages;
-    }
-
-    private ResponseMessage(String status, List<Message> messages){
-        this.status = status;
-        this.messages = messages;
-    }
-
     public String getStatus() {
         return status;
-    }
-
-    public Contact getContact() {
-        return contact;
     }
 
     public ContactDto getContactDto() {
@@ -117,10 +83,6 @@ public class ResponseMessage {
 
     public Place getPlace() {
         return place;
-    }
-
-    public List<Message> getMessages() {
-        return messages;
     }
 
     public String getRenderedHtml() {

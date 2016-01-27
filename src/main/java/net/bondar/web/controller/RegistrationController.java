@@ -86,7 +86,6 @@ public class RegistrationController {
         service.addPlaceToContact(contact2, place1);
         service.addPlaceToContact(contact4, place2);
 
-//                     Ошибка SQL!!!!!
         Post post1 = new Post(contact2, "Привет!", new Date());
         Post post2 = new Post(contact2, "Как дела?", new Date());
         Post post3 = new Post(contact2, "Как погода?", new Date());
@@ -102,18 +101,6 @@ public class RegistrationController {
         service.addPostToContact(contact1, post3);
         service.addPostToContact(contact1, post4);
         service.addPostToContact(contact1, post5);
-
-//                        Ошибка!!!
-//        Chat chat1 = new Chat(contact2);
-//        Message message1 = new Message(contact2, new Date(), "Привет!");
-//        Message message2 = new Message(contact1, new Date(), "Azaz");
-//        messageService.saveMessage(message1);
-//        messageService.saveMessage(message2);
-//
-//        chat1.getChatMessages().add(message1);
-//        chat1.getChatMessages().add(message2);
-//        chatService.saveChat(chat1);
-//        service.addChatToContact(contact1, chat1);
         return "redirect:/login";
     }
 
@@ -132,22 +119,6 @@ public class RegistrationController {
 
         return "redirect:/login";
     }
-
-//    @RequestMapping(value = "/author", method = RequestMethod.GET)
-//     public String signIn(@ModelAttribute("userForm") @Validated Contact contact, BindingResult result, Model model, HttpSession session) {
-//        logger.warn("singIn()");
-//        userSingInValidator.validate(contact, result);
-//        if (result.hasErrors()) {
-//            return "login-authorPanel";
-//        }
-//        try {
-//            session.setAttribute("USER", service.findContactByUserName(contact.getUserName()));
-//        } catch (Exception e) {
-//            model.addAttribute("error", e.getMessage());
-//            return "redirect:/home";
-//        }
-//        return "redirect:/home";
-//    }
 
     @RequestMapping(value = "/author", method = RequestMethod.GET)
     public String signIn(@ModelAttribute("userForm")Contact contact, RedirectAttributes redirectAttributes, Model model, HttpSession session) {
@@ -173,61 +144,6 @@ public class RegistrationController {
         logger.debug("handlerException()",e);
         return ResponseMessage.errorMessage(e.getMessage());
     }
-
-    //    @RequestMapping(value = "/saveContact", method = RequestMethod.POST)
-//    @ResponseBody
-//    public ResponseMessage saveContact(@RequestBody @Valid Contact contact, BindingResult bindingResult) {
-//        logger.warn("saveContact()");
-//        try {
-//            userValidator.validate(contact, bindingResult);
-//            if (bindingResult.hasErrors()) {
-//                String errors = "";
-//                for (Object object : bindingResult.getAllErrors()) {
-//                    if (object instanceof FieldError) {
-//                        FieldError fieldError = (FieldError) object;
-//                        errors += messageSource.getMessage(fieldError, null);
-//                    }
-//                }
-//                return ResponseMessage.errorMessage(errors);
-//            } else {
-//                return ResponseMessage.okMessage(service.saveContact(contact));
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return ResponseMessage.errorMessage("Registration error!");
-//        }
-//    }
-
-//    @RequestMapping(value = "/author", method = RequestMethod.GET)
-//    public String signIn(@RequestParam(name = "userName") String userName, @RequestParam(name = "userPassword") String password, Model model, HttpSession session) {
-//        logger.warn("singIn()");
-//        try {
-//            if (userName.isEmpty() || password.isEmpty()) {
-//                String errorString = "You should fill in both values - login and password.";
-//                model.addAttribute("error", errorString);
-//                return "login";
-//            }
-//
-//            try {
-//                Contact contact = service.findContactByUserName(userName);
-//                if (contact.getPassword().equals(password)) {
-//                    session.setAttribute("USER", service.findContactByUserName(userName));
-//                } else {
-//                    model.addAttribute("error", "Incorrect password.");
-//                    return "redirect:/login#tab_author-panel";
-//                }
-//
-//            } catch (Exception e) {
-//                model.addAttribute("error", e.getMessage());
-//                return "redirect:/home";
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        return "redirect:/home";
-//    }
-
 }
 
 

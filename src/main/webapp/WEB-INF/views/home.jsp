@@ -92,36 +92,21 @@
                                 </label>
 
                                 <div class="panel panel-primary">
-                                    <div class="panel-body" style="padding: 0px; max-height: 300px; overflow: auto">
+                                    <div class="panel-body" style="padding: 0px; height:300px; max-height: 300px; overflow: auto">
                                         <div id="messagesInModal">
-                                            <c:forEach items="${messages}" var="message">
-                                                <div class="popover-home">
-                                                    <div class="popover right message">
-                                                        <div class="arrow"></div>
-                                                        <h3 style="background-color: #337AB7; color: #ffffff; text-align: right"
-                                                            class="popover-title">${message.from.firstName} ${message.from.lastName}<span> ${message.date}</span>
-                                                        </h3>
-
-                                                        <div style="background-color:#EFEFEF"
-                                                             class="popover-content">${message.content}</div>
-                                                    </div>
-                                                </div>
+                                            <%--<c:forEach items="${messages}" var="message">--%>
                                                 <%--<div class="popover-home">--%>
-                                                <%--<div class="popover left message">--%>
-                                                <%--<div class="arrow"></div>--%>
-                                                <%--<h3 style="background-color: #5CB85C; color: #ffffff; text-align: right"--%>
-                                                <%--class="popover-title">--%>
-                                                <%--<span>00:00</span></h3>--%>
+                                                    <%--<div class="popover right message">--%>
+                                                        <%--<div class="arrow"></div>--%>
+                                                        <%--<h3 style="background-color: #337AB7; color: #ffffff; text-align: right"--%>
+                                                            <%--class="popover-title">${message.from.firstName} ${message.from.lastName}<span> ${message.date}</span>--%>
+                                                        <%--</h3>--%>
 
-                                                <%--<div style="background-color:#EFEFEF"--%>
-                                                <%--class="popover-content">--%>
-                                                <%--Сообщение сообщение сообщение сообщение--%>
-                                                <%--сообщение сообщение сообщение--%>
-                                                <%--сообщение--%>
+                                                        <%--<div style="background-color:#EFEFEF"--%>
+                                                             <%--class="popover-content">${message.content}</div>--%>
+                                                    <%--</div>--%>
                                                 <%--</div>--%>
-                                                <%--</div>--%>
-                                                <%--</div>--%>
-                                            </c:forEach>
+                                            <%--</c:forEach>--%>
                                         </div>
                                     </div>
                                 </div>

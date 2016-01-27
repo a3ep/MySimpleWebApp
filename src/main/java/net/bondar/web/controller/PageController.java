@@ -19,7 +19,6 @@ import org.springframework.web.servlet.ViewResolver;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -59,15 +58,23 @@ public class PageController {
         logger.debug("getHome()");
 
         Contact user = getPersistUser(session);
+        if (user.getFirstName().equals("emptySession")){
+            return "redirect:errorPage";
+        }
         model.addAttribute("user", user);
         return "home";
     }
 
+    @RequestMapping(value = "/errorPage", method = RequestMethod.GET)
+    public String getErrorPage() {
+        logger.debug("getErrorPage()");
+
+        return "errorPage";
+    }
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public String logout(Model model, HttpSession session) {
+    public String logout(HttpSession session) {
         logger.debug("logout()");
         session.invalidate();
-//        model.addAttribute("userForm", new Contact());
         return "redirect:/login";
     }
 
@@ -130,90 +137,6 @@ public class PageController {
         return ResponseMessage.okMessage(friendDto, result);
     }
 
-//    @RequestMapping(value = "/friends/{id}/invokeMessage", method = RequestMethod.POST)
-//    public String invokeMessage(@PathVariable("id") long id, HttpSession session, Model model) {
-//        logger.warn("invokeMessage()");
-//
-//        Contact user = (Contact) session.getAttribute("USER");
-//        Contact friend = service.findContactById(id);
-//        logger.debug(friend.getId() + " " + friend.getFirstName() + " " + friend.getLastName());
-//        List<Message> messages = new ArrayList<>();
-//        try {
-//            service.refreshContact(user);
-//            for (Chat chat : user.getConversation()) {
-//                if (chat.getUserTo().equals(friend)) {
-//                    if(chat.getChatMessages().isEmpty()){
-//                        break;
-//                    }
-//                    for (Message message : chat.getChatMessages()) {
-//                        messages.add(message);
-//                    }
-//                }
-//            }
-//        } catch (Exception e) {
-//            logger.debug("Invoke message error!", e);
-////            return ResponseMessage.errorMessage(e.getMessage());
-//        }
-//        session.setAttribute("messages", messages);
-//        model.addAttribute("message", messages);
-//        ContactDto friendDto = new ContactDto();
-//        friendDto.setId(friend.getId());
-//        friendDto.setFirstName(friend.getFirstName());
-//        friendDto.setLastName(friend.getLastName());
-//        logger.debug(friendDto.toString());
-//        return "temp";
-//    }
-
-//    @RequestMapping(value = "/friends/{id}/sendMessage", method = RequestMethod.POST)
-//    @ResponseBody
-//    public ResponseMessage sendMessage(@RequestBody SendMessageDto message, @PathVariable("id") long id, HttpSession session) {
-//        logger.warn("sendMessage()");
-//
-//        Contact user = (Contact) session.getAttribute("USER");
-//        service.refreshContact(user);
-//        Contact friend = service.findContactById(id);
-//        Message newMessage = new Message(user, new Date(), message.getMessage());
-//        List<Message> messages = new ArrayList<>();
-//        try {
-//            messageService.saveMessage(newMessage);
-//            logger.debug(user.getConversation().toString());
-//            Chat currentChat = null;
-//            for (Chat chat : user.getConversation()) {
-//                if (chat.getUserTo().equals(friend)) {
-//                    currentChat = chat;
-//                    currentChat.getChatMessages().add(newMessage);
-//                    chatService.updateChat(currentChat);
-//                    for (Message m : currentChat.getChatMessages()) {
-//                        messages.add(m);
-//                    }
-//                }
-//            }
-//            if(currentChat==null){
-//                Chat newChat = new Chat(friend);
-////                Chat newChat2 = new Chat(user);
-//                newChat.getChatMessages().add(newMessage);
-////                newChat2.getChatMessages().add(newMessage);
-//                chatService.saveChat(newChat);
-////                chatService.saveChat(newChat2);
-//                service.addChatToContact(user, newChat);
-////                service.addChatToContact(friend, newChat2);
-//                for(Message m:newChat.getChatMessages()){
-//                    messages.add(m);
-//                }
-//            }
-//            service.updateContact(user);
-//        } catch (Exception e) {
-//            logger.debug("Send message error!", e);
-//            return ResponseMessage.errorMessage(e.getMessage());
-//        }
-//        session.setAttribute("messages", messages);
-//        ContactDto friendDto = new ContactDto();
-//        friendDto.setId(friend.getId());
-//        friendDto.setFirstName(friend.getFirstName());
-//        friendDto.setLastName(friend.getLastName());
-//        return ResponseMessage.okMessage("");
-//    }
-
     @RequestMapping(value = "/friends/{id}/sendMessage", method = RequestMethod.POST)
     @ResponseBody
     public ResponseMessage sendMessage(@RequestBody SendMessageDto message, @PathVariable("id") long id, HttpSession session, Model model, HttpServletRequest req) {
@@ -268,7 +191,7 @@ public class PageController {
 
     @RequestMapping(value = "/friends/{id}/invokePost", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseMessage invokePost(@PathVariable("id") long id, HttpSession session) {
+    public ResponseMessage invokePost(@PathVariable("id") long id) {
         logger.warn("invokePost()");
         Contact friend = null;
         try {
@@ -454,7 +377,7 @@ public class PageController {
 
     @RequestMapping(value = "/people/show", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseMessage showPeople(HttpSession session, Model model) {
+    public ResponseMessage showPeople(HttpSession session) {
         logger.warn("showPeople()");
 
         Contact user = getPersistUser(session);
@@ -531,6 +454,11 @@ public class PageController {
 
     private Contact getPersistUser(HttpSession session){
         Contact user = (Contact)session.getAttribute("USER");
+        if(user==null){
+            Contact empty = new Contact();
+            empty.setFirstName("emptySession");
+            return empty;
+        }
         service.refreshContact(user);
         return user;
     }

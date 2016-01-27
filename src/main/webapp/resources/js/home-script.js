@@ -144,7 +144,7 @@ function invokeMessage(friendId) {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (result) {
-            invokeModalMessage(result.contactDto, result.message);
+            invokeModalMessage(result.contactDto, result.renderedHtml);
         }
     });
 }
