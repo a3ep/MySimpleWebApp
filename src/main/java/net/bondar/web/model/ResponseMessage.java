@@ -14,6 +14,7 @@ public class ResponseMessage {
     private Hobby hobby;
     private Place place;
     private String message;
+    private String renderedHtml;
     private List<Message> messages;
 
     public static ResponseMessage okMessage(Contact contact) {
@@ -22,6 +23,10 @@ public class ResponseMessage {
 
     public static ResponseMessage okMessage(ContactDto contactDto){
         return new ResponseMessage("OK", contactDto);
+    }
+
+    public static ResponseMessage okMessage(ContactDto contactDto, String renderedHtml){
+        return new ResponseMessage("OK", contactDto, renderedHtml);
     }
 
     public static ResponseMessage okMessage(Hobby hobby){
@@ -39,6 +44,7 @@ public class ResponseMessage {
     public static ResponseMessage okMessage(ContactDto contactDto, List<Message> messages){
         return new ResponseMessage("OK", contactDto, messages);
     }
+
     public static ResponseMessage okMessage(List<Message> messages){
         return new ResponseMessage("OK", messages);
     }
@@ -60,6 +66,12 @@ public class ResponseMessage {
     private ResponseMessage(String status, ContactDto contactDto){
         this.status = status;
         this.contactDto = contactDto;
+    }
+
+    private ResponseMessage(String status, ContactDto contactDto, String renderedHtml){
+        this.status = status;
+        this.contactDto = contactDto;
+        this.renderedHtml = renderedHtml;
     }
 
     private ResponseMessage(String status, Hobby hobby){
@@ -109,5 +121,9 @@ public class ResponseMessage {
 
     public List<Message> getMessages() {
         return messages;
+    }
+
+    public String getRenderedHtml() {
+        return renderedHtml;
     }
 }

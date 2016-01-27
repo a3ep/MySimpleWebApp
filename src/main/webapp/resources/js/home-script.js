@@ -144,21 +144,21 @@ function invokeMessage(friendId) {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (result) {
-            invokeModalMessage(result.contactDto, result.messages);
+            invokeModalMessage(result.contactDto, result.message);
         }
     });
 }
 
-function invokeModalMessage(friend, messages) {
+function invokeModalMessage(friend, message) {
     var friendName = " " + friend.firstName + " " + friend.lastName;
     $('#modalBodyLabel').text(friendName);
     $('#modalMessageFriendId').text(friend.id);
-    //buildModal(friend, messages);
+    $('#messagesInModal').html(message);
     $('#modalMessage').modal('show');
 }
 
 function sendMessage(){
-    var message = $('#messageArea').val();
+    var message = $('#messageArea').val().replace(/\s+/g,' ');
     var friendId = $('#modalMessageFriendId').text();
     var url = "/friends/" + friendId + "/sendMessage/";
 
@@ -168,12 +168,9 @@ function sendMessage(){
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         data: '{"message": "' + message + '"}',
-        success: function (result) {
-            if(result.status==='OK'){
+        success: function (result){
                 $('#messageArea').val("");
-                $('#messagesInModal').load(document.URL + ' #messagesInModal');
-                //buildModal(result.contactDto, result.messages);
-            }
+                $('#messagesInModal').html(result.message);
         }
     });
 }

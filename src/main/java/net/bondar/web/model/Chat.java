@@ -14,7 +14,7 @@ public class Chat extends AbstractEntity{
     @OneToOne
     private Contact userTo;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany/*(fetch = FetchType.EAGER)*/
     private Set<Message> chatMessages;
 
 

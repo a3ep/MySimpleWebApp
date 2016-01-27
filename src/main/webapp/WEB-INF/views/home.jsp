@@ -1,4 +1,3 @@
-<jsp:useBean id="user" scope="request" type="net.bondar.web.model.Contact"/>
 <%--
   Created by IntelliJ IDEA.
   User: AzeraL
@@ -93,7 +92,7 @@
                                 </label>
 
                                 <div class="panel panel-primary">
-                                    <div class="panel-body">
+                                    <div class="panel-body" style="padding: 0px; max-height: 300px; overflow: auto">
                                         <div id="messagesInModal">
                                             <c:forEach items="${messages}" var="message">
                                                 <div class="popover-home">
