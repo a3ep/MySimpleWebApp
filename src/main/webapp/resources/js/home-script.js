@@ -337,10 +337,52 @@ function removeFriend(friendId, element) {
     });
 }
 
+function showHobbyEditFields(hobbyId){
+    var showBtnId = "#"+hobbyId+"editHobbyBtn";
+    var saveBtnId = "#"+hobbyId+"saveHobbyChangesBtn";
+    var titleId = "#"+hobbyId+"editHobbyTitleInput";
+    var descriptionId = "#"+hobbyId+"editHobbyDescriptionInput";
+    $(titleId).removeClass('hideElement');
+    $(descriptionId).removeClass('hideElement');
+    $(titleId).addClass('showElement');
+    $(descriptionId).addClass('showElement');
+
+    $(showBtnId).removeClass('showElement');
+    $(showBtnId).addClass('hideElement');
+    $(saveBtnId).removeClass('hideElement');
+    $(saveBtnId).addClass('showElement')
+}
+
+function hideHobbyEditFields(hobbyId){
+    var showBtnId = "#"+hobbyId+"editHobbyBtn";
+    var saveBtnId = "#"+hobbyId+"saveHobbyChangesBtn";
+    var titleId = "#"+hobbyId+"editHobbyTitleInput";
+    var descriptionId = "#"+hobbyId+"editHobbyDescriptionInput";
+    $(titleId).removeClass('showElement');
+    $(descriptionId).removeClass('showElement');
+    $(titleId).addClass('hideElement');
+    $(descriptionId).addClass('hideElement');
+
+    $(showBtnId).removeClass('hideElement');
+    $(showBtnId).addClass('showElement');
+    $(saveBtnId).removeClass('showElement');
+    $(saveBtnId).addClass('hideElement');
+}
+
 function editHobby(hobbyId) {
     var url = "/hobbies/" + hobbyId + "/edit";
-    var title = $('#hobbyTitle').val();
-    var description = $('#hobbyDescription').val();
+    var titleText = "#"+hobbyId+"hobbyTitle";
+    var titleInput = "#"+hobbyId+"hobbyTitleChangeInput";
+    var desText = "#"+hobbyId+"hobbyDescription";
+    var desIput = "#"+hobbyId+"hobbyDescriptionChangeInput";
+    var title = $(titleInput).val().replace(/\s+/g,' ');
+    if(title.length==0){
+        title=$(titleText).text().replace(/\s+/g,' ');
+    }
+    var description = $(desIput).val().replace(/\s+/g,' ');
+    if(description.length==0){
+        description=$(desText).text().replace(/\s+/g,' ');
+    }
 
     $.ajax({
         type: "POST",
@@ -350,8 +392,11 @@ function editHobby(hobbyId) {
         data: '{"title": "' + title + '", "description": "' + description + '"}',
         success: function (result) {
             if (result.status === 'OK') {
-                $('#hobbyTitle').text(result.hobby.title);
-                $('#hobbyDescription').text(result.hobby.description);
+                $(titleText).text(result.hobby.title);
+                $(desText).text(result.hobby.description);
+                $(titleInput).val("");
+                $(desIput).val("");
+                hideHobbyEditFields(hobbyId);
                 $('#alert').addClass("alert-success");
                 $('#alert-message').text("Success! Hobby \"" + result.hobby.title + "\" updated:)");
                 $('#alert').alert();
@@ -369,6 +414,7 @@ function editHobby(hobbyId) {
         }
     });
 }
+
 
 function removeHobby(hobbyId, element) {
     var url = "/hobbies/" + hobbyId + "/remove";
@@ -399,12 +445,76 @@ function removeHobby(hobbyId, element) {
     });
 }
 
+function showPlaceEditFields(placeId){
+    var showBtnId = "#"+placeId+"editPlaceBtn";
+    var saveBtnId = "#"+placeId+"savePlaceChangesBtn";
+    var titleId = "#"+placeId+"editPlaceTitleInput";
+    var descriptionId = "#"+placeId+"editPlaceDescriptionInput";
+    var latitudeId = "#"+placeId+"editPlaceLatitudeInput";
+    var longitudeId = "#"+placeId+"editPlaceLongitudeInput";
+    $(titleId).removeClass('hideElement');
+    $(descriptionId).removeClass('hideElement');
+    $(latitudeId).removeClass('hideElement');
+    $(longitudeId).removeClass('hideElement');
+    $(titleId).addClass('showElement');
+    $(descriptionId).addClass('showElement');
+    $(latitudeId).addClass('showElement');
+    $(longitudeId).addClass('showElement');
+
+    $(showBtnId).removeClass('showElement');
+    $(showBtnId).addClass('hideElement');
+    $(saveBtnId).removeClass('hideElement');
+    $(saveBtnId).addClass('showElement');
+}
+
+function hidePlaceEditFields(placeId){
+    var showBtnId = "#"+placeId+"editPlaceBtn";
+    var saveBtnId = "#"+placeId+"savePlaceChangesBtn";
+    var titleId = "#"+placeId+"editPlaceTitleInput";
+    var descriptionId = "#"+placeId+"editPlaceDescriptionInput";
+    var latitudeId = "#"+placeId+"editPlaceLatitudeInput";
+    var longitudeId = "#"+placeId+"editPlaceLongitudeInput";
+    $(titleId).removeClass('showElement');
+    $(descriptionId).removeClass('showElement');
+    $(latitudeId).removeClass('showElement');
+    $(longitudeId).removeClass('showElement');
+    $(titleId).addClass('hideElement');
+    $(descriptionId).addClass('hideElement');
+    $(latitudeId).addClass('hideElement');
+    $(longitudeId).addClass('hideElement');
+
+    $(showBtnId).removeClass('hideElement');
+    $(showBtnId).addClass('showElement');
+    $(saveBtnId).removeClass('showElement');
+    $(saveBtnId).addClass('hideElement')
+}
+
 function editPlace(placeId) {
     var url = "/places/" + placeId + "/edit";
-    var title = $('#placeTitle').val();
-    var description = $('#placeDescription').val();
-    var latitude = $('#placeLatitude').val();
-    var longitude = $('#placeLongitude').val();
+    var titleText = "#"+placeId+"placeTitle";
+    var titleInput = "#"+placeId+"placeTitleChangeInput";
+    var desText = "#"+placeId+"placeDescription";
+    var desInput = "#"+placeId+"placeDescriptionChangeInput";
+    var laText = "#"+placeId+"placeLatitude";
+    var laInput = "#"+placeId+"placeLatitudeChangeInput";
+    var loText = "#"+placeId+"placeLongitude";
+    var loInput = "#"+placeId+"placeLongitudeChangeInput";
+    var title = $(titleInput).val().replace(/\s+/g,' ');
+    if(title.length==0){
+        title=$(titleText).text().replace(/\s+/g,' ');
+    }
+    var description = $(desInput).val().replace(/\s+/g,' ');
+    if(description.length==0){
+        description=$(desText).text().replace(/\s+/g,' ');
+    }
+    var latitude = $(laInput).val().replace(/\s+/g,' ');
+    if(latitude.length==0){
+        latitude=$(laText).text().replace(/\s+/g,' ');
+    }
+    var longitude = $(loInput).val().replace(/\s+/g,' ');
+    if(longitude.length==0){
+        longitude=$(loText).text().replace(/\s+/g,' ');
+    }
 
     $.ajax({
         type: "POST",
@@ -414,10 +524,15 @@ function editPlace(placeId) {
         data: '{"title": "' + title + '", "description": "' + description + '", "latitude": "' + latitude + '", "longitude": "' + longitude + '"}',
         success: function (result) {
             if (result.status === 'OK') {
-                $('#placeTitle').text(result.place.title);
-                $('#placeDescription').text(result.place.description);
-                $('#placeLatitude').text(result.place.description);
-                $('#placeLongitude').text(result.place.description);
+                $(titleText).text(result.place.title);
+                $(desText).text(result.place.description);
+                $(laText).text(result.place.latitude);
+                $(loText).text(result.place.longitude);
+                $(titleInput).val("");
+                $(desInput).val("");
+                $(laInput).val("");
+                $(loInput).val("");
+                hidePlaceEditFields(placeId);
                 $('#alert').addClass("alert-success");
                 $('#alert-message').text("Success! Place \"" + result.place.title + "\" updated:)");
                 $('#alert').alert();

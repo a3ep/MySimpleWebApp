@@ -515,28 +515,48 @@
                                                 <tr>
                                                     <td id="hobby-title"
                                                         style="text-align:center; vertical-align:middle">
-                                                        <input id="hobbyTitle"
-                                                               style="text-align: center; border: none; background-color: transparent"
-                                                               value="${hobby.title}"/>
+                                                        <spring:url value="${hobby.id}hobbyTitle" var="hobbyTitle"/>
+                                                        <spring:url value="${hobby.id}hobbyTitleChangeInput" var="hobbyTitleChangeInput"/>
+                                                        <div id="${hobbyTitle}" style="text-align: center">
+                                                            ${hobby.title}
+                                                        </div>
+                                                        <div id="${hobby.id}editHobbyTitleInput" class="hideElement fade in">
+                                                            <input id="${hobbyTitleChangeInput}" class="form-control" style="text-align: center" placeholder="Название..."/>
+                                                        </div>
                                                     </td>
                                                     <td id="hobby-description"
                                                         style="text-align:center; vertical-align:middle">
-                                                        <input id="hobbyDescription"
-                                                               style="text-align: center; border: none; background-color: transparent"
-                                                               value="${hobby.description}"/>
+                                                        <spring:url value="${hobby.id}hobbyDescription" var="hobbyDescription"/>
+                                                        <spring:url value="${hobby.id}hobbyDescriptionChangeInput" var="hobbyDescriptionChangeInput"/>
+                                                        <div id="${hobbyDescription}" style="text-align: center">
+                                                            ${hobby.description}
+                                                        </div>
+                                                        <div id="${hobby.id}editHobbyDescriptionInput" class="hideElement fade in">
+                                                            <input id="${hobbyDescriptionChangeInput}" class="form-control" style="text-align: center" placeholder="Описание..."/>
+                                                        </div>
                                                     </td>
                                                     <td class="hobbyCellBtn">
                                                         <spring:url value="${hobby.id}editHobbyBtn" var="editHobbyBtn"/>
-                                                        <spring:url value="${hobby.id}removeHobbyBtn"
-                                                                    var="removeHobbyBtn"/>
+                                                        <spring:url value="${hobby.id}saveHobbyChangesBtn" var="saveHobbyChangesBtn"/>
+                                                        <spring:url value="${hobby.id}removeHobbyBtn" var="removeHobbyBtn"/>
                                                         <div class="btn-group">
-                                                            <button id="${editHobbyBtn}" class="btn btn-primary"
-                                                                    onclick="editHobby(${hobby.id})"
+                                                            <button id="${editHobbyBtn}" class="btn btn-primary showElement"
+                                                                    onclick="showHobbyEditFields(${hobby.id})"
                                                                     onmouseover="showTooltip(this.id)"
                                                                     onmouseout="hideTooltip(this.id)"
                                                                     data-toggle="tooltip"
                                                                     data-placement="top" type="button"
                                                                     data-original-title="Редактировать"><span
+                                                                    class="glyphicon glyphicon-pencil"
+                                                                    aria-hidden="true"></span>
+                                                            </button>
+                                                            <button id="${saveHobbyChangesBtn}" class="btn btn-success hideElement"
+                                                                    onclick="editHobby(${hobby.id})"
+                                                                    onmouseover="showTooltip(this.id)"
+                                                                    onmouseout="hideTooltip(this.id)"
+                                                                    data-toggle="tooltip"
+                                                                    data-placement="top" type="button"
+                                                                    data-original-title="Сохранить изменения"><span
                                                                     class="glyphicon glyphicon-pencil"
                                                                     aria-hidden="true"></span>
                                                             </button>
@@ -663,40 +683,66 @@
                                                         <%--height="30"></td>--%>
                                                     <td id="place-title"
                                                         style="text-align:center; vertical-align:middle">
-                                                        <input id="placeTitle" class="placeTitleTh"
-                                                               style="text-align: center; border: none; background-color: transparent"
-                                                               value="${place.title}"/>
+                                                        <spring:url value="${place.id}placeTitle" var="placeTitle"/>
+                                                        <spring:url value="${place.id}placeTitleChangeInput" var="placeTitleChangeInput"/>
+                                                        <div id="${placeTitle}" class="placeTitleTh"
+                                                               style="text-align: center; margin: 0 auto">${place.title}</div>
+                                                        <div id="${place.id}editPlaceTitleInput" class="hideElement fade in">
+                                                            <input id="${placeTitleChangeInput}" class="form-control" style="text-align: center" placeholder="Название..."/>
+                                                        </div>
                                                     </td>
                                                     <td id="place-description"
                                                         style="text-align:center; vertical-align:middle">
-                                                        <input id="placeDescription" class="placeDescriptionTh"
-                                                               style="text-align: center; border: none; background-color: transparent"
-                                                               value="${place.description}"/>
+                                                        <spring:url value="${place.id}placeDescription" var="placeDescription"/>
+                                                        <spring:url value="${place.id}placeDescriptionChangeInput" var="placeDescriptionChangeInput"/>
+                                                        <div id="${placeDescription}" class="placeDescriptionTh"
+                                                               style="text-align: center; margin: 0 auto">${place.description}</div>
+                                                        <div id="${place.id}editPlaceDescriptionInput" class="hideElement fade in">
+                                                            <input id="${placeDescriptionChangeInput}" class="form-control" style="text-align: center" placeholder="Описание..."/>
+                                                        </div>
                                                     </td>
                                                     <td id="place-latitude"
                                                         style="text-align:center; vertical-align:middle">
-                                                        <input id="placeLatitude" class="placeLatitudeTh"
-                                                               style="text-align: center; border: none; background-color: transparent"
-                                                               value="${place.latitude}"/>
+                                                        <spring:url value="${place.id}placeLatitude" var="placeLatitude"/>
+                                                        <spring:url value="${place.id}placeLatitudeChangeInput" var="placeLatitudeChangeInput"/>
+                                                        <div id="${placeLatitude}" class="placeLatitudeTh"
+                                                               style="text-align: center; margin:0 auto">${place.latitude}</div>
+                                                        <div id="${place.id}editPlaceLatitudeInput" class="hideElement fade in">
+                                                            <input id="${placeLatitudeChangeInput}" class="form-control" style="text-align: center" placeholder="Широта..."/>
+                                                        </div>
                                                     </td>
                                                     <td id="place-longitude"
                                                         style="text-align:center; vertical-align:middle">
-                                                        <input id="placeLongitude" class="placeLongitudeTh"
-                                                               style="text-align: center; border: none; background-color: transparent"
-                                                               value="${place.longitude}"/>
+                                                        <spring:url value="${place.id}placeLongitude" var="placeLongitude"/>
+                                                        <spring:url value="${place.id}placeLongitudeChangeInput" var="placeLongitudeChangeInput"/>
+                                                        <div id="${placeLongitude}" class="placeLongitudeTh"
+                                                               style="text-align: center; margin:0 auto">${place.longitude}</div>
+                                                        <div id="${place.id}editPlaceLongitudeInput" class="hideElement fade in">
+                                                            <input id="${placeLongitudeChangeInput}" class="form-control" style="text-align: center" placeholder="Долгота..."/>
+                                                        </div>
                                                     </td>
                                                     <td class="placeCellBtn">
                                                         <spring:url value="${place.id}editPlaceBtn" var="editPlaceBtn"/>
+                                                        <spring:url value="${place.id}savePlaceChangesBtn" var="savePlaceChangesBtn"/>
                                                         <spring:url value="${place.id}removePlaceBtn"
                                                                     var="removePlaceBtn"/>
                                                         <div class="btn-group">
-                                                            <button id="${editPlaceBtn}" class="btn btn-primary"
-                                                                    onclick="editPlace(${place.id})"
+                                                            <button id="${editPlaceBtn}" class="btn btn-primary showElement"
+                                                                    onclick="showPlaceEditFields(${place.id})"
                                                                     onmouseover="showTooltip(this.id)"
                                                                     onmouseout="hideTooltip(this.id)"
                                                                     data-toggle="tooltip"
                                                                     data-placement="top" type="button"
                                                                     data-original-title="Редактировать"><span
+                                                                    class="glyphicon glyphicon-pencil"
+                                                                    aria-hidden="true"></span></button>
+                                                            <button id="${savePlaceChangesBtn}" class="btn btn-success hideElement"
+                                                                    onclick="editPlace(${place.id})"
+                                                                    onmouseover="showTooltip(this.id)"
+                                                                    onmouseout="hideTooltip(this.id)"
+                                                                    data-toggle="tooltip"
+                                                                    data-placement="top" type="button"
+                                                                    data-original-title="Сохранить изменения"><span
                                                                     class="glyphicon glyphicon-pencil"
                                                                     aria-hidden="true"></span></button>
                                                             <button id="${removePlaceBtn}" class="btn btn-danger"

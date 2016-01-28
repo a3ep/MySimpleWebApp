@@ -315,7 +315,10 @@ public class PageController {
         String hobbyTitle = hobby.getTitle();
         try {
             service.removeHobby(user, hobby);
-//            hobbyService.deleteHobby(id);
+            Set<Contact> contactsWithThisHobby = service.findAllContactsWithHobby(hobby);
+            if(contactsWithThisHobby.size()==0){
+                hobbyService.deleteHobby(id);
+            }
         } catch (Exception e) {
             logger.debug("Remove hobby error", e);
             return ResponseMessage.errorMessage(e.getMessage());
@@ -350,6 +353,7 @@ public class PageController {
         place.setDescription(placeDto.getDescription());
         place.setLatitude(placeDto.getLatitude());
         place.setLongitude(placeDto.getLongitude());
+        System.out.println(placeDto.getLatitude());
         try {
             placeService.updatePlace(place);
             service.updateContact(user);
@@ -371,7 +375,10 @@ public class PageController {
         String placeTitle = place.getTitle();
         try {
             service.removePlace(user, place);
-//            placeService.deletePlace(id);
+            Set<Contact> contactsWithThisPlace = service.findAllContactsForPlace(place);
+            if(contactsWithThisPlace.size()==0){
+                placeService.deletePlace(id);
+            }
         } catch (Exception e) {
             logger.debug("Remove place error", e);
             return ResponseMessage.errorMessage(e.getMessage());
