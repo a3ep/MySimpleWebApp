@@ -63,6 +63,10 @@ public class HobbyService {
         return hobbyDao.findHobbyByTitle(title);
     }
 
+    public Hobby findHobbyDyTitleOpt(String title){
+        return hobbyDao.findHobbyByTitleOpt(title);
+    }
+
     public Collection<Hobby> findAllHobbies() {
         return hobbyDao.getAll();
     }

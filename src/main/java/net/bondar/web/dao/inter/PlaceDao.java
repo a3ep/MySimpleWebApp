@@ -8,4 +8,5 @@ import net.bondar.web.model.Place;
  */
 public interface PlaceDao extends AbstractDao<Place> {
     Place findPlaceByTitle(String title);
+    Place findPlaceByTitleOpt(String title);
 }

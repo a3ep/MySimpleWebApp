@@ -1,17 +1,17 @@
 $(document).ready(function () {
 
     $('#saveProfileChangesBtn').click(function () {
-        var firstName = $('#firstNameInput').val();
+        var firstName = $('#firstNameInput').val().replace(/\s+/g,' ');
         if(firstName.length==0){
-            firstName=$('#firstName').text();
+            firstName=$('#firstName').text().replace(/\s+/g,' ');
         }
-        var lastName = $('#lastNameInput').val();
+        var lastName = $('#lastNameInput').val().replace(/\s+/g,' ');
         if(lastName.length==0){
-            lastName=$('#lastName').text();
+            lastName=$('#lastName').text().replace(/\s+/g,' ');
         }
-        var birthDate = $('#birthDateInput').val();
+        var birthDate = $('#birthDateInput').val().replace(/\s+/g,' ');
         if(birthDate.length==0){
-            birthDate=$('#birthDate').text();
+            birthDate=$('#birthDate').text().replace(/\s+/g,' ');
         }
         var newDate = birthDate.substring(6,10)+"-"+birthDate.substring(3,5)+"-"+birthDate.substring(0,2);
 
@@ -645,16 +645,11 @@ function filter(){
         data: '{"selectNumber": "' + selectNumber + '", "textFilter": "' + textFilter + '"}',
         success: function (result) {
             if (result.status === 'OK') {
+                $('#textInput').val("");
                 $('#myPeoplePanelBody').load(document.URL + ' #myPeoplePanelBody');
-                //$('#alert').addClass("alert-success");
-                //$('#alert-message').text("Success!");
-                //$('#alert').alert();
-                //$("#alert").fadeTo(5000, 500).slideUp(500, function () {
-                //    $("#alert").hide();
-                //});
             } else {
                 $('#alert').addClass("alert-danger");
-                $('#alert-message').text(result.message);
+                $('#alert-message').text("Invalid request. Please try again. " + result.message);
                 $('#alert').alert();
                 $("#alert").fadeTo(5000, 500).slideUp(500, function () {
                     $("#alert").alert('close');

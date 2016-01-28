@@ -30,9 +30,8 @@
             <span id="alert-message" style="text-align:center; font-weight: bold"></span>
         </div>
         <form:form class="form-horizontal" method="get" action="/logout">
-            <button id="logoutBtn" style="float: right" class="btn btn-danger" <%--onclick="logout()"--%>
-                    onmouseover="showTooltip(this.id)" onmouseout="hideTooltip(this.id)" data-toggle="tooltip"
-                    data-placement="bottom"
+            <button id="logoutBtn" style="float: right" class="btn btn-danger" onmouseover="showTooltip(this.id)"
+                    onmouseout="hideTooltip(this.id)" data-toggle="tooltip" data-placement="bottom"
                     type="submit" data-original-title="Выход"><span class="glyphicon glyphicon-log-out"
                                                                     aria-hidden="true"></span></button>
         </form:form>
@@ -96,19 +95,6 @@
                                     <div id="scrollBody" class="panel-body"
                                          style="padding: 0px; height:300px; max-height: 300px; overflow: auto" onload="scrollDown()">
                                         <div id="messagesInModal">
-                                            <%--<c:forEach items="${messages}" var="message">--%>
-                                            <%--<div class="popover-home">--%>
-                                            <%--<div class="popover right message">--%>
-                                            <%--<div class="arrow"></div>--%>
-                                            <%--<h3 style="background-color: #337AB7; color: #ffffff; text-align: right"--%>
-                                            <%--class="popover-title">${message.from.firstName} ${message.from.lastName}<span> ${message.date}</span>--%>
-                                            <%--</h3>--%>
-
-                                            <%--<div style="background-color:#EFEFEF"--%>
-                                            <%--class="popover-content">${message.content}</div>--%>
-                                            <%--</div>--%>
-                                            <%--</div>--%>
-                                            <%--</c:forEach>--%>
                                         </div>
                                     </div>
                                 </div>
@@ -195,7 +181,7 @@
                             <button id="saveProfileChangesBtn" class="btn btn-success hideElement fade in" onmouseover="showTooltip(this.id)"
                                     onmouseout="hideTooltip(this.id)" data-toggle="tooltip" data-placement="bottom"
                                     type="button" data-original-title="Сохранить изменения"><span
-                                    class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
+                                    class="glyphicon glyphicon-save" aria-hidden="true"></span></button>
                         </div>
                         <div id="profileInfo">
                             <table class="table table-hover-my">
@@ -557,7 +543,7 @@
                                                                     data-toggle="tooltip"
                                                                     data-placement="top" type="button"
                                                                     data-original-title="Сохранить изменения"><span
-                                                                    class="glyphicon glyphicon-pencil"
+                                                                    class="glyphicon glyphicon-save"
                                                                     aria-hidden="true"></span>
                                                             </button>
                                                             <button id="${removeHobbyBtn}" class="btn btn-danger"
@@ -743,7 +729,7 @@
                                                                     data-toggle="tooltip"
                                                                     data-placement="top" type="button"
                                                                     data-original-title="Сохранить изменения"><span
-                                                                    class="glyphicon glyphicon-pencil"
+                                                                    class="glyphicon glyphicon-save"
                                                                     aria-hidden="true"></span></button>
                                                             <button id="${removePlaceBtn}" class="btn btn-danger"
                                                                     onclick="removePlace(${place.id}, this.closest('tr'))"
@@ -875,13 +861,11 @@
 </div>
 
 <script>
-    //код Javascript, предназначенный для того активировать вкладку по хэшу (#tab_tab1) в адресной строке
     var hash = document.location.hash;
     var prefix = "tab_";
     if (hash) {
         $('.nav-tabs a[href=' + hash.replace(prefix, "") + ']').tab('show');
     }
-    //Изменить хэш при перезагрузки страницы
     $('.nav-tabs a').on('shown', function (e) {
         window.location.hash = e.target.hash.replace("#", "#" + prefix);
     });

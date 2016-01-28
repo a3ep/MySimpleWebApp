@@ -449,7 +449,7 @@ public class PageController {
         }
         if (filter.getSelectNumber() == 1) {
             try {
-                Hobby selectedHobby = hobbyService.findHobbyByTitle(fmtTitle);
+                Hobby selectedHobby = hobbyService.findHobbyDyTitleOpt(fmtTitle);
                 filteredContacts = service.findAllContactsWithHobby(selectedHobby);
                 filteredContacts.remove(user);
             } catch (Exception e) {
@@ -458,7 +458,7 @@ public class PageController {
             }
         }else if(filter.getSelectNumber()==2){
             try{
-                Place selectedPlace = placeService.findPlaceByTitle(fmtTitle);
+                Place selectedPlace = placeService.findPlaceByTitleOpt(fmtTitle);
                 filteredContacts = service.findAllContactsForPlace(selectedPlace);
                 filteredContacts.remove(user);
             }catch (Exception e){

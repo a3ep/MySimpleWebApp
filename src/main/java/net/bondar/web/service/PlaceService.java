@@ -63,6 +63,10 @@ public class PlaceService {
         return placeDao.findPlaceByTitle(title);
     }
 
+    public Place findPlaceByTitleOpt(String title){
+        return placeDao.findPlaceByTitleOpt(title);
+    }
+
     public Collection<Place> findAllPlaces() {
         return placeDao.getAll();
     }
