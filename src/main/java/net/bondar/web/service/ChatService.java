@@ -20,12 +20,12 @@ public class ChatService {
     @Autowired
     SessionFactory sessionFactory;
 
-    public Chat saveChat(Contact userTo) {
-        Chat chat = new Chat(userTo);
-        Chat savedChat = chatDao.save(chat);
-        chatDao.flush();
-        return savedChat;
-    }
+//    public Chat saveChat(Contact userTo) {
+//        Chat chat = new Chat(userTo);
+//        Chat savedChat = chatDao.save(chat);
+//        chatDao.flush();
+//        return savedChat;
+//    }
 
     public Chat saveChat(Chat chat){
         Chat savedChat = chatDao.save(chat);

@@ -10,50 +10,33 @@ import java.util.*;
 @Table(name = "CHAT")
 public class Chat extends AbstractEntity{
 
-    @OneToOne
-    private Contact userTo;
-
-    @ManyToMany
-    private List<Message> chatMessages;
+    @OneToMany
+    private List<Message> messages;
 
 
     public Chat(){
         super();
+        this.messages = new ArrayList<>();
     }
 
     public Chat(long id){
         super(id);
+        this.messages = new ArrayList<>();
     }
 
-    public Chat(Contact userTo) {
-        this.userTo = userTo;
-        this.chatMessages = new ArrayList<>();
+    public List<Message> getMessages() {
+        return messages;
     }
 
-
-
-    public Contact getUserTo() {
-        return userTo;
-    }
-
-    public void setUserTo(Contact userTo) {
-        this.userTo = userTo;
-    }
-
-    public List<Message> getChatMessages() {
-        return chatMessages;
-    }
-
-    public void setChatMessages(List<Message> chatMessages) {
-        this.chatMessages = chatMessages;
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
     }
 
     @Override
     public String toString() {
         return "Chat{" +
                 "id=" + super.getId() +
-                ", userTo=" + userTo +
-                ", chatMessages=" + chatMessages +
+                ", messages=" + messages +
                 '}';
     }
 }

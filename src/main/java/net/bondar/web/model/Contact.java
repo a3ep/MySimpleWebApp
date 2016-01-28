@@ -40,7 +40,7 @@ public class Contact extends AbstractEntity{
     @ManyToMany
     private Set<Contact> friendList;
 
-    @OneToMany
+    @ManyToMany
     private Set<Chat> conversation;
 
     @OneToMany
@@ -55,14 +55,14 @@ public class Contact extends AbstractEntity{
         super(id);
     }
 
-    public Contact(String firstName, String lastName, Date birthDate, String userName, String password, String confirmPassword, String photo) {
+    public Contact(String firstName, String lastName, Date birthDate, String userName, String password, String confirmPassword) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
         this.userName = userName;
         this.password = password;
         this.confirmPassword = confirmPassword;
-        this.photo = photo;
+        this.photo = "../../resources/img/user.png";
         this.hobbies = new HashSet<>();
         this.places = new HashSet<>();
         this.friendList = new HashSet<>();

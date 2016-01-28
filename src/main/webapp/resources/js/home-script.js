@@ -230,6 +230,7 @@ function invokeMessage(friendId) {
         dataType: "json",
         success: function (result) {
             invokeModalMessage(result.contactDto, result.renderedHtml);
+            scrollDown();
         }
     });
 }
@@ -254,8 +255,9 @@ function sendMessage(){
         dataType: "json",
         data: '{"message": "' + message + '"}',
         success: function (result){
-                $('#messageArea').val("");
-                $('#messagesInModal').html(result.message);
+            $('#messageArea').val("");
+            $('#messagesInModal').html(result.message);
+            scrollDown();
         }
     });
 }
@@ -414,7 +416,6 @@ function editHobby(hobbyId) {
         }
     });
 }
-
 
 function removeHobby(hobbyId, element) {
     var url = "/hobbies/" + hobbyId + "/remove";
@@ -684,4 +685,8 @@ function removeFilter(){
             }
         }
     });
+}
+
+function scrollDown(){
+    $('#scrollBody').scrollTop($('#scrollBody')[0].scrollHeight);
 }

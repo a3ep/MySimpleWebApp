@@ -93,8 +93,8 @@
                                 </label>
 
                                 <div class="panel panel-primary">
-                                    <div class="panel-body"
-                                         style="padding: 0px; height:300px; max-height: 300px; overflow: auto">
+                                    <div id="scrollBody" class="panel-body"
+                                         style="padding: 0px; height:300px; max-height: 300px; overflow: auto" onload="scrollDown()">
                                         <div id="messagesInModal">
                                             <%--<c:forEach items="${messages}" var="message">--%>
                                             <%--<div class="popover-home">--%>
@@ -521,7 +521,7 @@
                                                             ${hobby.title}
                                                         </div>
                                                         <div id="${hobby.id}editHobbyTitleInput" class="hideElement fade in">
-                                                            <input id="${hobbyTitleChangeInput}" class="form-control" style="text-align: center" placeholder="Название..."/>
+                                                            <input id="${hobbyTitleChangeInput}" class="form-control" style="text-align: center" placeholder=""/>
                                                         </div>
                                                     </td>
                                                     <td id="hobby-description"
@@ -532,7 +532,7 @@
                                                             ${hobby.description}
                                                         </div>
                                                         <div id="${hobby.id}editHobbyDescriptionInput" class="hideElement fade in">
-                                                            <input id="${hobbyDescriptionChangeInput}" class="form-control" style="text-align: center" placeholder="Описание..."/>
+                                                            <input id="${hobbyDescriptionChangeInput}" class="form-control" style="text-align: center" placeholder=""/>
                                                         </div>
                                                     </td>
                                                     <td class="hobbyCellBtn">
@@ -688,7 +688,7 @@
                                                         <div id="${placeTitle}" class="placeTitleTh"
                                                                style="text-align: center; margin: 0 auto">${place.title}</div>
                                                         <div id="${place.id}editPlaceTitleInput" class="hideElement fade in">
-                                                            <input id="${placeTitleChangeInput}" class="form-control" style="text-align: center" placeholder="Название..."/>
+                                                            <input id="${placeTitleChangeInput}" class="form-control" style="text-align: center" placeholder=""/>
                                                         </div>
                                                     </td>
                                                     <td id="place-description"
@@ -698,7 +698,7 @@
                                                         <div id="${placeDescription}" class="placeDescriptionTh"
                                                                style="text-align: center; margin: 0 auto">${place.description}</div>
                                                         <div id="${place.id}editPlaceDescriptionInput" class="hideElement fade in">
-                                                            <input id="${placeDescriptionChangeInput}" class="form-control" style="text-align: center" placeholder="Описание..."/>
+                                                            <input id="${placeDescriptionChangeInput}" class="form-control" style="text-align: center" placeholder=""/>
                                                         </div>
                                                     </td>
                                                     <td id="place-latitude"
@@ -708,7 +708,7 @@
                                                         <div id="${placeLatitude}" class="placeLatitudeTh"
                                                                style="text-align: center; margin:0 auto">${place.latitude}</div>
                                                         <div id="${place.id}editPlaceLatitudeInput" class="hideElement fade in">
-                                                            <input id="${placeLatitudeChangeInput}" class="form-control" style="text-align: center" placeholder="Широта..."/>
+                                                            <input id="${placeLatitudeChangeInput}" class="form-control" style="text-align: center" placeholder=""/>
                                                         </div>
                                                     </td>
                                                     <td id="place-longitude"
@@ -718,7 +718,7 @@
                                                         <div id="${placeLongitude}" class="placeLongitudeTh"
                                                                style="text-align: center; margin:0 auto">${place.longitude}</div>
                                                         <div id="${place.id}editPlaceLongitudeInput" class="hideElement fade in">
-                                                            <input id="${placeLongitudeChangeInput}" class="form-control" style="text-align: center" placeholder="Долгота..."/>
+                                                            <input id="${placeLongitudeChangeInput}" class="form-control" style="text-align: center" placeholder=""/>
                                                         </div>
                                                     </td>
                                                     <td class="placeCellBtn">

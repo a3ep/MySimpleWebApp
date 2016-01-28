@@ -290,9 +290,9 @@
                                                        id="userName"
                                                        placeholder="Логин"/>
                                             </div>
-                                            <div class="span-login">
-                                                <span class="required text-danger">*</span>
-                                            </div>
+                                            <%--<div class="span-login">--%>
+                                                <%--<span class="required text-danger">*</span>--%>
+                                            <%--</div>--%>
                                         </td>
                                     </tr>
                                     <tr>
@@ -308,17 +308,17 @@
                                                        id="password"
                                                        placeholder="Пароль"/>
                                             </div>
-                                            <div class="span-login">
-                                                <span class="required text-danger">*</span>
-                                            </div>
+                                            <%--<div class="span-login">--%>
+                                                <%--<span class="required text-danger">*</span>--%>
+                                            <%--</div>--%>
                                         </td>
                                     </tr>
 
                             </table>
-                            <div style="width: 325px; margin: 20px auto">
-                                <span class="required text-danger">*</span> - поля, обязательные для
-                                заполнения.
-                            </div>
+                            <%--<div style="width: 325px; margin: 20px auto">--%>
+                                <%--<span class="required text-danger">*</span> - поля, обязательные для--%>
+                                <%--заполнения.--%>
+                            <%--</div>--%>
                             <p></p>
 
                             <div style="width: 190px; margin: 0 auto">

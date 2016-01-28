@@ -14,7 +14,8 @@ import org.springframework.stereotype.Repository;
 public class ChatDaoImpl extends AbstractDaoImpl<Chat> implements ChatDao {
     public Chat findChatByUserToId(long id) {
         Criteria criteria = getSession().createCriteria(Chat.class, "chat");
-        criteria.createAlias("chat.userTo", "userTo");
+        criteria.createAlias("chat.messages", "messages");
+        criteria.createAlias("messages.userTo", "userTo");
         criteria.add(Restrictions.eq("userTo.id", id));
         return (Chat) criteria.uniqueResult();
     }

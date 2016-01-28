@@ -57,10 +57,10 @@ public class RegistrationController {
     @RequestMapping(value = "/test", method=RequestMethod.GET)
     public String test(){
         logger.warn("test()");
-        Contact contact1 = new Contact("Всеволод", "Бондарь", new Date(1990-1900, 8, 18), "azeral", "258456", "258456", "resources/img/my.png");
-        Contact contact2 = new Contact("Святослав", "Бондарь", new Date(1992-1900, 6, 24), "ctumyji", "258456", "258456", "resources/img/slavik.jpg");
-        Contact contact3 = new Contact("Илья", "Коверя", new Date(1992-1900, 7 , 14), "goldLady", "258456", "258456", "resources/img/illia.jpg");
-        Contact contact4 = new Contact("Иван", "Иванов", new Date(1900-1900, 3, 13), "azazaz", "258456", "258456", "resources/img/no-photo.png");
+        Contact contact1 = new Contact("Всеволод", "Бондарь", new Date(1990-1900, 8, 18), "azeral", "258456", "258456");
+        Contact contact2 = new Contact("Святослав", "Бондарь", new Date(1992-1900, 6, 24), "ctumyji", "258456", "258456");
+        Contact contact3 = new Contact("Илья", "Коверя", new Date(1992-1900, 7 , 14), "goldLady", "258456", "258456");
+        Contact contact4 = new Contact("Иван", "Иванов", new Date(1900-1900, 3, 13), "azazaz", "258456", "258456");
         service.saveContact(contact1);
         service.saveContact(contact2);
         service.saveContact(contact3);
@@ -88,19 +88,10 @@ public class RegistrationController {
 
         Post post1 = new Post(contact2, "Привет!", new Date());
         Post post2 = new Post(contact2, "Как дела?", new Date());
-        Post post3 = new Post(contact2, "Как погода?", new Date());
-        Post post4 = new Post(contact2, "Азаза", new Date());
-        Post post5 = new Post(contact1, "Лол, нарм", new Date());
         postService.savePost(post1);
         postService.savePost(post2);
-        postService.savePost(post3);
-        postService.savePost(post4);
-        postService.savePost(post5);
         service.addPostToContact(contact1, post1);
         service.addPostToContact(contact1, post2);
-        service.addPostToContact(contact1, post3);
-        service.addPostToContact(contact1, post4);
-        service.addPostToContact(contact1, post5);
         return "redirect:/";
     }
 
@@ -114,7 +105,7 @@ public class RegistrationController {
             redirectAttributes.addFlashAttribute("css", "success");
             redirectAttributes.addFlashAttribute("msg", "Congratulations " + contact.getFirstName() + ", registration successful!:)");
         }
-        Contact newContact = new Contact(contact.getFirstName(), contact.getLastName(), contact.getBirthDate(), contact.getUserName(), contact.getPassword(), contact.getConfirmPassword(), "resources/img/no-photo.png");
+        Contact newContact = new Contact(contact.getFirstName(), contact.getLastName(), contact.getBirthDate(), contact.getUserName(), contact.getPassword(), contact.getConfirmPassword());
         service.saveContact(newContact);
 
         return "redirect:/";

@@ -106,13 +106,15 @@ public class PageController {
         logger.debug(friend.getId() + " " + friend.getFirstName() + " " + friend.getLastName());
         List<Message> messages = new ArrayList<>();
         try {
-            for (Chat chat : user.getConversation()) {
-                if (chat.getUserTo().equals(friend)) {
-                    if(chat.getChatMessages().isEmpty()){
-                        break;
+            if(!(user.getConversation().isEmpty())){
+                for (Chat chat : user.getConversation()) {
+                    if(chat.getMessages().isEmpty()){
+                    break;
                     }
-                    for (Message message : chat.getChatMessages()) {
-                        messages.add(message);
+                    for(Message m:chat.getMessages()) {
+                        if (m.getUserTo().equals(friend)|| m.getUserFrom().equals(friend)) {
+                            messages.add(m);
+                        }
                     }
                 }
             }
@@ -144,35 +146,34 @@ public class PageController {
 
         Contact user = getPersistUser(session);
         Contact friend = service.findContactById(id);
-        Message newMessage = new Message(user, new Date(), message.getMessage());
+        Message newMessage = new Message(user, friend, new Date(), message.getMessage());
         List<Message> messages = new ArrayList<>();
         try {
             messageService.saveMessage(newMessage);
             logger.debug(user.getConversation().toString());
             Chat currentChat = null;
             for (Chat chat : user.getConversation()) {
-                if (chat.getUserTo().equals(friend)) {
-                    currentChat = chat;
-                    currentChat.getChatMessages().add(newMessage);
-                    Chat friendChat = chatService.findChatByUserToId(user.getId());
-                    friendChat.getChatMessages().add(newMessage);
-                    chatService.updateChat(currentChat);
-                    chatService.updateChat(friendChat);
-                    for (Message m : currentChat.getChatMessages()) {
-                        messages.add(m);
+                for(Message m:chat.getMessages()){
+                    if (m.getUserTo().equals(friend)||m.getUserFrom().equals(friend)) {
+                        currentChat = chat;
+                        break;
                     }
                 }
             }
+            if(currentChat!=null){
+                currentChat.getMessages().add(newMessage);
+                chatService.updateChat(currentChat);
+                for (Message msg : currentChat.getMessages()) {
+                    messages.add(msg);
+                }
+            }
             if(currentChat==null){
-                Chat newChat = new Chat(friend);
-                Chat newChat2 = new Chat(user);
-                newChat.getChatMessages().add(newMessage);
-                newChat2.getChatMessages().add(newMessage);
+                Chat newChat = new Chat();
+                newChat.getMessages().add(newMessage);
                 chatService.saveChat(newChat);
-                chatService.saveChat(newChat2);
                 service.addChatToContact(user, newChat);
-                service.addChatToContact(friend, newChat2);
-                for(Message m:newChat.getChatMessages()){
+                service.addChatToContact(friend, newChat);
+                for(Message m:newChat.getMessages()){
                     messages.add(m);
                 }
             }

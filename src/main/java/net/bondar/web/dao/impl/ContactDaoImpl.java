@@ -1,10 +1,7 @@
 package net.bondar.web.dao.impl;
 
 import net.bondar.web.dao.inter.ContactDao;
-import net.bondar.web.model.Chat;
-import net.bondar.web.model.Contact;
-import net.bondar.web.model.Hobby;
-import net.bondar.web.model.Place;
+import net.bondar.web.model.*;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -61,8 +58,10 @@ public class ContactDaoImpl extends AbstractDaoImpl<Contact> implements ContactD
     public Chat getConversation(Contact who, Contact with) {
         Chat result = new Chat();
         for(Chat chat:who.getConversation()){
-            if(chat.getUserTo().getId()==with.getId()){
-                result=chat;
+            for(Message m:chat.getMessages()){
+                if(m.getUserTo().getId()==with.getId()){
+                    result=chat;
+                }
             }
         }
         return result;

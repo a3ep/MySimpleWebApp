@@ -54,15 +54,15 @@ public class WebAppTest {
 
     @Before
     public void initMocks(){
-        Contact contact1 = new Contact("FirstName", "FirstLastName", new Date(1990-1900, 8, 18), "first", "258456", "258456", "resources/img/no-photo.png");
+        Contact contact1 = new Contact("FirstName", "FirstLastName", new Date(1990-1900, 8, 18), "first", "258456", "258456");
         doReturn(contact1).when(contactDao).findById(1);
-        Contact contact2 = new Contact("SecondName", "SecondLastName", new Date(1900-1900, 3, 13), "second", "258456", "258456", "resources/img/no-photo.png");
+        Contact contact2 = new Contact("SecondName", "SecondLastName", new Date(1900-1900, 3, 13), "second", "258456", "258456");
         doReturn(contact2).when(contactDao).findById(2);
         Hobby hobby1 = new Hobby("FirstHobby", "FirstDescription");
         doReturn(hobby1).when(hobbyDao).findById(21);
         Hobby hobby2 = new Hobby("SecondHobby", "SecondDescription");
         doReturn(hobby2).when(hobbyDao).findById(22);
-        Message message1 = new Message(contact1, new Date(), "Привет!");
+        Message message1 = new Message(contact1, contact2, new Date(), "Привет!");
         doReturn(message1).when(messageDao).findById(31);
         Place place1 = new Place("FirstPlace", "FirstDescription", 12.0, 12.0);
         doReturn(place1).when(placeDao).findById(41);

@@ -14,7 +14,10 @@ import java.util.Date;
 public class Message extends AbstractEntity{
 
     @OneToOne
-    private Contact from;
+    private Contact userFrom;
+
+    @OneToOne
+    private Contact userTo;
 
     private Date date;
 
@@ -29,8 +32,9 @@ public class Message extends AbstractEntity{
         super(id);
     }
 
-    public Message(Contact from, Date date, String content) {
-        this.from = from;
+    public Message(Contact from, Contact to, Date date, String content) {
+        this.userFrom = from;
+        this.userTo = to;
         this.date = date;
         this.content = content;
     }
@@ -53,12 +57,20 @@ public class Message extends AbstractEntity{
         this.content = content;
     }
 
-    public Contact getFrom() {
-        return from;
+    public Contact getUserFrom() {
+        return userFrom;
     }
 
-    public void setFrom(Contact from) {
-        this.from = from;
+    public void setUserFrom(Contact userFrom) {
+        this.userFrom = userFrom;
+    }
+
+    public Contact getUserTo() {
+        return userTo;
+    }
+
+    public void setUserTo(Contact userTo) {
+        this.userTo = userTo;
     }
 
     @Override
@@ -67,7 +79,8 @@ public class Message extends AbstractEntity{
                 "id=" + super.getId() +
                 ", date=" + date + '\'' +
                 ", content='" + content + '\'' +
-                ", from=" + from +
+                ", userFrom=" + userFrom +
+                ", userTo=" + userTo +
                 '}';
     }
 }
