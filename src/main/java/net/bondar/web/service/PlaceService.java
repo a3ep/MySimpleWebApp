@@ -1,6 +1,7 @@
 package net.bondar.web.service;
 
 import net.bondar.web.dao.inter.PlaceDao;
+import net.bondar.web.exceptions.NoSuchObjectException;
 import net.bondar.web.model.Place;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,11 +57,15 @@ public class PlaceService {
     }
 
     public Place findPlaceById(long id) {
-        return placeDao.findById(id);
+        Place result = placeDao.findById(id);
+        if(result==null) throw new NoSuchObjectException();
+        return result;
     }
 
     public Place findPlaceByTitle(String title){
-        return placeDao.findPlaceByTitle(title);
+        Place result = placeDao.findPlaceByTitle(title);
+        if(result==null) throw new NoSuchObjectException();
+        return result;
     }
 
     public Place findPlaceByTitleOpt(String title){

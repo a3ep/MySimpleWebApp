@@ -1,6 +1,7 @@
 package net.bondar.web.service;
 
 import net.bondar.web.dao.inter.HobbyDao;
+import net.bondar.web.exceptions.NoSuchObjectException;
 import net.bondar.web.model.Contact;
 import net.bondar.web.model.Hobby;
 import org.hibernate.Criteria;
@@ -56,15 +57,21 @@ public class HobbyService {
     }
 
     public Hobby findHobbyById(long id) {
-        return hobbyDao.findById(id);
+        Hobby result = hobbyDao.findById(id);
+        if(result==null) throw new NoSuchObjectException();
+        return result;
     }
 
     public Hobby findHobbyByTitle(String title){
-        return hobbyDao.findHobbyByTitle(title);
+        Hobby result = hobbyDao.findHobbyByTitle(title);
+        if(result==null) throw new NoSuchObjectException();
+        return result;
     }
 
     public Hobby findHobbyDyTitleOpt(String title){
-        return hobbyDao.findHobbyByTitleOpt(title);
+        Hobby result = hobbyDao.findHobbyByTitleOpt(title);
+        if(result==null) throw new NoSuchObjectException();
+        return result;
     }
 
     public Collection<Hobby> findAllHobbies() {

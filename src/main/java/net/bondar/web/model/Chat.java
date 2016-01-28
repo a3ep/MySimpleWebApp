@@ -39,4 +39,20 @@ public class Chat extends AbstractEntity{
                 ", messages=" + messages +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Chat chat = (Chat) o;
+
+        return !(messages != null ? !messages.equals(chat.messages) : chat.messages != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return messages != null ? messages.hashCode() : 0;
+    }
 }

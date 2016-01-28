@@ -83,4 +83,27 @@ public class Message extends AbstractEntity{
                 ", userTo=" + userTo +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Message message = (Message) o;
+        if (Long.compare(message.getId(), super.getId()) !=0) return false;
+        if (userFrom != null ? !userFrom.equals(message.userFrom) : message.userFrom != null) return false;
+        if (userTo != null ? !userTo.equals(message.userTo) : message.userTo != null) return false;
+        if (date != null ? !date.equals(message.date) : message.date != null) return false;
+        return !(content != null ? !content.equals(message.content) : message.content != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = userFrom != null ? userFrom.hashCode() : 0;
+        result = 31 * result + (userTo != null ? userTo.hashCode() : 0);
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + (content != null ? content.hashCode() : 0);
+        return result;
+    }
 }

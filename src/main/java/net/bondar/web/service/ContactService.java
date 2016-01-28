@@ -1,7 +1,10 @@
 package net.bondar.web.service;
 
 import net.bondar.web.dao.inter.ContactDao;
-import net.bondar.web.exceptions.*;
+import net.bondar.web.exceptions.ContactsNotFoundException;
+import net.bondar.web.exceptions.EmptyObjectException;
+import net.bondar.web.exceptions.ExistingObjectException;
+import net.bondar.web.exceptions.NoSuchObjectException;
 import net.bondar.web.model.*;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
@@ -10,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -61,6 +63,9 @@ public class ContactService {
         criteria.createAlias("contact.friendList", "friendList");
         criteria.add(Restrictions.eq("friendList.id", contact.getId()));
         List<Contact> contacts = criteria.list();
+        if(contacts.isEmpty()){
+            throw new EmptyObjectException();
+        }
         for(Contact user:contacts){
             removeFriendship(user, contact);
         }
@@ -81,15 +86,16 @@ public class ContactService {
         contactDao.flush();
     }
 
-
     public Contact findContactById(long id) {
         Contact result = contactDao.findById(id);
-        if(result==null) throw new NoSuchContactException();
+        if(result==null) throw new NoSuchObjectException();
         return result;
     }
 
     public Contact findContactByUserName(String userName) {
-        return contactDao.findContactByUserName(userName);
+        Contact result = contactDao.findContactByUserName(userName);
+        if(result==null) throw new NoSuchObjectException();
+        return result;
     }
 
     public Long count(String userName){
@@ -114,7 +120,7 @@ public class ContactService {
 
 
     public void addHobbyToContact(Contact contact, Hobby hobby) {
-        if(contact.getHobbies().contains(hobby)) throw new ExistingHobbyException();
+        if(contact.getHobbies().contains(hobby)) throw new ExistingObjectException();
         contact.getHobbies().add(hobby);
         contactDao.update(contact);
         contactDao.flush();
@@ -129,7 +135,7 @@ public class ContactService {
     }
 
     public void addPlaceToContact(Contact contact, Place place) {
-        if(contact.getPlaces().contains(place)) throw new ExistingPlaceException();
+        if(contact.getPlaces().contains(place)) throw new ExistingObjectException();
         contact.getPlaces().add(place);
         contactDao.update(contact);
         contactDao.flush();
@@ -143,6 +149,13 @@ public class ContactService {
         }
     }
 
+    public void addPostToContact(Contact contact, Post post) {
+        if(contact.getPosts().contains(post)) throw new ExistingObjectException();
+        contact.getPosts().add(post);
+        contactDao.update(contact);
+        contactDao.flush();
+    }
+
     public void removePost(Contact contact, Post post){
         if(contact.getPosts().contains(post)){
             contact.getPosts().remove(post);
@@ -152,7 +165,7 @@ public class ContactService {
     }
 
     public void addFriendship(Contact who, Contact with) {
-        if(who.getFriendList().contains(with)||with.getFriendList().contains(who)) throw new ExistingFriendException();
+        if(who.getFriendList().contains(with)||with.getFriendList().contains(who)) throw new ExistingObjectException();
         addFriend(who, with);
         addFriend(with, who);
     }
@@ -164,7 +177,7 @@ public class ContactService {
     }
 
     public void removeFriendship(Contact who, Contact with) throws Exception {
-        if(who.getFriendList().isEmpty()) throw new NoSuchFriendException();
+        if(!(who.getFriendList().contains(with))||!(with.getFriendList().contains(who))) throw new NoSuchObjectException();
         removeFriend(who, with);
         removeFriend(with, who);
     }
@@ -180,26 +193,31 @@ public class ContactService {
     }
 
     public void addChatToContact(Contact contact, Chat chat) {
+        if(contact.getConversation().contains(chat)) throw new ExistingObjectException();
         contact.getConversation().add(chat);
         contactDao.update(contact);
         contactDao.flush();
     }
 
+    public void removeChat(Contact contact, Chat chat){
+        if(contact.getConversation().contains(chat)){
+            contact.getConversation().remove(chat);
+            contactDao.update(contact);
+            contactDao.flush();
+        }
+    }
+
     public Set<Contact> getFriendList(Contact contact) {
         Set<Contact> result = contact.getFriendList();
-        if(result.isEmpty()) throw new EmptyFriendListException();
+        if(result.isEmpty()) throw new EmptyObjectException();
         return result;
     }
 
     public Chat getConversation(Contact who, Contact with) {
         Chat result = contactDao.getConversation(who, with);
-        if(result==null) throw new NoSuchConversationException();
+        if(result==null) throw new NoSuchObjectException();
         else return result;
     }
 
-    public void addPostToContact(Contact contact, Post post) {
-        contact.getPosts().add(post);
-        contactDao.update(contact);
-        contactDao.flush();
-    }
+
 }

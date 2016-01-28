@@ -84,4 +84,27 @@ public class Post extends AbstractEntity{
                 ", date=" + date +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Post post = (Post) o;
+
+        if (contactFrom != null ? !contactFrom.equals(post.contactFrom) : post.contactFrom != null) return false;
+        if (content != null ? !content.equals(post.content) : post.content != null) return false;
+        if (date != null ? !date.equals(post.date) : post.date != null) return false;
+        return !(responses != null ? !responses.equals(post.responses) : post.responses != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = contactFrom != null ? contactFrom.hashCode() : 0;
+        result = 31 * result + (content != null ? content.hashCode() : 0);
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + (responses != null ? responses.hashCode() : 0);
+        return result;
+    }
 }

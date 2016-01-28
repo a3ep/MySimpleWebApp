@@ -1,8 +1,8 @@
 package net.bondar.web.service;
 
 import net.bondar.web.dao.inter.ChatDao;
+import net.bondar.web.exceptions.NoSuchObjectException;
 import net.bondar.web.model.Chat;
-import net.bondar.web.model.Contact;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,11 +38,16 @@ public class ChatService {
         chatDao.flush();
         return updatedChat;
     }
+
     public Chat findChatById(long id) {
-        return chatDao.findById(id);
+        Chat result = chatDao.findById(id);
+        if(result==null) throw new NoSuchObjectException();
+        return result;
     }
 
     public Chat findChatByUserToId(long id){
-        return chatDao.findChatByUserToId(id);
+        Chat result = chatDao.findChatByUserToId(id);
+        if(result==null) throw new NoSuchObjectException();
+        return result;
     }
 }

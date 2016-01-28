@@ -1,6 +1,7 @@
 package net.bondar.web.service;
 
 import net.bondar.web.dao.inter.MessageDao;
+import net.bondar.web.exceptions.NoSuchObjectException;
 import net.bondar.web.model.Message;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,10 @@ public class MessageService {
         messageDao.flush();
         return savedMessage;
     }
+
     public Message findMessageById(long id) {
-        return messageDao.findById(id);
+        Message result = messageDao.findById(id);
+        if(result==null) throw new NoSuchObjectException();
+        return result;
     }
 }

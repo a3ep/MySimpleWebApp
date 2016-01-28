@@ -1,6 +1,7 @@
 package net.bondar.web.service;
 
 import net.bondar.web.dao.inter.PostDao;
+import net.bondar.web.exceptions.NoSuchObjectException;
 import net.bondar.web.model.Contact;
 import net.bondar.web.model.Post;
 import org.hibernate.SessionFactory;
@@ -53,7 +54,9 @@ public class PostService {
     }
 
     public Post findPostById(long id) {
-        return postDao.findById(id);
+        Post result = postDao.findById(id);
+        if(result==null) throw new NoSuchObjectException();
+        return result;
     }
 
     public List<Post> findPosts(Contact contact) {
