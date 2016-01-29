@@ -645,7 +645,7 @@ function filter(){
         data: '{"selectNumber": "' + selectNumber + '", "textFilter": "' + textFilter + '"}',
         success: function (result) {
             if (result.status === 'OK') {
-                $('#textInput').val("");
+                $('#filterInput').val("");
                 $('#myPeoplePanelBody').load(document.URL + ' #myPeoplePanelBody');
             } else {
                 $('#alert').addClass("alert-danger");

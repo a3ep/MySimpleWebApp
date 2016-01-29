@@ -66,9 +66,7 @@ public class HobbyService {
     }
 
     public Hobby findHobbyDyTitleOpt(String title) {
-        Hobby result = hobbyDao.findHobbyByTitleOpt(title);
-        if (result == null) throw new NoSuchObjectException();
-        return result;
+        return hobbyDao.findHobbyByTitleOpt(title);
     }
 
     public Collection<Hobby> findAllHobbies() {
