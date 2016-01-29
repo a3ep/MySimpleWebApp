@@ -2,62 +2,59 @@ package net.bondar.web.model;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Azeral on 28.10.2015.
  */
 @Entity
 @Table(name = "CHAT")
-public class Chat extends AbstractEntity{
-
-    @OneToOne
-    private Contact userTo;
+public class Chat extends AbstractEntity {
 
     @OneToMany
-    private Set<Message> chatMessages;
+    private List<Message> messages;
 
-
-    public Chat(){
+    public Chat() {
         super();
+        this.messages = new ArrayList<>();
     }
 
-    public Chat(long id){
+    public Chat(long id) {
         super(id);
+        this.messages = new ArrayList<>();
     }
 
-    public Chat(Contact userTo) {
-        this.userTo = userTo;
-        this.chatMessages = new HashSet<>();
+    public List<Message> getMessages() {
+        return messages;
     }
 
-
-
-    public Contact getUserTo() {
-        return userTo;
-    }
-
-    public void setUserTo(Contact userTo) {
-        this.userTo = userTo;
-    }
-
-    public Set<Message> getChatMessages() {
-        return chatMessages;
-    }
-
-    public void setChatMessages(Set<Message> chatMessages) {
-        this.chatMessages = chatMessages;
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
     }
 
     @Override
     public String toString() {
         return "Chat{" +
                 "id=" + super.getId() +
-                ", userTo=" + userTo +
-                ", chatMessages=" + chatMessages +
+                ", messages=" + messages +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Chat chat = (Chat) o;
+
+        return !(messages != null ? !messages.equals(chat.messages) : chat.messages != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return messages != null ? messages.hashCode() : 0;
     }
 }

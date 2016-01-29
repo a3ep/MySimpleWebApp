@@ -1,11 +1,9 @@
 package net.bondar.web.dao.impl;
 
 import net.bondar.web.dao.inter.ContactDao;
-import net.bondar.web.model.Chat;
-import net.bondar.web.model.Contact;
-import net.bondar.web.model.Hobby;
-import net.bondar.web.model.Place;
+import net.bondar.web.model.*;
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -19,6 +17,20 @@ import java.util.stream.Collectors;
  */
 @Repository
 public class ContactDaoImpl extends AbstractDaoImpl<Contact> implements ContactDao {
+    @Override
+    public Long count(String userName) {
+        Criteria criteria = getSession().createCriteria(Contact.class);
+        criteria.add(Restrictions.eq("userName", userName));
+        criteria.setProjection(Projections.rowCount());
+        return (Long) criteria.uniqueResult();
+    }
+
+    @Override
+    public Contact findContactByUserName(String userName) {
+        Criteria criteria = getSession().createCriteria(Contact.class);
+        criteria.add(Restrictions.eq("userName", userName));
+        return (Contact) criteria.uniqueResult();
+    }
 
     @Override
     public Set<Contact> getAllContactsWithHobby(Hobby hobby) {
@@ -44,9 +56,11 @@ public class ContactDaoImpl extends AbstractDaoImpl<Contact> implements ContactD
 
     public Chat getConversation(Contact who, Contact with) {
         Chat result = new Chat();
-        for(Chat chat:who.getConversation()){
-            if(chat.getUserTo().getId()==with.getId()){
-                result=chat;
+        for (Chat chat : who.getConversation()) {
+            for (Message m : chat.getMessages()) {
+                if (m.getUserTo().getId() == with.getId()) {
+                    result = chat;
+                }
             }
         }
         return result;

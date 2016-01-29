@@ -1,6 +1,7 @@
 /**
  * Created by Azeral on 23.11.2015.
  */
+
 $(document).ready(function() {
 
     function displayError(message) {
@@ -12,20 +13,22 @@ $(document).ready(function() {
     function displaySuccess() {
         $('#register-button-response').removeClass('bg-danger');
         $('#register-button-response').addClass('bg-success');
-        $('#register-button-response').text('Contact saved successful:)');
+        $('#register-button-response').text('Registration successful:)');
     }
 
     $('#register-button').click(function(){
-        var first_name = $('#first-name').text();
-        var last_name = $('#last-name').text();
-        var birth_date = $('#birth-date').text();
+        var first_name = $('#first-name').val();
+        var last_name = $('#last-name').val();
+        var birth_date = ($('#year').val()+"-"+$('#month').val()+"-"+$('#day').val());
+        var login = $('#login').val();
+        var password = $('#password').val();
 
         $.ajax({
             type: "POST",
-            url: '/contact',
-            contextType: "application/json; charset=utf-8",
+            url: '/saveContact',
+            contentType: "application/json; charset=utf-8",
             dataType: "json",
-            data: '{"firstName": "' + first_name + '", "lastName": "' + last_name + '", "birthDate": "' + birth_date + '"}',
+            data: '{"firstName": "' + first_name + '", "lastName": "' + last_name + '", "birthDate": "' + birth_date + '", "login": "' + login + '", "password": "' + password + '"}',
             success: function(data) {
                 if (data.status === 'OK'){
                     displaySuccess()
@@ -37,3 +40,10 @@ $(document).ready(function() {
     });
 
 });
+
+function toggleTab(){
+    $('#reg').addClass('active');
+    $('#aut').removeClass('active');
+    $('#register-panel').addClass('active');
+    $('#author-panel').removeClass('active');
+}

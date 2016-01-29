@@ -1,30 +1,34 @@
 package net.bondar.web.model;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import org.joda.time.DateTime;
+import org.joda.time.Period;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.*;
+import java.util.*;
 
 /**
  * Created by Azeral on 28.10.2015.
  */
 @Entity
 @Table(name = "CONTACT")
-public class Contact extends AbstractEntity{
+public class Contact extends AbstractEntity {
 
-    @NotNull
     private String firstName;
 
-    @NotNull
     private String lastName;
 
-    @NotNull
-    private LocalDate birthDate;
+    @DateTimeFormat(pattern = "dd.MM.yyyy")
+    @Temporal(TemporalType.DATE)
+    private Date birthDate;
+
+    private String userName;
+
+    private String password;
+
+    private String confirmPassword;
+
+    private String photo;
 
     @ManyToMany
     private Set<Hobby> hobbies;
@@ -35,33 +39,43 @@ public class Contact extends AbstractEntity{
     @ManyToMany
     private Set<Contact> friendList;
 
-    @OneToMany
+    @ManyToMany
     private Set<Chat> conversation;
 
     @OneToMany
-    private Set<Post> posts;
+    private List<Post> posts;
 
 
-    public Contact(){
+    public Contact() {
         super();
     }
 
-    public Contact(long id){
+    public Contact(long id) {
         super(id);
     }
 
-    public Contact(String firstName, String lastName, LocalDate birthDate) {
+    public Contact(String firstName, String lastName, Date birthDate, String userName, String password, String confirmPassword) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
+        this.userName = userName;
+        this.password = password;
+        this.confirmPassword = confirmPassword;
+        this.photo = "../../resources/img/user.png";
         this.hobbies = new HashSet<>();
         this.places = new HashSet<>();
         this.friendList = new HashSet<>();
         this.conversation = new HashSet<>();
-        this.posts = new HashSet<>();
+        this.posts = new ArrayList<>();
     }
 
+    public int getAge() {
+        DateTime date = new DateTime();
+        DateTime birthDate = new DateTime(this.birthDate);
+        Period period = new Period(birthDate, date);
 
+        return period.getYears();
+    }
 
     public String getFirstName() {
         return firstName;
@@ -79,12 +93,44 @@ public class Contact extends AbstractEntity{
         this.lastName = lastName;
     }
 
-    public LocalDate getBirthDate() {
+    public Date getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(LocalDate birthDate) {
+    public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
     public Set<Hobby> getHobbies() {
@@ -119,12 +165,38 @@ public class Contact extends AbstractEntity{
         this.conversation = conversation;
     }
 
-    public Set<Post> getPosts() {
+    public List<Post> getPosts() {
         return posts;
     }
 
-    public void setPosts(Set<Post> posts) {
+    public void setPosts(List<Post> posts) {
         this.posts = posts;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Contact contact = (Contact) o;
+
+        if (Long.compare(contact.getId(), super.getId()) != 0) return false;
+        if (firstName != null ? !firstName.equals(contact.firstName) : contact.firstName != null) return false;
+        if (lastName != null ? !lastName.equals(contact.lastName) : contact.lastName != null) return false;
+        if (birthDate != null ? !birthDate.equals(contact.birthDate) : contact.birthDate != null) return false;
+        if (userName != null ? !userName.equals(contact.userName) : contact.userName != null) return false;
+        return !(password != null ? !password.equals(contact.password) : contact.password != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = firstName != null ? firstName.hashCode() : 0;
+        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (birthDate != null ? birthDate.hashCode() : 0);
+        result = 31 * result + (userName != null ? userName.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        return result;
     }
 
     @Override

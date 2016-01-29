@@ -1,6 +1,5 @@
 package net.bondar.web.dao.impl;
 
-
 import net.bondar.web.dao.inter.MessageDao;
 import net.bondar.web.model.Message;
 import org.springframework.stereotype.Repository;
@@ -10,5 +9,4 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class MessageDaoImpl extends AbstractDaoImpl<Message> implements MessageDao {
-
 }

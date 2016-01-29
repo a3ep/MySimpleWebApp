@@ -10,7 +10,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "PLACE")
-public class Place extends AbstractEntity{
+public class Place extends AbstractEntity {
 
     @NotEmpty
     private String title;
@@ -22,12 +22,14 @@ public class Place extends AbstractEntity{
 
     private double longitude;
 
+    private String photo;
 
-    public Place(){
+
+    public Place() {
         super();
     }
 
-    public Place(long id){
+    public Place(long id) {
         super(id);
     }
 
@@ -36,6 +38,7 @@ public class Place extends AbstractEntity{
         this.description = description;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.photo = "../../resources/img/no-photo.png";
     }
 
     public String getTitle() {
@@ -68,6 +71,44 @@ public class Place extends AbstractEntity{
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Place place = (Place) o;
+
+        if (Long.compare(place.getId(), super.getId()) != 0) return false;
+        if (Double.compare(place.latitude, latitude) != 0) return false;
+        if (Double.compare(place.longitude, longitude) != 0) return false;
+        if (title != null ? !title.equals(place.title) : place.title != null) return false;
+        if (description != null ? !description.equals(place.description) : place.description != null) return false;
+        return !(photo != null ? !photo.equals(place.photo) : place.photo != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = title != null ? title.hashCode() : 0;
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        temp = Double.doubleToLongBits(latitude);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(longitude);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (photo != null ? photo.hashCode() : 0);
+        return result;
     }
 
     @Override

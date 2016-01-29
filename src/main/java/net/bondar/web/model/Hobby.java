@@ -10,7 +10,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "HOBBY")
-public class Hobby extends AbstractEntity{
+public class Hobby extends AbstractEntity {
 
     @NotEmpty
     private String title;
@@ -18,13 +18,11 @@ public class Hobby extends AbstractEntity{
     @NotEmpty
     private String description;
 
-
-
-    public Hobby(){
+    public Hobby() {
         super();
     }
 
-    public Hobby(long id){
+    public Hobby(long id) {
         super(id);
     }
 
@@ -47,6 +45,26 @@ public class Hobby extends AbstractEntity{
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Hobby hobby = (Hobby) o;
+
+        if (Long.compare(hobby.getId(), super.getId()) != 0) return false;
+        if (title != null ? !title.equals(hobby.title) : hobby.title != null) return false;
+        return !(description != null ? !description.equals(hobby.description) : hobby.description != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = title != null ? title.hashCode() : 0;
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        return result;
     }
 
     @Override
