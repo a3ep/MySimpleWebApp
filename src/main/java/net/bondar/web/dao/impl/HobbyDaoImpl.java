@@ -1,6 +1,5 @@
 package net.bondar.web.dao.impl;
 
-
 import net.bondar.web.dao.inter.HobbyDao;
 import net.bondar.web.model.Hobby;
 import org.hibernate.Criteria;
@@ -13,7 +12,7 @@ import java.util.List;
  * Created by AzeraL on 07.10.2015.
  */
 @Repository
-public class HobbyDaoImpl extends  AbstractDaoImpl<Hobby> implements HobbyDao {
+public class HobbyDaoImpl extends AbstractDaoImpl<Hobby> implements HobbyDao {
     public Hobby findHobbyByTitle(String title) {
         Criteria criteria = getSession().createCriteria(Hobby.class);
         criteria.add(Restrictions.eq("title", title));
@@ -24,9 +23,9 @@ public class HobbyDaoImpl extends  AbstractDaoImpl<Hobby> implements HobbyDao {
         Hobby result = null;
         Criteria criteria = getSession().createCriteria(Hobby.class);
         List<Hobby> hobbies = criteria.list();
-        for(Hobby hobby:hobbies){
-            if(hobby.getTitle().contains(title)){
-                result=hobby;
+        for (Hobby hobby : hobbies) {
+            if (hobby.getTitle().contains(title)) {
+                result = hobby;
             }
         }
         return result;

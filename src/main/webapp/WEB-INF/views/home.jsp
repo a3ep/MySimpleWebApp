@@ -188,8 +188,8 @@
                                 <tr>
                                     <td id="profileFirstCol" class="fontBold">Имя</td>
                                     <td id="profileLastCol">
-                                        <div id="firstName" style="text-align: center; width: 150px">
-                                            ${user.firstName}
+                                        <div style="text-align: center; width: 182px">
+                                            <span id="firstName">${user.firstName}</span>
                                         </div>
                                         <div id="editFirtNameInput" class="hideElement fade in">
                                             <input id="firstNameInput" class="form-control" style="text-align: center" placeholder="Введите имя"/>
@@ -199,8 +199,8 @@
                                 <tr>
                                     <td class="fontBold">Фамилия</td>
                                     <td>
-                                        <div id="lastName" style="text-align: center">
-                                            ${user.lastName}
+                                        <div style="text-align: center">
+                                            <span id="lastName">${user.lastName}</span>
                                         </div>
                                         <div id="editLastNameInput" class="hideElement fade in">
                                             <input id="lastNameInput" class="form-control" style="text-align: center" placeholder="Введите фамилию"/>
@@ -210,8 +210,8 @@
                                 <tr>
                                     <td class="fontBold">День рождения</td>
                                     <td>
-                                        <div id="birthDate" style="text-align: center">
-                                            <fmt:formatDate value="${user.birthDate}" pattern="dd.MM.yyyy"/>
+                                        <div style="text-align: center">
+                                            <span id="birthDate"><fmt:formatDate value="${user.birthDate}" pattern="dd.MM.yyyy"/></span>
                                         </div>
                                         <div id="editBirthDateInput" class="hideElement fade in">
                                             <input id="birthDateInput" class="form-control" style="text-align: center" placeholder="dd.mm.yyyy"/>
@@ -236,7 +236,7 @@
                                             </h3>
 
                                             <div class="popover-content" style="background-color:#EFEFEF">
-                                                    ${post.content}
+                                                <span>${post.content}</span>
                                             </div>
                                             <div class="popover-buttons">
                                                     <%--<button class="btn btn-link" type="button" onclick="" style="color: #337AB7; font-size: 10px">--%>
@@ -258,8 +258,7 @@
                                             <h3 style="background-color: #337AB7; color: #ffffff; height: 30px"
                                                 class="popover-title">
                                                 <span style="float: left">${post.contactFrom.firstName} ${post.contactFrom.lastName}</span>
-                                                <span style="float:right"><fmt:formatDate value="${post.date}"
-                                                                                          pattern="HH:mm"/></span>
+                                                <span style="float:right"><fmt:formatDate value="${post.date}" pattern="HH:mm"/></span>
                                             </h3>
                                             <div style="background-color:#EFEFEF" class="popover-content">
                                                 <div>${post.content}</div>
@@ -412,7 +411,6 @@
                                                         </div>
                                                     </td>
                                                 </tr>
-
                                             </c:forEach>
                                             </tbody>
                                         </table>
@@ -432,7 +430,7 @@
                                 <div class="panel-heading" role="tab" id="hobbyHeadingOne">
                                     <h4 class="panel-title">
                                         <a role="button" data-toggle="collapse"
-                                           data-parent="#<%--hobbyCollapseGroup--%>" href="#hobbyCollapseOne"
+                                           data-parent="#" href="#hobbyCollapseOne"
                                            aria-expanded="false" aria-controls="hobbyCollapseOne">
                                             <strong>Добавить новое хобби</strong>
                                         </a>
@@ -479,7 +477,7 @@
                                 <div class="panel-heading" role="tab" id="hobbyHeadingTwo">
                                     <h4 class="panel-title">
                                         <a class="" role="button" data-toggle="collapse"
-                                           data-parent="#<%--hobbyCollapseGroup--%>" href="#hobbyCollapseTwo"
+                                           data-parent="#" href="#hobbyCollapseTwo"
                                            aria-expanded="true" aria-controls="hobbyCollapseTwo">
                                             <strong>Мои хобби</strong>
                                         </a>
@@ -503,8 +501,8 @@
                                                         style="text-align:center; vertical-align:middle">
                                                         <spring:url value="${hobby.id}hobbyTitle" var="hobbyTitle"/>
                                                         <spring:url value="${hobby.id}hobbyTitleChangeInput" var="hobbyTitleChangeInput"/>
-                                                        <div id="${hobbyTitle}" style="text-align: center">
-                                                            ${hobby.title}
+                                                        <div style="text-align: center">
+                                                            <span id="${hobbyTitle}">${hobby.title}</span>
                                                         </div>
                                                         <div id="${hobby.id}editHobbyTitleInput" class="hideElement fade in">
                                                             <input id="${hobbyTitleChangeInput}" class="form-control" style="text-align: center" placeholder=""/>
@@ -514,8 +512,8 @@
                                                         style="text-align:center; vertical-align:middle">
                                                         <spring:url value="${hobby.id}hobbyDescription" var="hobbyDescription"/>
                                                         <spring:url value="${hobby.id}hobbyDescriptionChangeInput" var="hobbyDescriptionChangeInput"/>
-                                                        <div id="${hobbyDescription}" style="text-align: center">
-                                                            ${hobby.description}
+                                                        <div style="text-align: center">
+                                                            <span id="${hobbyDescription}">${hobby.description}</span>
                                                         </div>
                                                         <div id="${hobby.id}editHobbyDescriptionInput" class="hideElement fade in">
                                                             <input id="${hobbyDescriptionChangeInput}" class="form-control" style="text-align: center" placeholder=""/>
@@ -554,7 +552,8 @@
                                                                     data-placement="top" type="button"
                                                                     data-original-title="Удалить"><span
                                                                     class="glyphicon glyphicon-trash"
-                                                                    aria-hidden="true"></span></button>
+                                                                    aria-hidden="true"></span>
+                                                            </button>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -577,7 +576,7 @@
                                 <div class="panel-heading" role="tab" id="placeHeadingOne">
                                     <h4 class="panel-title">
                                         <a role="button" data-toggle="collapse"
-                                           data-parent="#<%--placeCollapseGroup--%>" href="#placeCollapseOne"
+                                           data-parent="#" href="#placeCollapseOne"
                                            aria-expanded="false" aria-controls="placeCollapseOne">
                                             <strong>Добавить новое место</strong>
                                         </a>
@@ -638,7 +637,7 @@
                                 <div class="panel-heading" role="tab" id="placeHeadingTwo">
                                     <h4 class="panel-title">
                                         <a class="" role="button" data-toggle="collapse"
-                                           data-parent="#<%--placeCollapseGroup--%>" href="#placeCollapseTwo"
+                                           data-parent="#" href="#placeCollapseTwo"
                                            aria-expanded="true" aria-controls="placeCollapseTwo">
                                             <strong>Мои места</strong>
                                         </a>
@@ -671,8 +670,9 @@
                                                         style="text-align:center; vertical-align:middle">
                                                         <spring:url value="${place.id}placeTitle" var="placeTitle"/>
                                                         <spring:url value="${place.id}placeTitleChangeInput" var="placeTitleChangeInput"/>
-                                                        <div id="${placeTitle}" class="placeTitleTh"
-                                                               style="text-align: center; margin: 0 auto">${place.title}</div>
+                                                        <div class="placeTitleTh" style="text-align: center; margin: 0 auto">
+                                                            <span id="${placeTitle}">${place.title}</span>
+                                                        </div>
                                                         <div id="${place.id}editPlaceTitleInput" class="hideElement fade in">
                                                             <input id="${placeTitleChangeInput}" class="form-control" style="text-align: center" placeholder=""/>
                                                         </div>
@@ -681,8 +681,9 @@
                                                         style="text-align:center; vertical-align:middle">
                                                         <spring:url value="${place.id}placeDescription" var="placeDescription"/>
                                                         <spring:url value="${place.id}placeDescriptionChangeInput" var="placeDescriptionChangeInput"/>
-                                                        <div id="${placeDescription}" class="placeDescriptionTh"
-                                                               style="text-align: center; margin: 0 auto">${place.description}</div>
+                                                        <div class="placeDescriptionTh" style="text-align: center; margin: 0 auto">
+                                                            <span id="${placeDescription}">${place.description}</span>
+                                                        </div>
                                                         <div id="${place.id}editPlaceDescriptionInput" class="hideElement fade in">
                                                             <input id="${placeDescriptionChangeInput}" class="form-control" style="text-align: center" placeholder=""/>
                                                         </div>
@@ -691,8 +692,9 @@
                                                         style="text-align:center; vertical-align:middle">
                                                         <spring:url value="${place.id}placeLatitude" var="placeLatitude"/>
                                                         <spring:url value="${place.id}placeLatitudeChangeInput" var="placeLatitudeChangeInput"/>
-                                                        <div id="${placeLatitude}" class="placeLatitudeTh"
-                                                               style="text-align: center; margin:0 auto">${place.latitude}</div>
+                                                        <div class="placeLatitudeTh" style="text-align: center; margin:0 auto">
+                                                            <span id="${placeLatitude}">${place.latitude}</span>
+                                                        </div>
                                                         <div id="${place.id}editPlaceLatitudeInput" class="hideElement fade in">
                                                             <input id="${placeLatitudeChangeInput}" class="form-control" style="text-align: center" placeholder=""/>
                                                         </div>
@@ -701,8 +703,9 @@
                                                         style="text-align:center; vertical-align:middle">
                                                         <spring:url value="${place.id}placeLongitude" var="placeLongitude"/>
                                                         <spring:url value="${place.id}placeLongitudeChangeInput" var="placeLongitudeChangeInput"/>
-                                                        <div id="${placeLongitude}" class="placeLongitudeTh"
-                                                               style="text-align: center; margin:0 auto">${place.longitude}</div>
+                                                        <div  class="placeLongitudeTh" style="text-align: center; margin:0 auto">
+                                                            <span id="${placeLongitude}">${place.longitude}</span>
+                                                        </div>
                                                         <div id="${place.id}editPlaceLongitudeInput" class="hideElement fade in">
                                                             <input id="${placeLongitudeChangeInput}" class="form-control" style="text-align: center" placeholder=""/>
                                                         </div>
@@ -738,7 +741,8 @@
                                                                     data-placement="top" type="button"
                                                                     data-original-title="Удалить"><span
                                                                     class="glyphicon glyphicon-trash"
-                                                                    aria-hidden="true"></span></button>
+                                                                    aria-hidden="true"></span>
+                                                            </button>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -842,7 +846,8 @@
                                                                     data-placement="top" type="button"
                                                                     data-original-title="Отправить сообщение"><span
                                                                     class="glyphicon glyphicon-envelope"
-                                                                    aria-hidden="true"></span></button>
+                                                                    aria-hidden="true"></span>
+                                                            </button>
                                                         </div>
                                                     </td>
                                                 </tr>

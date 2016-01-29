@@ -18,34 +18,30 @@ import java.util.Set;
  */
 @Repository
 public abstract class AbstractDaoImpl<T> implements AbstractDao<T> {
-
     @Autowired
     private SessionFactory sessionFactory;
-
-    private  Class<T> persistentClass;
-
+    private Class<T> persistentClass;
     private Session session;
 
-    public AbstractDaoImpl(){
-        this.persistentClass = (Class<T>)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+    public AbstractDaoImpl() {
+        this.persistentClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
-
-    public void setSession(Session session){
+    public void setSession(Session session) {
         this.session = session;
     }
 
-    protected Session getSession(){
+    protected Session getSession() {
         return sessionFactory.getCurrentSession();
     }
 
-    public Class<T> getPersistentClass(){
-        return  persistentClass;
+    public Class<T> getPersistentClass() {
+        return persistentClass;
     }
 
     public T save(T t) {
         getSession().saveOrUpdate(t);
-        return  t;
+        return t;
     }
 
     public T update(T t) {
@@ -54,7 +50,7 @@ public abstract class AbstractDaoImpl<T> implements AbstractDao<T> {
     }
 
     public void refresh(T t) {
-       getSession().refresh(t);
+        getSession().refresh(t);
     }
 
     public void delete(T t) {
@@ -65,22 +61,22 @@ public abstract class AbstractDaoImpl<T> implements AbstractDao<T> {
         getSession().delete(findById(id));
     }
 
-    public T findById(long id){
-        return (T)getSession().get(getPersistentClass(), id);
+    public T findById(long id) {
+        return (T) getSession().get(getPersistentClass(), id);
     }
 
-    public Set<T> getAll(){
+    public Set<T> getAll() {
         return findByCriteria();
     }
 
-    protected Set<T> findByCriteria(Criterion... criterion){
+    protected Set<T> findByCriteria(Criterion... criterion) {
         Criteria criteria = getSession().createCriteria(getPersistentClass());
-        for(Criterion c:criterion){
+        for (Criterion c : criterion) {
             criteria.add(c);
         }
         Collection<T> collection = criteria.list();
         Set<T> set = new HashSet<>();
-        for(T t:collection){
+        for (T t : collection) {
             set.add(t);
         }
         return set;

@@ -7,13 +7,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.util.*;
 
-
 /**
  * Created by Azeral on 28.10.2015.
  */
 @Entity
 @Table(name = "CONTACT")
-public class Contact extends AbstractEntity{
+public class Contact extends AbstractEntity {
 
     private String firstName;
 
@@ -47,11 +46,11 @@ public class Contact extends AbstractEntity{
     private List<Post> posts;
 
 
-    public Contact(){
+    public Contact() {
         super();
     }
 
-    public Contact(long id){
+    public Contact(long id) {
         super(id);
     }
 
@@ -73,7 +72,7 @@ public class Contact extends AbstractEntity{
     public int getAge() {
         DateTime date = new DateTime();
         DateTime birthDate = new DateTime(this.birthDate);
-        Period period = new Period(birthDate,date);
+        Period period = new Period(birthDate, date);
 
         return period.getYears();
     }
@@ -181,7 +180,7 @@ public class Contact extends AbstractEntity{
 
         Contact contact = (Contact) o;
 
-        if (Long.compare(contact.getId(), super.getId()) !=0) return false;
+        if (Long.compare(contact.getId(), super.getId()) != 0) return false;
         if (firstName != null ? !firstName.equals(contact.firstName) : contact.firstName != null) return false;
         if (lastName != null ? !lastName.equals(contact.lastName) : contact.lastName != null) return false;
         if (birthDate != null ? !birthDate.equals(contact.birthDate) : contact.birthDate != null) return false;

@@ -20,7 +20,7 @@ public class MessageService {
     @Autowired
     SessionFactory sessionFactory;
 
-    public Message saveMessage(Message message){
+    public Message saveMessage(Message message) {
         Message savedMessage = messageDao.save(message);
         messageDao.flush();
         return savedMessage;
@@ -28,7 +28,7 @@ public class MessageService {
 
     public Message findMessageById(long id) {
         Message result = messageDao.findById(id);
-        if(result==null) throw new NoSuchObjectException();
+        if (result == null) throw new NoSuchObjectException();
         return result;
     }
 }

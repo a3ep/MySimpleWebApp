@@ -1,4 +1,5 @@
 package net.bondar.web.dao.inter;
+
 import net.bondar.web.model.Chat;
 import net.bondar.web.model.Contact;
 import net.bondar.web.model.Hobby;
@@ -11,8 +12,12 @@ import java.util.Set;
  */
 public interface ContactDao extends AbstractDao<Contact> {
     Long count(String userName);
+
     Contact findContactByUserName(String userName);
+
     Set<Contact> getAllContactsWithHobby(Hobby hobby);
+
     Set<Contact> getAllContactsForPlace(Place place);
+
     Chat getConversation(Contact who, Contact with);
 }

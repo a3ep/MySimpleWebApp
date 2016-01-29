@@ -7,8 +7,10 @@ public class HobbyDto {
     private String title;
     private String description;
 
-    public HobbyDto(){};
-    public HobbyDto(String title, String description){
+    public HobbyDto() {
+    }
+
+    public HobbyDto(String title, String description) {
         this.title = title;
         this.description = description;
     }

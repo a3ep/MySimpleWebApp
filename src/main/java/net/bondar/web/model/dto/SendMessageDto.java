@@ -8,6 +8,7 @@ public class SendMessageDto {
 
     public SendMessageDto() {
     }
+
     public SendMessageDto(String message) {
         this.message = message;
     }

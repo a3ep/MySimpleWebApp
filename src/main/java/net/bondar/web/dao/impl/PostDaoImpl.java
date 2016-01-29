@@ -1,6 +1,5 @@
 package net.bondar.web.dao.impl;
 
-
 import net.bondar.web.dao.inter.PostDao;
 import net.bondar.web.model.Post;
 import org.springframework.stereotype.Repository;

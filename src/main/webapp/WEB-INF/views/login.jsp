@@ -116,47 +116,10 @@
                                         </td>
                                         <td>
                                             <div class="input-login ${status.error ? 'has-error' : ''}">
-                                                <form:input path="birthDate" type="date" class="form-control "
+                                                <form:input path="birthDate" class="form-control "
                                                             id="birthDate" placeholder="dd.MM.yyyy"/>
                                                 <form:errors path="birthDate" class="control-label"/>
                                             </div>
-                                                <%--<div>--%>
-                                                <%--<div class="col-lg-1">--%>
-                                                <%--<form:select path="birthDate" name="day" id="day"--%>
-                                                <%--class="form-control form-control-padding"--%>
-                                                <%--style="text-align: center">--%>
-                                                <%--<option selected>-</option>--%>
-                                                <%--<c:forEach var="day" begin="1" end="31">--%>
-                                                <%--<option>${day}</option>--%>
-                                                <%--</c:forEach>--%>
-                                                <%--</form:select>--%>
-                                                <%--</div>--%>
-                                                <%--<div class="col-lg-2">--%>
-                                                <%--<form:select path="birthDate" name="month" id="month" class="form-control"--%>
-                                                <%--style="text-align: center">--%>
-                                                <%--<option selected>-</option>--%>
-                                                <%--<%--%>
-                                                <%--String[] months_name = new String[]{"Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"};--%>
-                                                <%--int[] month_value = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};--%>
-                                                <%--Map<String, Integer> months = new HashMap<>();--%>
-                                                <%--for (int i = 0; i < month_value.length; i++) {--%>
-                                                <%--months.put(months_name[i], month_value[i]);--%>
-                                                <%--}--%>
-                                                <%--pageContext.setAttribute("months", months);--%>
-                                                <%--%>--%>
-                                                <%--<c:forEach items="${months}" var="month">--%>
-                                                <%--<option value="${month.value}">${month.key}</option>--%>
-                                                <%--</c:forEach>--%>
-                                                <%--</form:select>--%>
-                                                <%--</div>--%>
-                                                <%--<div class="col-lg-1">--%>
-                                                <%--<form:input path="birthDate" id="year"--%>
-                                                <%--class="form-control form-control-padding"--%>
-                                                <%--name="year"--%>
-                                                <%--placeholder="Год" value=""/>--%>
-                                                <%--</div>--%>
-                                                <%--<form:errors path="birthDate" class="control-label"/>--%>
-                                                <%--</div>--%>
                                             <div class="span-login">
                                                 <span class="required text-danger">*</span>
                                             </div>
@@ -180,8 +143,8 @@
                                     <%--</td>--%>
                                     <%--</spring:bind>--%>
                                     <%--</tr>--%>
-                                    <%--<tr>--%>
-                                <spring:bind path="userName">
+                                <tr>
+                                    <spring:bind path="userName">
                                     <td class="fontBold">
                                         <div class="form-group ${status.error ? 'has-error' : ''}">
                                             <label class="label-login control-label">Введите логин:</label>
@@ -199,7 +162,7 @@
                                             <span class="required text-danger">*</span>
                                         </div>
                                     </td>
-                                </spring:bind>
+                                    </spring:bind>
                                 </tr>
                                 <tr>
                                     <spring:bind path="password">
@@ -224,7 +187,6 @@
                                 </tr>
                                 <tr>
                                     <spring:bind path="confirmPassword">
-
                                         <td class="fontBold">
                                             <div class="form-group ${status.error ? 'has-error' : ''}">
                                                 <label class="label-login control-label">Подтвердите пароль:</label>
@@ -277,54 +239,35 @@
                                 <form:form class="form-horizontal" modelAttribute="userForm" method="get"
                                            action="/author">
                                 <tr>
-
                                     <td>
                                         <div class="form-group">
-                                            <label class="label-login control-label active">Введите
-                                                логин</label>
+                                            <label class="label-login control-label active">Введите логин</label>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="input-login">
-                                            <form:input path="userName" type="text" class="form-control"
-                                                        id="userName"
-                                                        placeholder="Логин"/>
+                                            <form:input path="userName" type="text" class="form-control" id="userName" placeholder="Логин"/>
                                         </div>
-                                        <%--<div class="span-login">--%>
-                                            <%--<span class="required text-danger">*</span>--%>
-                                        <%--</div>--%>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="fontBold">
                                         <div class="form-group">
-                                            <label class="label-login control-label active">Введите
-                                                пароль</label>
+                                            <label class="label-login control-label active">Введите пароль</label>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="input-login">
-                                            <form:input path="password" type="password" class="form-control"
-                                                        id="password"
-                                                        placeholder="Пароль"/>
+                                            <form:input path="password" type="password" class="form-control" id="password" placeholder="Пароль"/>
                                         </div>
-                                        <%--<div class="span-login">--%>
-                                            <%--<span class="required text-danger">*</span>--%>
-                                        <%--</div>--%>
                                     </td>
                                 </tr>
 
                             </table>
-                            <%--<div style="width: 325px; margin: 20px auto">--%>
-                                <%--<span class="required text-danger">*</span> - поля, обязательные для--%>
-                                <%--заполнения.--%>
-                            <%--</div>--%>
                             <p></p>
 
                             <div style="width: 190px; margin: 0 auto">
-                                <input style="width: 190px" type="submit" class="btn btn-primary fontBold"
-                                       id="login-button"
-                                       value="Войти">
+                                <input style="width: 190px" type="submit" class="btn btn-primary fontBold" id="login-button" value="Войти">
                             </div>
                             </form:form>
                         </div>

@@ -6,6 +6,7 @@ package net.bondar.web.exceptions;
 public class WebAppException extends RuntimeException {
     public WebAppException() {
     }
+
     public WebAppException(String message) {
         super(message);
     }

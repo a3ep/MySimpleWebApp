@@ -1,25 +1,27 @@
 package net.bondar.web.model;
 
-import javax.persistence.*;
-import java.util.*;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Azeral on 28.10.2015.
  */
 @Entity
 @Table(name = "CHAT")
-public class Chat extends AbstractEntity{
+public class Chat extends AbstractEntity {
 
     @OneToMany
     private List<Message> messages;
 
-
-    public Chat(){
+    public Chat() {
         super();
         this.messages = new ArrayList<>();
     }
 
-    public Chat(long id){
+    public Chat(long id) {
         super(id);
         this.messages = new ArrayList<>();
     }

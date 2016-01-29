@@ -1,13 +1,11 @@
 package net.bondar.web.configuration;
 
 import org.springframework.orm.hibernate4.support.OpenSessionInViewFilter;
-import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.DispatcherServlet;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 
 import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;
@@ -17,7 +15,7 @@ import javax.servlet.ServletRegistration;
 /**
  * Created by Azeral on 24.11.2015.
  */
-public class AppInitializer implements WebApplicationInitializer{
+public class AppInitializer implements WebApplicationInitializer {
 
     public void onStartup(ServletContext servletContext) throws ServletException {
         AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();

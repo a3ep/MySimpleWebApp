@@ -10,7 +10,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "PLACE")
-public class Place extends AbstractEntity{
+public class Place extends AbstractEntity {
 
     @NotEmpty
     private String title;
@@ -25,11 +25,11 @@ public class Place extends AbstractEntity{
     private String photo;
 
 
-    public Place(){
+    public Place() {
         super();
     }
 
-    public Place(long id){
+    public Place(long id) {
         super(id);
     }
 
@@ -88,7 +88,7 @@ public class Place extends AbstractEntity{
 
         Place place = (Place) o;
 
-        if (Long.compare(place.getId(), super.getId()) !=0) return false;
+        if (Long.compare(place.getId(), super.getId()) != 0) return false;
         if (Double.compare(place.latitude, latitude) != 0) return false;
         if (Double.compare(place.longitude, longitude) != 0) return false;
         if (title != null ? !title.equals(place.title) : place.title != null) return false;

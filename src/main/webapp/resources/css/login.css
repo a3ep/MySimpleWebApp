@@ -28,7 +28,6 @@ body{
     width: 290px;
     margin: 0 auto;
 }
-
 #content{
     width: 800px;
     margin: 0 auto;
@@ -67,50 +66,38 @@ body{
 .nav-tabs li{
     font-weight: bold;
 }
-
 .popover-home .popover{
     position: relative;
     display: block;
     margin: 20px;
 }
-
-
 .top-buffer {
     margin-top:20px;
 }
 .top-buffer-for-change-botton {
     margin-top:30px;
 }
-
 .text-centred {
     text-align: center;
 }
-
 .hidden {
     display: none;
 }
-
 .form-control-padding{
     padding: 6px 4px;
 }
-
 .btn-margin-and-height{
     margin-bottom: 5px;
     height: 34px;
 }
-
 .text-index{
     text-indent: 7px;
 }
-
-
                 /*REGISTRATION*/
-
 #firstNameLabel{
     width: 200px;
     float: left;
 }
-
 .table > thead > tr > th,
 .table > tbody > tr > th,
 .table > tfoot > tr > th,

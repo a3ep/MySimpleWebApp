@@ -17,13 +17,12 @@ import java.util.stream.Collectors;
  */
 @Repository
 public class ContactDaoImpl extends AbstractDaoImpl<Contact> implements ContactDao {
-
     @Override
     public Long count(String userName) {
         Criteria criteria = getSession().createCriteria(Contact.class);
         criteria.add(Restrictions.eq("userName", userName));
         criteria.setProjection(Projections.rowCount());
-        return (Long)criteria.uniqueResult();
+        return (Long) criteria.uniqueResult();
     }
 
     @Override
@@ -57,10 +56,10 @@ public class ContactDaoImpl extends AbstractDaoImpl<Contact> implements ContactD
 
     public Chat getConversation(Contact who, Contact with) {
         Chat result = new Chat();
-        for(Chat chat:who.getConversation()){
-            for(Message m:chat.getMessages()){
-                if(m.getUserTo().getId()==with.getId()){
-                    result=chat;
+        for (Chat chat : who.getConversation()) {
+            for (Message m : chat.getMessages()) {
+                if (m.getUserTo().getId() == with.getId()) {
+                    result = chat;
                 }
             }
         }

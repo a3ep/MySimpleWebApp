@@ -1,6 +1,5 @@
 package net.bondar.web.dao.inter;
 
-
 import net.bondar.web.model.Hobby;
 
 /**
@@ -8,5 +7,6 @@ import net.bondar.web.model.Hobby;
  */
 public interface HobbyDao extends AbstractDao<Hobby> {
     Hobby findHobbyByTitle(String title);
+
     Hobby findHobbyByTitleOpt(String title);
 }

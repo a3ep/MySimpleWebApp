@@ -1,7 +1,9 @@
 package net.bondar.web;
 
 import net.bondar.web.dao.inter.*;
-import net.bondar.web.exceptions.*;
+import net.bondar.web.exceptions.EmptyObjectException;
+import net.bondar.web.exceptions.ExistingObjectException;
+import net.bondar.web.exceptions.NoSuchObjectException;
 import net.bondar.web.model.*;
 import net.bondar.web.service.*;
 import org.junit.Before;
@@ -11,7 +13,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
@@ -59,10 +63,10 @@ public class WebAppTest {
     private PostService postService = new PostService();
 
     @Before
-    public void initMocks(){
-        contact1 = new Contact("FirstName", "FirstLastName", new Date(1990-1900, 8, 18), "first", "258456", "258456");
+    public void initMocks() {
+        contact1 = new Contact("FirstName", "FirstLastName", new Date(1990 - 1900, 8, 18), "first", "258456", "258456");
         doReturn(contact1).when(contactDao).findById(1);
-        contact2 = new Contact("SecondName", "SecondLastName", new Date(1900-1900, 3, 13), "second", "258456", "258456");
+        contact2 = new Contact("SecondName", "SecondLastName", new Date(1900 - 1900, 3, 13), "second", "258456", "258456");
         doReturn(contact2).when(contactDao).findById(2);
         hobby1 = new Hobby("FirstHobby", "FirstDescription");
         doReturn(hobby1).when(hobbyDao).findById(21);
@@ -79,36 +83,29 @@ public class WebAppTest {
 
 
     @Test
-    public void testSaveContact(){
-        Contact user = new Contact("FirstName", "FirstLastName", new Date(1990-1900, 8, 18), "first", "258456", "258456");
+    public void testSaveContact() {
+        Contact user = new Contact("FirstName", "FirstLastName", new Date(1990 - 1900, 8, 18), "first", "258456", "258456");
         doReturn(contact1).when(contactDao).save(user);
         assertEquals(user, contactService.saveContact(user));
     }
 
     @Test
-    public void testUpdateContact(){
-        Contact user = new Contact("FirstName", "FirstLastName", new Date(1990-1900, 8, 18), "first", "258456", "258456");
+    public void testUpdateContact() {
+        Contact user = new Contact("FirstName", "FirstLastName", new Date(1990 - 1900, 8, 18), "first", "258456", "258456");
         doReturn(contact1).when(contactDao).update(user);
         assertEquals(user, contactService.updateContact(user));
     }
 
     @Test(expected = NoSuchObjectException.class)
     public void testFindContactById() throws Exception {
-        Contact user = new Contact("FirstName", "FirstLastName", new Date(1990-1900, 8, 18), "first", "258456", "258456");
+        Contact user = new Contact("FirstName", "FirstLastName", new Date(1990 - 1900, 8, 18), "first", "258456", "258456");
         doReturn(null).when(contactDao).findById(user.getId());
         assertNotNull(contactService.findContactById(user.getId()));
     }
 
-    @Test(expected = NoSuchObjectException.class)
-    public void testFindContactByUserName() throws Exception {
-        Contact user = new Contact("FirstName", "FirstLastName", new Date(1990-1900, 8, 18), "first", "258456", "258456");
-        doReturn(null).when(contactDao).findContactByUserName(user.getUserName());
-        assertNotNull(contactService.findContactByUserName(user.getUserName()));
-    }
-
     @Test
     public void testCount() throws Exception {
-        Contact user = new Contact("FirstName", "FirstLastName", new Date(1990-1900, 8, 18), "first", "258456", "258456");
+        Contact user = new Contact("FirstName", "FirstLastName", new Date(1990 - 1900, 8, 18), "first", "258456", "258456");
         long count = 0;
         doReturn(count).when(contactDao).count(user.getUserName());
         assertTrue(contactService.count(user.getUserName()) == 0);
@@ -116,8 +113,8 @@ public class WebAppTest {
 
     @Test
     public void testFindAllContacts() throws Exception {
-        Contact user = new Contact("FirstName", "FirstLastName", new Date(1990-1900, 8, 18), "first", "258456", "258456");
-        Contact user2 = new Contact("SecondName", "SecondLastName", new Date(1900-1900, 3, 13), "second", "258456", "258456");
+        Contact user = new Contact("FirstName", "FirstLastName", new Date(1990 - 1900, 8, 18), "first", "258456", "258456");
+        Contact user2 = new Contact("SecondName", "SecondLastName", new Date(1900 - 1900, 3, 13), "second", "258456", "258456");
         Set<Contact> contacts = new HashSet<>();
         contacts.add(user);
         contacts.add(user2);
@@ -127,8 +124,8 @@ public class WebAppTest {
 
     @Test
     public void testFindAllContactsWithHobby() throws Exception {
-        Contact user = new Contact("FirstName", "FirstLastName", new Date(1990-1900, 8, 18), "first", "258456", "258456");
-        Contact user2 = new Contact("SecondName", "SecondLastName", new Date(1900-1900, 3, 13), "second", "258456", "258456");
+        Contact user = new Contact("FirstName", "FirstLastName", new Date(1990 - 1900, 8, 18), "first", "258456", "258456");
+        Contact user2 = new Contact("SecondName", "SecondLastName", new Date(1900 - 1900, 3, 13), "second", "258456", "258456");
         Hobby hobby = hobbyService.findHobbyById(21);
         user.getHobbies().add(hobby);
         user2.getHobbies().add(hobby);
@@ -141,8 +138,8 @@ public class WebAppTest {
 
     @Test
     public void testFindAllContactsForPlaces() throws Exception {
-        Contact user = new Contact("FirstName", "FirstLastName", new Date(1990-1900, 8, 18), "first", "258456", "258456");
-        Contact user2 = new Contact("SecondName", "SecondLastName", new Date(1900-1900, 3, 13), "second", "258456", "258456");
+        Contact user = new Contact("FirstName", "FirstLastName", new Date(1990 - 1900, 8, 18), "first", "258456", "258456");
+        Contact user2 = new Contact("SecondName", "SecondLastName", new Date(1900 - 1900, 3, 13), "second", "258456", "258456");
         Place place = placeService.findPlaceById(41);
         user.getPlaces().add(place);
         user2.getPlaces().add(place);
@@ -155,7 +152,7 @@ public class WebAppTest {
 
     @Test(expected = ExistingObjectException.class)
     public void testAddHobbyToContact() throws Exception {
-        Contact user = new Contact("FirstName", "FirstLastName", new Date(1990-1900, 8, 18), "first", "258456", "258456");
+        Contact user = new Contact("FirstName", "FirstLastName", new Date(1990 - 1900, 8, 18), "first", "258456", "258456");
         Hobby hobby = hobbyService.findHobbyById(21);
         user.getHobbies().add(hobby);
         contactService.addHobbyToContact(user, hobby);
@@ -163,15 +160,15 @@ public class WebAppTest {
 
     @Test
     public void removeHobby() throws Exception {
-        Contact user = new Contact("FirstName", "FirstLastName", new Date(1990-1900, 8, 18), "first", "258456", "258456");
+        Contact user = new Contact("FirstName", "FirstLastName", new Date(1990 - 1900, 8, 18), "first", "258456", "258456");
         Hobby hobby = hobbyService.findHobbyById(21);
         user.getHobbies().add(hobby);
-        contactService.removeHobby(user,hobby);
+        contactService.removeHobby(user, hobby);
     }
 
     @Test(expected = ExistingObjectException.class)
     public void testAddPlaceToContact() throws Exception {
-        Contact user = new Contact("FirstName", "FirstLastName", new Date(1990-1900, 8, 18), "first", "258456", "258456");
+        Contact user = new Contact("FirstName", "FirstLastName", new Date(1990 - 1900, 8, 18), "first", "258456", "258456");
         Place place = placeService.findPlaceById(41);
         user.getPlaces().add(place);
         contactService.addPlaceToContact(user, place);
@@ -179,7 +176,7 @@ public class WebAppTest {
 
     @Test
     public void removePlace() throws Exception {
-        Contact user = new Contact("FirstName", "FirstLastName", new Date(1990-1900, 8, 18), "first", "258456", "258456");
+        Contact user = new Contact("FirstName", "FirstLastName", new Date(1990 - 1900, 8, 18), "first", "258456", "258456");
         Place place = placeService.findPlaceById(41);
         user.getPlaces().add(place);
         contactService.removePlace(user, place);
@@ -187,7 +184,7 @@ public class WebAppTest {
 
     @Test(expected = ExistingObjectException.class)
     public void testAddPostToContact() throws Exception {
-        Contact user = new Contact("FirstName", "FirstLastName", new Date(1990-1900, 8, 18), "first", "258456", "258456");
+        Contact user = new Contact("FirstName", "FirstLastName", new Date(1990 - 1900, 8, 18), "first", "258456", "258456");
         Post post = postService.findPostById(51);
         user.getPosts().add(post);
         contactService.addPostToContact(user, post);
@@ -195,16 +192,16 @@ public class WebAppTest {
 
     @Test
     public void removePost() throws Exception {
-        Contact user = new Contact("FirstName", "FirstLastName", new Date(1990-1900, 8, 18), "first", "258456", "258456");
+        Contact user = new Contact("FirstName", "FirstLastName", new Date(1990 - 1900, 8, 18), "first", "258456", "258456");
         Post post = postService.findPostById(51);
         user.getPosts().add(post);
         contactService.removePost(user, post);
     }
 
     @Test(expected = ExistingObjectException.class)
-    public void testAddFriendship_ExistingFriend(){
-        Contact user = new Contact("FirstName", "FirstLastName", new Date(1990-1900, 8, 18), "first", "258456", "258456");
-        Contact user2 = new Contact("SecondName", "SecondLastName", new Date(1900-1900, 3, 13), "second", "258456", "258456");
+    public void testAddFriendship_ExistingFriend() {
+        Contact user = new Contact("FirstName", "FirstLastName", new Date(1990 - 1900, 8, 18), "first", "258456", "258456");
+        Contact user2 = new Contact("SecondName", "SecondLastName", new Date(1900 - 1900, 3, 13), "second", "258456", "258456");
         user.getFriendList().add(user2);
         user2.getFriendList().add(user);
         contactService.addFriendship(user, user2);
@@ -212,14 +209,14 @@ public class WebAppTest {
 
     @Test(expected = NoSuchObjectException.class)
     public void testRemoveFriendship_NoSuchFriend() throws Exception {
-        Contact user = new Contact("FirstName", "FirstLastName", new Date(1990-1900, 8, 18), "first", "258456", "258456");
-        Contact user2 = new Contact("SecondName", "SecondLastName", new Date(1900-1900, 3, 13), "second", "258456", "258456");
+        Contact user = new Contact("FirstName", "FirstLastName", new Date(1990 - 1900, 8, 18), "first", "258456", "258456");
+        Contact user2 = new Contact("SecondName", "SecondLastName", new Date(1900 - 1900, 3, 13), "second", "258456", "258456");
         contactService.removeFriendship(user, user2);
     }
 
     @Test(expected = ExistingObjectException.class)
     public void testAddChatToContact() throws Exception {
-        Contact user = new Contact("FirstName", "FirstLastName", new Date(1990-1900, 8, 18), "first", "258456", "258456");
+        Contact user = new Contact("FirstName", "FirstLastName", new Date(1990 - 1900, 8, 18), "first", "258456", "258456");
         Chat chat = chatService.findChatById(61);
         user.getConversation().add(chat);
         contactService.addChatToContact(user, chat);
@@ -227,19 +224,19 @@ public class WebAppTest {
 
     @Test(expected = EmptyObjectException.class)
     public void getFriendList() throws Exception {
-        Contact user = new Contact("FirstName", "FirstLastName", new Date(1990-1900, 8, 18), "first", "258456", "258456");
+        Contact user = new Contact("FirstName", "FirstLastName", new Date(1990 - 1900, 8, 18), "first", "258456", "258456");
         contactService.getFriendList(user);
     }
 
     @Test(expected = NoSuchObjectException.class)
     public void getConversation() throws Exception {
-        Contact user = new Contact("FirstName", "FirstLastName", new Date(1990-1900, 8, 18), "first", "258456", "258456");
-        Contact user2 = new Contact("SecondName", "SecondLastName", new Date(1900-1900, 3, 13), "second", "258456", "258456");
+        Contact user = new Contact("FirstName", "FirstLastName", new Date(1990 - 1900, 8, 18), "first", "258456", "258456");
+        Contact user2 = new Contact("SecondName", "SecondLastName", new Date(1900 - 1900, 3, 13), "second", "258456", "258456");
         contactService.getConversation(user, user2);
     }
 
     @Test
-    public void testSaveChat(){
+    public void testSaveChat() {
         Chat newChat = new Chat();
         newChat.getMessages().add(message);
         doReturn(chat).when(chatDao).save(newChat);
@@ -247,7 +244,7 @@ public class WebAppTest {
     }
 
     @Test
-    public void testUpdateChat(){
+    public void testUpdateChat() {
         Chat newChat = new Chat();
         newChat.getMessages().add(message);
         doReturn(chat).when(chatDao).update(newChat);
@@ -263,28 +260,28 @@ public class WebAppTest {
 
     @Test(expected = NoSuchObjectException.class)
     public void testFindChatByUserToId() throws Exception {
-        Contact user = new Contact("FirstName", "FirstLastName", new Date(1990-1900, 8, 18), "first", "258456", "258456");
+        Contact user = new Contact("FirstName", "FirstLastName", new Date(1990 - 1900, 8, 18), "first", "258456", "258456");
         Chat newChat = new Chat();
         doReturn(null).when(chatDao).findChatByUserToId(user.getId());
         assertNotNull(chatService.findChatByUserToId(user.getId()));
     }
 
     @Test
-    public void testSaveHobby(){
+    public void testSaveHobby() {
         Hobby hobby = new Hobby("FirstHobby", "FirstDescription");
         doReturn(hobby1).when(hobbyDao).save(hobby);
         assertEquals(hobby, hobbyService.saveHobby(hobby));
     }
 
     @Test
-    public void testUpdateHobby(){
+    public void testUpdateHobby() {
         Hobby hobby = new Hobby("FirstHobby", "FirstDescription");
         doReturn(hobby1).when(hobbyDao).update(hobby);
         assertEquals(hobby, hobbyService.updateHobby(hobby));
     }
 
     @Test
-    public void testDeleteHobby(){
+    public void testDeleteHobby() {
         Hobby hobby = new Hobby("FirstHobby", "FirstDescription");
         hobbyService.deleteHobby(hobby);
     }
@@ -315,7 +312,7 @@ public class WebAppTest {
     }
 
     @Test
-    public void testSaveMessage(){
+    public void testSaveMessage() {
         Message newMessage = new Message(contact1, contact2, new Date(), "Привет!");
         doReturn(message).when(messageDao).save(newMessage);
         assertEquals(newMessage, messageService.saveMessage(newMessage));
@@ -329,21 +326,21 @@ public class WebAppTest {
     }
 
     @Test
-    public void testSavePlace(){
+    public void testSavePlace() {
         Place newPlace = new Place("FirstPlace", "FirstDescription", 12.0, 12.0);
         doReturn(place1).when(placeDao).save(newPlace);
         assertEquals(newPlace, placeService.savePlace(newPlace));
     }
 
     @Test
-    public void testUpdatePlace(){
+    public void testUpdatePlace() {
         Place newPlace = new Place("FirstPlace", "FirstDescription", 12.0, 12.0);
         doReturn(place1).when(placeDao).update(newPlace);
         assertEquals(newPlace, placeService.updatePlace(newPlace));
     }
 
     @Test
-    public void testDeletePlace(){
+    public void testDeletePlace() {
         Place newPlace = new Place("FirstPlace", "FirstDescription", 12.0, 12.0);
         placeService.deletePlace(newPlace);
     }
@@ -374,21 +371,21 @@ public class WebAppTest {
     }
 
     @Test
-    public void testSavePost(){
+    public void testSavePost() {
         Post newPost = new Post(contact1, "Привет!", new Date());
         doReturn(post1).when(postDao).save(newPost);
         assertEquals(newPost, postService.savePost(newPost));
     }
 
     @Test
-    public void testUpdatePost(){
+    public void testUpdatePost() {
         Post newPost = new Post(contact1, "Привет!", new Date());
         doReturn(post1).when(postDao).update(newPost);
         assertEquals(newPost, postService.updatePost(newPost));
     }
 
     @Test
-    public void testDeletePost(){
+    public void testDeletePost() {
         Post newPost = new Post(contact1, "Привет!", new Date());
         postService.deletePost(newPost);
     }

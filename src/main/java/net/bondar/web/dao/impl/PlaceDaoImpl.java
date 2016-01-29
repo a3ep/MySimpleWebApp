@@ -23,8 +23,8 @@ public class PlaceDaoImpl extends AbstractDaoImpl<Place> implements PlaceDao {
         Place result = null;
         Criteria criteria = getSession().createCriteria(Place.class);
         List<Place> places = criteria.list();
-        for(Place place:places){
-            if(place.getTitle().contains(title)){
+        for (Place place : places) {
+            if (place.getTitle().contains(title)) {
                 result = place;
             }
         }

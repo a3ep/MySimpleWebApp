@@ -7,12 +7,20 @@ import java.util.Set;
  */
 public interface AbstractDao<T> {
     T save(T t);
+
     T update(T t);
+
     void refresh(T t);
+
     void delete(T t);
+
     void delete(long id);
+
     T findById(long id);
+
     Set<T> getAll();
+
     void flush();
+
     void clear();
 }

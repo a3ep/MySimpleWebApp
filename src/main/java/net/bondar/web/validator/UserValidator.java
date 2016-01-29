@@ -9,7 +9,7 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 @Component
-public class UserValidator implements Validator{
+public class UserValidator implements Validator {
 
     @Autowired
     ContactService service;
@@ -30,15 +30,15 @@ public class UserValidator implements Validator{
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty.contact.password");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "confirmPassword", "NotEmpty.contact.confirmPassword");
 
-        if(contact.getFirstName().length()<2){
+        if (contact.getFirstName().length() < 2) {
             errors.rejectValue("firstName", "contact.firstName.error.minLength");
-        }else if(contact.getFirstName().length()>20){
+        } else if (contact.getFirstName().length() > 20) {
             errors.rejectValue("firstName", "contact.firstName.error.maxLength");
         }
 
-        if(contact.getLastName().length()<2){
+        if (contact.getLastName().length() < 2) {
             errors.rejectValue("lastName", "contact.lastName.error.minLength");
-        }else if(contact.getLastName().length()>20){
+        } else if (contact.getLastName().length() > 20) {
             errors.rejectValue("lastName", "contact.lastName.error.maxLength");
         }
 
@@ -48,27 +48,26 @@ public class UserValidator implements Validator{
             errors.rejectValue("birthDate", "contact.age.error.max");
         }
 
-        if (service.count(contact.getUserName()) >0) {
+        if (service.count(contact.getUserName()) > 0) {
             errors.rejectValue("userName", "contact.username.error.unique");
         }
 
-        if(contact.getUserName().length()<6){
+        if (contact.getUserName().length() < 6) {
             errors.rejectValue("userName", "contact.userName.error.minLength");
-        }else if(contact.getUserName().length()>16){
+        } else if (contact.getUserName().length() > 16) {
             errors.rejectValue("userNameReg", "contact.userName.error.maxLength");
         }
 
-        if(contact.getPassword().length()<6||contact.getPassword().length()>16){
+        if (contact.getPassword().length() < 6 || contact.getPassword().length() > 16) {
             contact.setPassword("");
             contact.setConfirmPassword("");
             errors.rejectValue("password", "contact.password.error.length");
         }
 
-        if(!contact.getPassword().equals(contact.getConfirmPassword())){
+        if (!contact.getPassword().equals(contact.getConfirmPassword())) {
             contact.setPassword("");
             contact.setConfirmPassword("");
             errors.rejectValue("password", "contact.password.error.equals");
         }
-
     }
 }

@@ -17,7 +17,7 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "net.bondar.web")
-public class WebAppConfig extends WebMvcConfigurerAdapter{
+public class WebAppConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -26,7 +26,7 @@ public class WebAppConfig extends WebMvcConfigurerAdapter{
     }
 
     @Bean(name = "viewResolver")
-    public UrlBasedViewResolver setupViewResolver(){
+    public UrlBasedViewResolver setupViewResolver() {
         UrlBasedViewResolver resolver = new UrlBasedViewResolver();
         resolver.setPrefix("/WEB-INF/views/");
         resolver.setSuffix(".jsp");

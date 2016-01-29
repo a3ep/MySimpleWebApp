@@ -20,20 +20,13 @@ public class ChatService {
     @Autowired
     SessionFactory sessionFactory;
 
-//    public Chat saveChat(Contact userTo) {
-//        Chat chat = new Chat(userTo);
-//        Chat savedChat = chatDao.save(chat);
-//        chatDao.flush();
-//        return savedChat;
-//    }
-
-    public Chat saveChat(Chat chat){
+    public Chat saveChat(Chat chat) {
         Chat savedChat = chatDao.save(chat);
         chatDao.flush();
         return savedChat;
     }
 
-    public Chat updateChat(Chat chat){
+    public Chat updateChat(Chat chat) {
         Chat updatedChat = chatDao.update(chat);
         chatDao.flush();
         return updatedChat;
@@ -41,13 +34,13 @@ public class ChatService {
 
     public Chat findChatById(long id) {
         Chat result = chatDao.findById(id);
-        if(result==null) throw new NoSuchObjectException();
+        if (result == null) throw new NoSuchObjectException();
         return result;
     }
 
-    public Chat findChatByUserToId(long id){
+    public Chat findChatByUserToId(long id) {
         Chat result = chatDao.findChatByUserToId(id);
-        if(result==null) throw new NoSuchObjectException();
+        if (result == null) throw new NoSuchObjectException();
         return result;
     }
 }

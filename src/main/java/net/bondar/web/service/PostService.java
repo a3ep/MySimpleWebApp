@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by AzeraL on 14.12.2015.
@@ -30,32 +29,32 @@ public class PostService {
         return postDao.save(post);
     }
 
-    public Post savePost(Post post){
+    public Post savePost(Post post) {
         Post savedPost = postDao.save(post);
         postDao.flush();
         return savedPost;
     }
 
-    public Post updatePost(Post post){
+    public Post updatePost(Post post) {
         Post updatedPost = postDao.update(post);
         postDao.flush();
-        return  updatedPost;
+        return updatedPost;
 
     }
 
-    public void deletePost(Post post){
+    public void deletePost(Post post) {
         postDao.delete(post);
         postDao.flush();
     }
 
-    public void deletePost(long id){
+    public void deletePost(long id) {
         postDao.delete(id);
         postDao.flush();
     }
 
     public Post findPostById(long id) {
         Post result = postDao.findById(id);
-        if(result==null) throw new NoSuchObjectException();
+        if (result == null) throw new NoSuchObjectException();
         return result;
     }
 

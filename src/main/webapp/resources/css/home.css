@@ -1,90 +1,73 @@
-body{
+body {
     background-color: #C7EDFC;
     background-image: url(../img/background_blue.gif);
     font: 14px Verdana, sans-serif;
 }
-
 .top-buffer {
     margin-top: 20px;
 }
-
 .text-centred {
     text-align: center;
 }
-
 .table-hover-my > tbody > tr:hover {
     background-color: #D9EDF7;
     max-width: 900px;
 }
-
 .tabbable {
     *zoom: 1;
 }
-
 .tabbable:before,
 .tabbable:after {
     display: table;
     line-height: 0;
     content: "";
 }
-
 .tabbable-my:after {
     clear: both;
 }
-
 .tabs-below > .nav-tabs,
 .tabs-right > .nav-tabs,
 .tabs-left > .nav-tabs {
     border-bottom: 0;
 }
-
 .tabs-left > .nav-tabs > li,
 .tabs-right > .nav-tabs > li {
     float: none;
 }
-
 .tabs-left > .nav-tabs > li > a,
 .tabs-right > .nav-tabs > li > a {
     min-width: 74px;
     margin-right: 0;
     margin-bottom: 3px;
 }
-
 .tabs-left > .nav-tabs {
     float: left;
     margin-right: 19px;
     border-right: 1px solid #ddd;
 }
-
 .tabs-left > .nav-tabs > li > a {
     margin-right: -1px;
     -webkit-border-radius: 4px 0 0 4px;
     -moz-border-radius: 4px 0 0 4px;
     border-radius: 4px 0 0 4px;
 }
-
 .tabs-left > .nav-tabs > li > a:hover {
     border-color: #eeeeee #dddddd #eeeeee #eeeeee;
 }
-
 .tabs-left > .nav-tabs .active > a,
 .tabs-left > .nav-tabs .active > a:hover {
     border-color: #ddd transparent #ddd #ddd;
     *border-right-color: #ffffff;
 }
 
-              /*МОИ НАСТРОЙКИ*/
-/*-----------------------------------------*/
-
-                /*SEARCH*/
-.search-block{
+/*SEARCH*/
+.search-block {
     width: 400px;
     margin: 0 auto;
 }
 
-                 /*ALL*/
-
-.header-home{
+/*ALL*/
+.header-home {
     width: 1168px;
     margin: 0 auto 20px auto;
     padding: 20px;
@@ -94,16 +77,15 @@ body{
 .container-home {
     width: 1170px;
     padding: 0;
-    margin:0 auto;
+    margin: 0 auto;
     background-color: #ffffff;
     border: 1px solid #333333;
 }
-.mainRow{
+.mainRow {
     margin: 20px -15px 0 -15px;
     padding: 15px;
 }
-
-#content{
+#content {
     width: 1058px;
     margin: 0 0 0 110px;
 }
@@ -118,153 +100,142 @@ body{
     margin: 0 auto;
     /*outline: 2px solid #cccccc;*/
 }
-.table-home{
+.table-home {
     /*width: 990px;*/
     margin: 0 auto;
     padding: 0 10px;
 }
-.fontBold{
+.fontBold {
     font-weight: bold;
 }
-.nav-tabs li{
+.nav-tabs li {
     font-weight: bold;
 }
-
-.popover-home .popover{
+.popover-home .popover {
     position: relative;
     display: block;
     margin: 20px;
 }
 
-
-
-                /*PROFILE*/
-
-#profilePhoto{
+/*PROFILE*/
+#profilePhoto {
     width: 200px;
     float: left;
     /*outline: 2px solid #cccccc;*/
 }
-#profileInfo{
+#profileInfo {
     width: 350px;
     margin: 30px 0 0 210px;
     /*outline: 2px solid #cccccc;*/
 }
-#profileChangeBtn{
+#profileChangeBtn {
     width: 100px;
     margin: 72px 320px 0 0;
     /*outline: 2px solid #cccccc;*/
     float: right;
 }
-#profileChangeBtn button{
+#profileChangeBtn button {
     width: 100px;
 }
-#profileFirstCol{
+#profileFirstCol {
     width: 329px;
     text-align: left;
 }
-#profileLastNameTr{
+#profileLastNameTr {
     width: 201px;
     text-align: center;
     font-weight: normal;
 }
-
-#postRow{
+#postRow {
     /*outline: 2px solid #FF8000;*/
     width: 880px;;
     margin: 30px auto 0 auto;
 }
-#postArea{
+#postArea {
     /*outline: 2px solid #FF8000;*/
     width: 750px;
     margin: 0 auto;
 }
-.postMessage{
+.postMessage {
     /*outline: 2px solid #FF8000;*/
     width: 700px;
     max-width: 700px;
     height: inherit;
     margin: 0 0 20px 0;
 }
-.popover-buttons{
+.popover-buttons {
     width: 120px;
     height: 30px;
     margin: 0 0 auto auto;
 }
-.popover-buttons button{
-    color:#337AB7;
+.popover-buttons button {
+    color: #337AB7;
     font-size: 10px;
     padding: 6px 6px;
 }
-.hideElement{
+.hideElement {
     display: none;
 }
-.showElement{
+.showElement {
     display: block;
 }
-.responseBlock .btn-group{
+.responseBlock .btn-group {
     margin: 0 0 5px 20px;
 }
 
-            /*FRIEND*/
-
-#friendPhotoTh{
+/*FRIEND*/
+#friendPhotoTh {
     width: 70px;
     text-align: center;
 }
-#friendLastNameTh{
+#friendLastNameTh {
     width: 300px;
     text-align: center;
 }
-#friendFirstNameTh{
+#friendFirstNameTh {
     width: 300px;
     text-align: center;
 }
-#friendBthTh{
+#friendBthTh {
     width: 210px;
 }
 #friendCellBtn .btn-group {
     width: 210px;
 }
-#friendCellBtn .btn-group button{
+#friendCellBtn .btn-group button {
     width: 70px;
 }
-.message{
+.message {
     /*outline: 2px solid #FF8000;*/
     width: 600px;
     max-width: 600px;
     margin: 0 0 20px 0;
 }
 
-
-            /*HOBBY*/
-
-.hobbyTitleTh{
+/*HOBBY*/
+.hobbyTitleTh {
     width: 200px;
     text-align: center;
 }
-.hobbyDescriptionTh{
+.hobbyDescriptionTh {
     width: 500px;
     text-align: center;
 }
-.hobbyBtnTh{
+.hobbyBtnTh {
     width: 160px;
 }
 .hobbyCellBtn .btn-group {
     width: 160px;
 }
-
-.hobbyCellBtn .btn-group button{
+.hobbyCellBtn .btn-group button {
     width: 80px;
 }
-.well-home{
+.well-home {
     padding: 0px;
 
 }
 
-
-             /*PLACE*/
-
+/*PLACE*/
 .placePhotoTh {
     width: 60px;
     text-align: center;
@@ -292,26 +263,24 @@ body{
 .placeCellBtn .btn-group {
     width: 100px;
 }
-
-.placeCellBtn .btn-group button{
+.placeCellBtn .btn-group button {
     width: 50px;
 }
 
-            /*PEOPLE*/
-
-#userPhotoTh{
+/*PEOPLE*/
+#userPhotoTh {
     width: 100px;
     text-align: center;
 }
-#userLastNameTh{
+#userLastNameTh {
     width: 300px;
     text-align: center;
 }
-#userFirstNameTh{
+#userFirstNameTh {
     width: 300px;
     text-align: center;
 }
-#userBthTh{
+#userBthTh {
     width: 100px;
 }
 .userCellBtn .btn-group {
@@ -320,32 +289,22 @@ body{
 .userCellBtn .btn-group button {
     width: 50px;
 }
-
-.labelFilter{
+.labelFilter {
     float: left;
     position: relative;
     padding: 0 15px;
 }
-
-.selectFilter{
-     width: 130px;
-     float: left;
-     position: relative;
-     padding: 0 15px;
-     margin: 0 0 20px 0;
- }
-
-.inputFilter{
+.selectFilter {
+    width: 130px;
+    float: left;
+    position: relative;
+    padding: 0 15px;
+    margin: 0 0 20px 0;
+}
+.inputFilter {
     width: 400px;
     float: left;
     position: relative;
     padding: 0 15px;
     margin: 0 0 20px 0;
 }
-/*.btnFilter{*/
-    /*width: 100px;*/
-    /*float: left;*/
-    /*position: relative;*/
-    /*margin-left: 16px;*/
-/*}*/
-

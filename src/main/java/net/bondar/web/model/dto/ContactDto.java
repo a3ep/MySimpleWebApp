@@ -11,7 +11,9 @@ public class ContactDto {
     private String lastName;
     private Date birthDate;
 
-    public ContactDto(){};
+    public ContactDto() {
+    }
+
     public ContactDto(long id, String firstName, String lastName, Date birthDate) {
         this.id = id;
         this.firstName = firstName;

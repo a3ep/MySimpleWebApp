@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,7 +13,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "POST")
-public class Post extends AbstractEntity{
+public class Post extends AbstractEntity {
 
     @OneToOne
     private Contact contactFrom;
@@ -26,11 +25,11 @@ public class Post extends AbstractEntity{
     private List<Post> responses;
 
 
-    public Post(){
+    public Post() {
         super();
     }
 
-    public Post(long id){
+    public Post(long id) {
         super(id);
     }
 
@@ -40,8 +39,6 @@ public class Post extends AbstractEntity{
         this.date = date;
         this.responses = new ArrayList<>();
     }
-
-
 
     public Contact getContactFrom() {
         return contactFrom;

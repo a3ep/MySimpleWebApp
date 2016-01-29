@@ -1,6 +1,5 @@
 package net.bondar.web.dao.inter;
 
-
 import net.bondar.web.model.Place;
 
 /**
@@ -8,5 +7,6 @@ import net.bondar.web.model.Place;
  */
 public interface PlaceDao extends AbstractDao<Place> {
     Place findPlaceByTitle(String title);
+
     Place findPlaceByTitleOpt(String title);
 }

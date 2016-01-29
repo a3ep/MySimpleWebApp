@@ -3,7 +3,6 @@ package net.bondar.web.model;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -11,7 +10,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "MESSAGE")
-public class Message extends AbstractEntity{
+public class Message extends AbstractEntity {
 
     @OneToOne
     private Contact userFrom;
@@ -24,11 +23,11 @@ public class Message extends AbstractEntity{
     private String content;
 
 
-    public Message(){
+    public Message() {
         super();
     }
 
-    public Message(long id){
+    public Message(long id) {
         super(id);
     }
 
@@ -38,8 +37,6 @@ public class Message extends AbstractEntity{
         this.date = date;
         this.content = content;
     }
-
-
 
     public Date getDate() {
         return date;
@@ -90,7 +87,7 @@ public class Message extends AbstractEntity{
         if (o == null || getClass() != o.getClass()) return false;
 
         Message message = (Message) o;
-        if (Long.compare(message.getId(), super.getId()) !=0) return false;
+        if (Long.compare(message.getId(), super.getId()) != 0) return false;
         if (userFrom != null ? !userFrom.equals(message.userFrom) : message.userFrom != null) return false;
         if (userTo != null ? !userTo.equals(message.userTo) : message.userTo != null) return false;
         if (date != null ? !date.equals(message.date) : message.date != null) return false;

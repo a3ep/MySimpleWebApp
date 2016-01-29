@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.context.MessageSource;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,8 +39,6 @@ public class PageController {
     private MessageService messageService;
     @Autowired
     private PostService postService;
-    @Autowired
-    private MessageSource messageSource;
 
     @Qualifier("viewResolver")
     @Autowired
@@ -52,13 +49,12 @@ public class PageController {
         CustomDateEditor editor = new CustomDateEditor(new SimpleDateFormat("dd.MM.yyyy"), true);
         binder.registerCustomEditor(Date.class, editor);
     }
-//-----------------------------------------------------------------
+
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String getHome(Model model, HttpSession session) {
         logger.debug("getHome()");
-
         Contact user = getPersistUser(session);
-        if (user.getFirstName().equals("emptySession")){
+        if (user.getFirstName().equals("emptySession")) {
             return "redirect:errorPage";
         }
         model.addAttribute("user", user);
@@ -68,9 +64,9 @@ public class PageController {
     @RequestMapping(value = "/errorPage", method = RequestMethod.GET)
     public String getErrorPage() {
         logger.debug("getErrorPage()");
-
         return "errorPage";
     }
+
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logout(HttpSession session) {
         logger.debug("logout()");
@@ -98,21 +94,20 @@ public class PageController {
 
     @RequestMapping(value = "/friends/{id}/invokeMessage", method = RequestMethod.POST)
     @ResponseBody
-       public ResponseMessage invokeMessage(@PathVariable("id") long id, HttpSession session, Model model, HttpServletRequest req) {
+    public ResponseMessage invokeMessage(@PathVariable("id") long id, HttpSession session, Model model, HttpServletRequest req) {
         logger.warn("invokeMessage()");
-
         Contact user = getPersistUser(session);
         Contact friend = service.findContactById(id);
         logger.debug(friend.getId() + " " + friend.getFirstName() + " " + friend.getLastName());
         List<Message> messages = new ArrayList<>();
         try {
-            if(!(user.getConversation().isEmpty())){
+            if (!(user.getConversation().isEmpty())) {
                 for (Chat chat : user.getConversation()) {
-                    if(chat.getMessages().isEmpty()){
-                    break;
+                    if (chat.getMessages().isEmpty()) {
+                        break;
                     }
-                    for(Message m:chat.getMessages()) {
-                        if (m.getUserTo().equals(friend)|| m.getUserFrom().equals(friend)) {
+                    for (Message m : chat.getMessages()) {
+                        if (m.getUserTo().equals(friend) || m.getUserFrom().equals(friend)) {
                             messages.add(m);
                         }
                     }
@@ -135,7 +130,6 @@ public class PageController {
         friendDto.setId(friend.getId());
         friendDto.setFirstName(friend.getFirstName());
         friendDto.setLastName(friend.getLastName());
-        logger.debug(friendDto.toString());
         return ResponseMessage.okMessage(friendDto, result);
     }
 
@@ -143,37 +137,35 @@ public class PageController {
     @ResponseBody
     public ResponseMessage sendMessage(@RequestBody SendMessageDto message, @PathVariable("id") long id, HttpSession session, Model model, HttpServletRequest req) {
         logger.warn("sendMessage()");
-
         Contact user = getPersistUser(session);
         Contact friend = service.findContactById(id);
         Message newMessage = new Message(user, friend, new Date(), message.getMessage());
         List<Message> messages = new ArrayList<>();
         try {
             messageService.saveMessage(newMessage);
-            logger.debug(user.getConversation().toString());
             Chat currentChat = null;
             for (Chat chat : user.getConversation()) {
-                for(Message m:chat.getMessages()){
-                    if (m.getUserTo().equals(friend)||m.getUserFrom().equals(friend)) {
+                for (Message m : chat.getMessages()) {
+                    if (m.getUserTo().equals(friend) || m.getUserFrom().equals(friend)) {
                         currentChat = chat;
                         break;
                     }
                 }
             }
-            if(currentChat!=null){
+            if (currentChat != null) {
                 currentChat.getMessages().add(newMessage);
                 chatService.updateChat(currentChat);
                 for (Message msg : currentChat.getMessages()) {
                     messages.add(msg);
                 }
             }
-            if(currentChat==null){
+            if (currentChat == null) {
                 Chat newChat = new Chat();
                 newChat.getMessages().add(newMessage);
                 chatService.saveChat(newChat);
                 service.addChatToContact(user, newChat);
                 service.addChatToContact(friend, newChat);
-                for(Message m:newChat.getMessages()){
+                for (Message m : newChat.getMessages()) {
                     messages.add(m);
                 }
             }
@@ -201,12 +193,12 @@ public class PageController {
         Contact friend = null;
         try {
             friend = service.findContactById(id);
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.debug("Invoke post error!", e);
             return ResponseMessage.errorMessage(e.getMessage());
         }
         ContactDto friendDto = new ContactDto();
-        if(friend==null) {
+        if (friend == null) {
             return ResponseMessage.errorMessage(new NullPointerException().getMessage());
         }
         friendDto.setId(friend.getId());
@@ -235,7 +227,6 @@ public class PageController {
     @ResponseBody
     public ResponseMessage addFriend(@PathVariable("id") long id, HttpSession session) {
         logger.warn("addFriend() : {}", id);
-
         Contact user = getPersistUser(session);
         Contact friend = service.findContactById(id);
         try {
@@ -257,7 +248,6 @@ public class PageController {
     @ResponseBody
     public ResponseMessage removeFriend(@PathVariable("id") long id, HttpSession session) {
         logger.warn("removeFriend() : {}", id);
-
         Contact user = getPersistUser(session);
         Contact friend = service.findContactById(id);
         String friendName = friend.getFirstName() + " " + friend.getLastName();
@@ -291,7 +281,6 @@ public class PageController {
     public ResponseMessage editHobby(@PathVariable("id") long id, @RequestBody HobbyDto hobbyDto, HttpSession session) {
         logger.warn("editHobby() : {}", id);
         Contact user = getPersistUser(session);
-        logger.info("User " + user.getFirstName() + " tries to edit hobby with id:" + id);
         Hobby hobby = hobbyService.findHobbyById(id);
         hobby.setTitle(hobbyDto.getTitle());
         hobby.setDescription(hobbyDto.getDescription());
@@ -310,14 +299,13 @@ public class PageController {
     @ResponseBody
     public ResponseMessage removeHobby(@PathVariable("id") long id, HttpSession session) {
         logger.warn("removeHobby() : {}", id);
-
         Contact user = getPersistUser(session);
         Hobby hobby = hobbyService.findHobbyById(id);
         String hobbyTitle = hobby.getTitle();
         try {
             service.removeHobby(user, hobby);
             Set<Contact> contactsWithThisHobby = service.findAllContactsWithHobby(hobby);
-            if(contactsWithThisHobby.size()==0){
+            if (contactsWithThisHobby.size() == 0) {
                 hobbyService.deleteHobby(id);
             }
         } catch (Exception e) {
@@ -347,7 +335,6 @@ public class PageController {
     @ResponseBody
     public ResponseMessage editPlace(@PathVariable("id") long id, @RequestBody PlaceDto placeDto, HttpSession session) {
         logger.warn("editPlace() : {}", id);
-
         Contact user = getPersistUser(session);
         Place place = placeService.findPlaceById(id);
         place.setTitle(placeDto.getTitle());
@@ -370,14 +357,13 @@ public class PageController {
     @ResponseBody
     public ResponseMessage removePlace(@PathVariable("id") long id, HttpSession session) {
         logger.warn("removePlace{() : {}", id);
-
         Contact user = getPersistUser(session);
         Place place = placeService.findPlaceById(id);
         String placeTitle = place.getTitle();
         try {
             service.removePlace(user, place);
             Set<Contact> contactsWithThisPlace = service.findAllContactsForPlace(place);
-            if(contactsWithThisPlace.size()==0){
+            if (contactsWithThisPlace.size() == 0) {
                 placeService.deletePlace(id);
             }
         } catch (Exception e) {
@@ -391,7 +377,6 @@ public class PageController {
     @ResponseBody
     public ResponseMessage deletePost(@PathVariable("id") long id, HttpSession session) {
         logger.warn("deletePost{() : {}", id);
-
         Contact user = getPersistUser(session);
         Post post = postService.findPostById(id);
         try {
@@ -404,6 +389,8 @@ public class PageController {
         return ResponseMessage.okMessage("");
     }
 
+
+//                         UNDER DEVELOPMENT
 //    @RequestMapping(value = "/posts/{id}/addResponse", method = RequestMethod.POST)
 //    @ResponseBody
 //    public ResponseMessage addResponse(@RequestBody SendMessageDto message, @PathVariable("id") long id, HttpSession session) {
@@ -428,7 +415,6 @@ public class PageController {
     @ResponseBody
     public ResponseMessage showPeople(HttpSession session) {
         logger.warn("showPeople()");
-
         Contact user = getPersistUser(session);
         Set<Contact> contacts = service.findAllContacts();
         contacts.remove(user);
@@ -444,8 +430,8 @@ public class PageController {
         Contact user = getPersistUser(session);
         Set<Contact> filteredContacts = new HashSet<>();
         String fmtTitle = filter.getTextFilter();
-        if(!(fmtTitle.substring(0,1).equals(fmtTitle.substring(0, 1).toUpperCase()))) {
-            fmtTitle = filter.getTextFilter().substring(0, 1).toUpperCase()+filter.getTextFilter().substring(1);
+        if (!(fmtTitle.substring(0, 1).equals(fmtTitle.substring(0, 1).toUpperCase()))) {
+            fmtTitle = filter.getTextFilter().substring(0, 1).toUpperCase() + filter.getTextFilter().substring(1);
         }
         if (filter.getSelectNumber() == 1) {
             try {
@@ -456,12 +442,12 @@ public class PageController {
                 logger.debug("Filter contacts for hobby error", e);
                 return ResponseMessage.errorMessage(e.getMessage());
             }
-        }else if(filter.getSelectNumber()==2){
-            try{
+        } else if (filter.getSelectNumber() == 2) {
+            try {
                 Place selectedPlace = placeService.findPlaceByTitleOpt(fmtTitle);
                 filteredContacts = service.findAllContactsForPlace(selectedPlace);
                 filteredContacts.remove(user);
-            }catch (Exception e){
+            } catch (Exception e) {
                 logger.debug("Filter contacts for place error", e);
                 return ResponseMessage.errorMessage(e.getMessage());
             }
@@ -475,7 +461,7 @@ public class PageController {
     public ResponseMessage removeFilter(HttpSession session) {
         logger.warn("removeFilter()");
         Contact user = getPersistUser(session);
-        Set<Contact> filteredContacts = new HashSet<>();
+        Set<Contact> filteredContacts;
         try {
             filteredContacts = service.findAllContacts();
             filteredContacts.remove(user);
@@ -487,23 +473,23 @@ public class PageController {
         return ResponseMessage.okMessage("");
     }
 
-    private String renderHtml(Model model, HttpServletRequest req, String view){
-        View resolvedView = null;
+    private String renderHtml(Model model, HttpServletRequest req, String view) {
+        View resolvedView;
         String result = null;
         MockHttpServletResponse mockResp = new MockHttpServletResponse();
-        try{
+        try {
             resolvedView = resolver.resolveViewName(view, Locale.getDefault());
             resolvedView.render(model.asMap(), req, mockResp);
             result = mockResp.getContentAsString();
-        } catch (Exception e){
+        } catch (Exception e) {
             logger.debug("Render html error!", e);
         }
         return result;
     }
 
-    private Contact getPersistUser(HttpSession session){
-        Contact user = (Contact)session.getAttribute("USER");
-        if(user==null){
+    private Contact getPersistUser(HttpSession session) {
+        Contact user = (Contact) session.getAttribute("USER");
+        if (user == null) {
             Contact empty = new Contact();
             empty.setFirstName("emptySession");
             return empty;
@@ -511,10 +497,11 @@ public class PageController {
         service.refreshContact(user);
         return user;
     }
-//    @ExceptionHandler(Exception.class)
-//    @ResponseBody
-//    public ResponseMessage handleException(Exception e) {
-//        logger.debug("handlerException()");
-//        return ResponseMessage.errorMessage(e.getMessage());
-//    }
+
+    @ExceptionHandler(Exception.class)
+    @ResponseBody
+    public ResponseMessage handleException(Exception e) {
+        logger.debug("handlerException()");
+        return ResponseMessage.errorMessage(e.getMessage());
+    }
 }
