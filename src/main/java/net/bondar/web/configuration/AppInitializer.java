@@ -16,7 +16,6 @@ import javax.servlet.ServletRegistration;
  * Created by Azeral on 24.11.2015.
  */
 public class AppInitializer implements WebApplicationInitializer {
-
     public void onStartup(ServletContext servletContext) throws ServletException {
         AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
         context.register(WebAppConfig.class);
