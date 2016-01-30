@@ -89,6 +89,7 @@ public class Post extends AbstractEntity {
 
         Post post = (Post) o;
 
+        if (Long.compare(post.getId(), super.getId()) != 0) return false;
         if (contactFrom != null ? !contactFrom.equals(post.contactFrom) : post.contactFrom != null) return false;
         if (content != null ? !content.equals(post.content) : post.content != null) return false;
         if (date != null ? !date.equals(post.date) : post.date != null) return false;

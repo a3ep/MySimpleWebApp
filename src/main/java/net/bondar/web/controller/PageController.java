@@ -119,7 +119,7 @@ public class PageController {
         }
         model.addAttribute("messages", messages);
         session.setAttribute("user", user);
-        String result = null;
+        String result;
         try {
             result = renderHtml(model, req, "messageTemplate");
         } catch (Exception e) {
@@ -176,7 +176,7 @@ public class PageController {
         }
         model.addAttribute("messages", messages);
         session.setAttribute("user", user);
-        String result = null;
+        String result;
         try {
             result = renderHtml(model, req, "messageTemplate");
         } catch (Exception e) {
@@ -190,7 +190,7 @@ public class PageController {
     @ResponseBody
     public ResponseMessage invokePost(@PathVariable("id") long id) {
         logger.warn("invokePost()");
-        Contact friend = null;
+        Contact friend;
         try {
             friend = service.findContactById(id);
         } catch (Exception e) {
@@ -266,7 +266,6 @@ public class PageController {
         logger.warn("saveHobby()");
         try {
             Hobby newHobby = hobbyService.saveHobby(hobbyDto.getTitle(), hobbyDto.getDescription());
-            logger.debug(newHobby.toString());
             Contact user = getPersistUser(session);
             service.addHobbyToContact(user, newHobby);
         } catch (Exception e) {
